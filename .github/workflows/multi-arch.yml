@@ -56,7 +56,7 @@ jobs:
           for TARGET in $TARGETS; do
             ## -ne 两数不等返回为真 [[  ]]：双括号表示高级字符串处理函数
             echo -e "\033[31m FIRST: $FIRST \033[0m"
-            [[ $FIRST -ne 1 ]] && JSON="$JSON"','
+            [[ $FIRST -eq 1 ]] || JSON="$JSON"','
             echo -e "\033[31m JSON1: $JSON \033[0m"
             JSON="$JSON"'"'"${TARGET}"'"'
             echo -e "\033[31m JSON2: $JSON \033[0m"
