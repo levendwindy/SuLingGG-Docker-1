@@ -38,7 +38,6 @@ jobs:
         env:
           INPUT_TARGET: ${{ github.event.inputs.INPUT_TARGET }}
         run: |
-          ## 两个变量判断是否相等 [ "$var1" = "$var2" ] 不相等 || 则判断   "$INPUT_TARGET" = ""  是否相等
           if [ "$INPUT_TARGET" = "all" ] || [ "$INPUT_TARGET" = "" ]; then
             export TARGETS="$(cat config/openwrt.config)"
           else
@@ -54,8 +53,6 @@ jobs:
           JSON='{"config": ["default"], "targets":['
           FIRST=1
           for TARGET in $TARGETS; do
-            ## -ne 两数不等返回为真 [[  ]]：双括号表示高级字符串处理函数
-            ## 可写成 [[ $FIRST -eq 1 ]] || JSON="$JSON"','
             echo -e "\033[31m FIRST: $FIRST \033[0m"
             [[ $FIRST -ne 1 ]] && JSON="$JSON"','
             echo -e "\033[31m JSON1: $JSON \033[0m"
