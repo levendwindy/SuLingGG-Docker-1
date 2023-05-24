@@ -83,4 +83,38 @@ jobs:
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
-          sleep 1m
+          sleep 1s
+
+      - name: Generate Variables
+        id: env
+        run: |
+          export DEVICE_PLATFORM=$(echo ${{ matrix.TARGETS }} | awk -F '/' '{print $1}')
+          echo "DEVICE_PLATFORM=$DEVICE_PLATFORM" >> $GITHUB_ENV
+          export DEVICE_TARGET=$(echo ${{ matrix.TARGETS }} | awk -F '/' '{print $2}')
+          echo "DEVICE_TARGET=$DEVICE_TARGET" >> $GITHUB_ENV
+          export DEVICE_SUBTARGET=$(echo ${{ matrix.TARGETS }} | awk -F '/' '{print $3}')
+          echo "DEVICE_SUBTARGET=$DEVICE_SUBTARGET" >> $GITHUB_ENV
+          export DOCKER_IMAGE_ARCH=$(echo ${{ matrix.TARGETS }} | awk -F '/' '{print $4}' | sed 's/-/\//g')
+          echo "DOCKER_IMAGE_ARCH=$DOCKER_IMAGE_ARCH" >> $GITHUB_ENV
+          export DOCKER_EXTERA_TAG=$(echo ${{ matrix.TARGETS }} | awk -F '/' '{print $5}')
+          echo "DOCKER_EXTERA_TAG=$DOCKER_EXTERA_TAG" >> $GITHUB_ENV
+          
+          echo -e "\033[31m DEVICE_PLATFORM:  $DEVICE_PLATFORM \033[0m"
+          echo -e "\033[31m DEVICE_TARGET:  $DEVICE_TARGET \033[0m"
+          echo -e "\033[31m DEVICE_SUBTARGET:  $DEVICE_SUBTARGET \033[0m"
+          echo -e "\033[31m DOCKER_IMAGE_ARCH:  $DOCKER_IMAGE_ARCH  \033[0m"
+          echo -e "\033[31m DOCKER_EXTERA_TAG:  $DOCKER_EXTERA_TAG  \033[0m"
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
