@@ -86,16 +86,16 @@ jobs:
       - name: Generate Variables
         id: env
         run: |
-          export DEVICE_PLATFORM=$(echo ${{ matrix.TARGETS }} | awk -F '/' '{print $1}')
-          echo "DEVICE_PLATFORM=$DEVICE_PLATFORM" >> $GITHUB_ENV
-          export DEVICE_TARGET=$(echo ${{ matrix.TARGETS }} | awk -F '/' '{print $2}')
-          echo "DEVICE_TARGET=$DEVICE_TARGET" >> $GITHUB_ENV
-          export DEVICE_SUBTARGET=$(echo ${{ matrix.TARGETS }} | awk -F '/' '{print $3}')
-          echo "DEVICE_SUBTARGET=$DEVICE_SUBTARGET" >> $GITHUB_ENV
-          export DOCKER_IMAGE_ARCH=$(echo ${{ matrix.TARGETS }} | awk -F '/' '{print $4}' | sed 's/-/\//g')
-          echo "DOCKER_IMAGE_ARCH=$DOCKER_IMAGE_ARCH" >> $GITHUB_ENV
-          export DOCKER_EXTERA_TAG=$(echo ${{ matrix.TARGETS }} | awk -F '/' '{print $5}')
-          echo "DOCKER_EXTERA_TAG=$DOCKER_EXTERA_TAG" >> $GITHUB_ENV
+          export CONFIG=$(echo ${{ matrix.TARGETS }} | awk -F '/' '{print $1}')
+          echo "CONFIG=$CONFIG" >> $GITHUB_ENV
+          export GITHUB_URL=$(echo ${{ matrix.TARGETS }} | awk -F '/' '{print $2}')
+          echo "GITHUB_URL=GITHUB_URL" >> $GITHUB_ENV
+          export DIY_P1_SH=$(echo ${{ matrix.TARGETS }} | awk -F '/' '{print $3}')
+          echo "DIY_P1_SH=$DIY_P1_SH" >> $GITHUB_ENV
+          export DIY_P2_SH=$(echo ${{ matrix.TARGETS }} | awk -F '/' '{print $4}' | sed 's/-/\//g')
+          echo "DIY_P2_SH=$DIY_P2_SH" >> $GITHUB_ENV
+          export ORTHER=$(echo ${{ matrix.TARGETS }} | awk -F '/' '{print $5}')
+          echo "ORTHER=$ORTHER" >> $GITHUB_ENV
           
           echo -e "\033[31m DEVICE_PLATFORM:  $DEVICE_PLATFORM \033[0m"
           echo -e "\033[31m DEVICE_TARGET:  $DEVICE_TARGET \033[0m"
