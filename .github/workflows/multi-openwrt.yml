@@ -9,7 +9,7 @@
 name: Multi-OpenWrt Images
 
 env:
-  PREFIX_URL: https://storage.openwrt.cc/snapshots/targets
+  # PREFIX_URL: https://storage.openwrt.cc/snapshots/targets
   TZ: Asia/Shanghai
 
 on:
