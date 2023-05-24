@@ -127,7 +127,7 @@ jobs:
           cp Shell/$DIY_P1_SH openwrt/
           cd openwrt
           echo '---------------------------------------------------------------'
-          ls -al $GITHUB_WORKSPACE
+          ls -al 
           $DIY_P1_SH
 
           
