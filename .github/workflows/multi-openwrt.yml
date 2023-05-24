@@ -106,7 +106,8 @@ jobs:
           echo "ORTHER=$ORTHER" >> $GITHUB_ENV
           
           echo -e "\033[31m CONFIG:  $CONFIG \033[0m"
-          echo -e "\033[31m GITHUB_URL:  $GITHUB_URL \033[0m"
+          echo -e "\033[31m REPO_URL:  $REPO_URL \033[0m"
+          echo -e "\033[31m REPO_BRANCH:  $REPO_BRANCH \033[0m"
           echo -e "\033[31m DIY_P1_SH:  $DIY_P1_SH \033[0m"
           echo -e "\033[31m DIY_P2_SH:  $DIY_P2_SH  \033[0m"
           echo -e "\033[31m ORTHER:  $ORTHER  \033[0m"
