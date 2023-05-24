@@ -89,7 +89,8 @@ jobs:
         run: |
           export CONFIG=$(echo ${{ matrix.TARGETS }} | awk -F '/' '{print $1}')
           echo "CONFIG=$CONFIG" >> $GITHUB_ENV
-          export GITHUB_URL='https://'$(echo ${{ matrix.TARGETS }} | awk -F '/' '{print $2}') | sed -i 's,+,/,g'
+          CHA_URL='https://'$(echo ${{ matrix.TARGETS }} | awk -F '/' '{print $2}')
+          export GITHUB_URL=$(echo ${CHA_URL//+/\/})
           echo "GITHUB_URL=$GITHUB_URL" >> $GITHUB_ENV
           
           export DIY_P1_SH=$(echo ${{ matrix.TARGETS }} | awk -F '/' '{print $3}')
