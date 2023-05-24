@@ -154,7 +154,7 @@ jobs:
           find dl -size -1024c -exec rm -f {} \;
         
       - name: 1.Compile
-        id: 1.compile
+        id: compile_1
         run: |
           cd openwrt
           echo -e "$(nproc) thread compile"
@@ -163,7 +163,7 @@ jobs:
         
       - name: 1.Compile failure
         if: ${{ failure() }}
-        id: 1.Compile_failure
+        id: Compile_failure_1
         run: |
           cd openwrt && make -j1 V=s 
           echo "::set-output name=status::success"  ; fi
