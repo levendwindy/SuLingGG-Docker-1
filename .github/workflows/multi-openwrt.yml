@@ -89,8 +89,8 @@ jobs:
       - name: Generate Variables
         id: env
         run: |
-          export CONFIG=$(echo ${{ matrix.TARGETS }} | awk -F '/' '{print $1}')
-          echo "CONFIG=$CONFIG" >> $GITHUB_ENV
+          export CONFIG_FILE=$(echo ${{ matrix.TARGETS }} | awk -F '/' '{print $1}')".config"
+          echo "CONFIG_FILE=$CONFIG_FILE" >> $GITHUB_ENV
           CHA_URL=$(echo ${{ matrix.TARGETS }} | awk -F '/' '{print $2}') 
           export REPO_URL='https://'$(echo ${CHA_URL//+/\/}) 
           echo "REPO_URL=$REPO_URL" >> $GITHUB_ENV
@@ -121,14 +121,33 @@ jobs:
 
       - name: Load custom feeds
         run: |
-          ls -al
           # [ -e config/$FEEDS_CONF ] && mv config/$FEEDS_CONF openwrt/feeds.conf.default
           chmod +x Shell/$DIY_P1_SH
-          cp Shell/$DIY_P1_SH openwrt/
           cd openwrt
           echo '---------------------------------------------------------------'
-          ls -al 
           bash $DIY_P1_SH
+          
+      - name: Update feeds
+        run: cd openwrt && ./scripts/feeds update -a
+
+      - name: Install feeds
+        run: cd openwrt && ./scripts/feeds install -a
+
+      - name: Load custom configuration
+        run: |
+          [ -e files ] && mv files openwrt/files
+          [ -e config/$CONFIG_FILE ] && mv config/$CONFIG_FILE openwrt/.config
+          chmod +x Shell/$DIY_P2_SH
+          cd openwrt
+          $GITHUB_WORKSPACE/Shell/$DIY_P2_SH
+
+      - name: Download package
+        id: package
+        run: |
+          cd openwrt && make defconfig && make download -j8
+          find dl -size -1024c -exec ls -l {} \; && find dl -size -1024c -exec rm -f {} \;
+
+
 
           
           
