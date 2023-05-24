@@ -12,6 +12,12 @@ env:
   PREFIX_URL: https://storage.openwrt.cc/snapshots/targets
 
 on:
+  workflow_dispatch:
+    inputs:
+      INPUT_TARGET:
+        description: "Target to build (platform/target/subtarget)"
+        required: false
+        default: "all"
   push:
     paths:
       - '.github/workflows/multi-arch.yml'
@@ -64,4 +70,4 @@ jobs:
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
-          sleep 3m
+          sleep 2m
