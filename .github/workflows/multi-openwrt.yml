@@ -125,7 +125,7 @@ jobs:
           chmod +x Shell/$DIY_P1_SH
           cd openwrt
           echo '---------------------------------------------------------------'
-          bash Shell/$DIY_P1_SH
+          $GITHUB_WORKSPACE/Shell/$DIY_P1_SH
           
       - name: Update feeds
         run: cd openwrt && ./scripts/feeds update -a
