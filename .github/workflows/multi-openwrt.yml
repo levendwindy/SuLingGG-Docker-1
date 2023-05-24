@@ -93,6 +93,8 @@ jobs:
       - name: Generate Variables
         id: env
         run: |
+          export FILENAME=$(echo ${{ matrix.TARGETS }} | awk -F '/' '{print $1}')
+          echo "FILENAME=$FILENAME" >> $GITHUB_ENV
           export CONFIG_FILE=$(echo ${{ matrix.TARGETS }} | awk -F '/' '{print $1}')".config"
           echo "CONFIG_FILE=$CONFIG_FILE" >> $GITHUB_ENV
           CHA_URL=$(echo ${{ matrix.TARGETS }} | awk -F '/' '{print $2}') 
@@ -107,6 +109,7 @@ jobs:
           export ORTHER=$(echo ${{ matrix.TARGETS }} | awk -F '/' '{print $6}')
           echo "ORTHER=$ORTHER" >> $GITHUB_ENV
           
+          echo -e "\033[31m FILENAME:  $FILENAME \033[0m"
           echo -e "\033[31m CONFIG:  $CONFIG \033[0m"
           echo -e "\033[31m REPO_URL:  $REPO_URL \033[0m"
           echo -e "\033[31m REPO_BRANCH:  $REPO_BRANCH \033[0m"
@@ -115,7 +118,14 @@ jobs:
           echo -e "\033[31m ORTHER:  $ORTHER  \033[0m"
           
           echo "matrix.TARGETS: ${{ matrix.TARGETS }}"
-
+          
+      - name : 1.总附件 bin
+        uses: actions/upload-artifact@master
+        with:
+          name: 1.${{ FILENAME }}-108M-bin
+          path: config
+          if-no-files-found: ignore # error 'warn' or 'ignore' are also available, defaults to `warn`
+          
       - name: Clone source code
         working-directory: /workdir
         run: |
