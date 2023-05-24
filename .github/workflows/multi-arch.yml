@@ -38,23 +38,29 @@ jobs:
         env:
           INPUT_TARGET: ${{ github.event.inputs.INPUT_TARGET }}
         run: |
+          ## 两个变量判断是否相等 [ "$var1" = "$var2" ] 不相等 || 则判断   "$INPUT_TARGET" = ""  是否相等
           if [ "$INPUT_TARGET" = "all" ] || [ "$INPUT_TARGET" = "" ]; then
             export TARGETS="$(cat config/platform.config)"
           else
             export TARGETS="$INPUT_TARGET"
           fi
+          ## TARGETS="arm_cortex-a9_vfpv3-d16/mvebu/cortexa9/linux-arm-v7 i386_pentium4/x86/generic/linux-386/386 x86_64/x86/64/linux-amd64/amd64"
           echo -e "\033[31m INPUT_TARGET=${INPUT_TARGETT} \033[0m"
           echo -e "\033[31m TARGETS=${INPUT_TARGET} \033[0m"
           echo -e "\033[31m INPUT_TARGET: \033[0m $INPUT_TARGET"
-          echo -e "\033[31m TARGETS: \033[0m $TARGETS"
-          cat config/platform.config
+          echo -e "\033[31m TARGETS:  $TARGETS \033[0m"
+          # cat config/platform.config
           
           JSON='{"config": ["default"], "targets":['
           FIRST=1
           for TARGET in $TARGETS; do
-          [[ $FIRST -ne 1 ]] && JSON="$JSON"','
-          JSON="$JSON"'"'"${TARGET}"'"'
-          FIRST=0
+            ## -ne 两数不等返回为真 [[  ]]：双括号表示高级字符串处理函数
+            echo -e "\033[31m FIRST: $FIRST \033[0m"
+            [[ $FIRST -ne 1 ]] && JSON="$JSON"','
+            echo -e "\033[31m JSON1: $JSON \033[0m"
+            JSON="$JSON"'"'"${TARGET}"'"'
+            echo -e "\033[31m JSON2: $JSON \033[0m"
+            FIRST=0
           done
           JSON="$JSON"']}'
           echo $JSON
