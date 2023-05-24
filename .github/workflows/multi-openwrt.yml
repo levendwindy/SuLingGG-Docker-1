@@ -122,7 +122,7 @@ jobs:
       - name : 1.总附件 bin
         uses: actions/upload-artifact@master
         with:
-          name: 1.${{ FILENAME }}-108M-bin
+          name: ${{ env.FILENAME }}
           path: config
           if-no-files-found: ignore # error 'warn' or 'ignore' are also available, defaults to `warn`
           
