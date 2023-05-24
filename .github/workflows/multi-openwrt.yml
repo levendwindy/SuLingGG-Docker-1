@@ -123,9 +123,15 @@ jobs:
         working-directory: /workdir
         run: |
           export FILENAME='360T7-'$NAME'-108M'
+          export BIN='360T7-'$NAME'-108M-BIN'
+          export FACTORY='360T7-'$NAME'-108M-squashfs-factory'
+          export SYSUPGRADE='360T7-'$NAME'-108M-squashfs-sysupgrade'
           echo "FILENAME=$FILENAME" >> $GITHUB_ENV
+          echo "BIN=$BIN" >> $GITHUB_ENV
+          echo "FACTORY=$FACTORY" >> $GITHUB_ENV
+          echo "SYSUPGRADE=$SYSUPGRADE" >> $GITHUB_ENV
           
-      - name : 1.总附件 bin
+      - name : 1.Upload BIN
         uses: actions/upload-artifact@master
         with:
           name: ${{ env.FILENAME }}
