@@ -105,6 +105,7 @@ jobs:
           echo -e "\033[31m DOCKER_IMAGE_ARCH:  $DOCKER_IMAGE_ARCH  \033[0m"
           echo -e "\033[31m DOCKER_EXTERA_TAG:  $DOCKER_EXTERA_TAG  \033[0m"
           
+          echo "matrix.TARGETS: ${{ matrix.TARGETS }}"
           
           
           
