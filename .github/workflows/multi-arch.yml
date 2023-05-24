@@ -55,8 +55,9 @@ jobs:
           FIRST=1
           for TARGET in $TARGETS; do
             ## -ne 两数不等返回为真 [[  ]]：双括号表示高级字符串处理函数
+            ## 可写成 [[ $FIRST -eq 1 ]] || JSON="$JSON"','
             echo -e "\033[31m FIRST: $FIRST \033[0m"
-            [[ $FIRST -eq 1 ]] || JSON="$JSON"','
+            [[ $FIRST -ne 1 ]] && JSON="$JSON"','
             echo -e "\033[31m JSON1: $JSON \033[0m"
             JSON="$JSON"'"'"${TARGET}"'"'
             echo -e "\033[31m JSON2: $JSON \033[0m"
@@ -66,7 +67,7 @@ jobs:
           echo $JSON
           echo "::set-output name=TARGETS::$JSON"
 
-  Docker-Images:
+  Mulit-Images:
     name: ${{ matrix.TARGETS }}
     needs: [Config]
     runs-on: ubuntu-latest
