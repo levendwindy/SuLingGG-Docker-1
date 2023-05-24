@@ -122,10 +122,10 @@ jobs:
       - name: Clone source code
         working-directory: /workdir
         run: |
-          export FILENAME='360T7-'$NAME'-108M'
-          export BIN='360T7-'$NAME'-108M-BIN'
-          export FACTORY='360T7-'$NAME'-108M-squashfs-factory'
-          export SYSUPGRADE='360T7-'$NAME'-108M-squashfs-sysupgrade'
+          export FILENAME='1.360T7-'$NAME'-108M'
+          export BIN='1.360T7-'$NAME'-108M-BIN'
+          export FACTORY='1.360T7-'$NAME'-108M-squashfs-factory'
+          export SYSUPGRADE='1.360T7-'$NAME'-108M-squashfs-sysupgrade'
           echo "FILENAME=$FILENAME" >> $GITHUB_ENV
           echo "BIN=$BIN" >> $GITHUB_ENV
           echo "FACTORY=$FACTORY" >> $GITHUB_ENV
