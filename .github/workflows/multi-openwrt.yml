@@ -92,8 +92,8 @@ jobs:
           export CONFIG=$(echo ${{ matrix.TARGETS }} | awk -F '/' '{print $1}')
           echo "CONFIG=$CONFIG" >> $GITHUB_ENV
           CHA_URL='https://'$(echo ${{ matrix.TARGETS }} | awk -F '/' '{print $2}')
-          export REPO_UR=$(echo ${CHA_URL//+/\/}) 
-          echo "REPO_UR=$GITHUB_URL" >> $GITHUB_ENV
+          export REPO_URL=$(echo ${CHA_URL//+/\/}) 
+          echo "REPO_URL=$GITHUB_URL" >> $GITHUB_ENV
           
           export REPO_BRANCH=$(echo ${{ matrix.TARGETS }} | awk -F '/' '{print $3}')
           echo "REPO_BRANCH=$REPO_BRANCH" >> $GITHUB_ENV
