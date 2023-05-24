@@ -11,5 +11,3 @@
 # sed -i "/exit 0/i\uci set network.lan.dns='192.168.1.1'" package/lean/default-settings/files/zzz-default-settings 
 # sed -i "/exit 0/i\uci commit network" package/lean/default-settings/files/zzz-default-settings 
 
-#- name: 替换默认主题 luci-theme-argon
-sed -i 's/luci-theme-bootstrap/luci-theme-argon/' feeds/luci/collections/luci/Makefile
