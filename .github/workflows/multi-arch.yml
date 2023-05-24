@@ -45,7 +45,8 @@ jobs:
           fi
           echo -e "\033[31m INPUT_TARGET=${INPUT_TARGETT} \033[0m"
           echo -e "\033[31m TARGETS=${INPUT_TARGET} \033[0m"
-          echo  $INPUT_TARGET
+          echo -e "\033[31m INPUT_TARGET: \033[0m $INPUT_TARGET"
+          echo -e "\033[31m TARGETS: \033[0m $TARGETS"
           cat config/platform.config
           
           JSON='{"config": ["default"], "targets":['
