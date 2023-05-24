@@ -19,7 +19,7 @@ on:
         required: false
         default: "all"
   push:
-    paths:
+    paths: 
       - '.github/workflows/multi-openwrt.yml'
 
 jobs:
