@@ -45,6 +45,9 @@ jobs:
           fi
           echo -e "\033[31m INPUT_TARGET=${INPUT_TARGETT} \033[0m"
           echo -e "\033[31m TARGETS=${INPUT_TARGET} \033[0m"
+          echo  $INPUT_TARGET
+          cat config/platform.config
+          
           JSON='{"config": ["default"], "targets":['
           FIRST=1
           for TARGET in $TARGETS; do
@@ -72,4 +75,4 @@ jobs:
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
-          sleep 2m
+          sleep 1m
