@@ -6,7 +6,7 @@
 # Blog: https://p3terx.com
 #=================================================
 
-name: Multi-Arch Images
+name: Multi-OpenWrt Images
 
 env:
   PREFIX_URL: https://storage.openwrt.cc/snapshots/targets
