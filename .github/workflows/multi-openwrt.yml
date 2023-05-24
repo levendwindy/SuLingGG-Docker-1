@@ -125,7 +125,9 @@ jobs:
           # [ -e config/$FEEDS_CONF ] && mv config/$FEEDS_CONF openwrt/feeds.conf.default
           chmod +x Shell/$DIY_P1_SH
           cd openwrt
-          $GITHUB_WORKSPACE/Shell/$DIY_P1_SH
+          echo '---------------------------------------------------------------'
+          ls -al $GITHUB_WORKSPACE
+          bash $GITHUB_WORKSPACE/Shell/$DIY_P1_SH
           cat feeds/luci/collections/luci/Makefile
 
           
