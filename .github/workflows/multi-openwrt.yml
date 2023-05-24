@@ -93,8 +93,8 @@ jobs:
       - name: Generate Variables
         id: env
         run: |
-          export FILENAME=$(echo ${{ matrix.TARGETS }} | awk -F '/' '{print $1}')
-          echo "FILENAME=$FILENAME" >> $GITHUB_ENV
+          export NAME=$(echo ${{ matrix.TARGETS }} | awk -F '/' '{print $1}')
+          echo "NAME=$NAME" >> $GITHUB_ENV
           export CONFIG_FILE=$(echo ${{ matrix.TARGETS }} | awk -F '/' '{print $1}')".config"
           echo "CONFIG_FILE=$CONFIG_FILE" >> $GITHUB_ENV
           CHA_URL=$(echo ${{ matrix.TARGETS }} | awk -F '/' '{print $2}') 
@@ -118,6 +118,12 @@ jobs:
           echo -e "\033[31m ORTHER:  $ORTHER  \033[0m"
           
           echo "matrix.TARGETS: ${{ matrix.TARGETS }}"
+          
+      - name: Clone source code
+        working-directory: /workdir
+        run: |
+          export FILENAME='360T7-'$NAME'-108M'
+          echo "FILENAME=$FILENAME" >> $GITHUB_ENV
           
       - name : 1.总附件 bin
         uses: actions/upload-artifact@master
