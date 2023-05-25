@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/bash
 ###
 ### Usage:
 ###   speedpower <input> <output>
@@ -34,17 +34,21 @@ while [ $# -gt 0 ]
 do
 	key="$1"
 	case $key in
-		-h | --help)
+		-h | --help )
 			INPUT=$1
 			sed -rn 's/^### ?//;T;p' "$0" && exit 1 ;shift;shift;;
-		ImmortalWrt)
+		ImmortalWrt )
 			NAME=$1
 			CHANGE;shift;shift;;
-		hanwckf | padavanonly )
+		hanwckf )
+			NAME=$1
+			CHANGE;shift;shift;;
+		padavanonly )
 			NAME=$1
 			CHANGE;shift;shift;;
 		*)
 			echo "paramter seem error!";echo "Usage: $(basename) $0 [options]"
+			echo -e "请输如正确作者名： \033[31m	ImmortalWrt/hanwckf/padavanonly	\033[0m"
 			exit 1; ;;
 	esac
 done
