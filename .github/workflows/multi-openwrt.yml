@@ -142,7 +142,7 @@ jobs:
           cat .config
           echo "修改前"
           ls -al
-          cp Shell/REVISECONFIG.sh .
+          cp $GITHUB_WORKSPACE/Shell/REVISECONFIG.sh .
           chmod +x REVISECONFIG.sh &&  ./REVISECONFIG.sh padavanonly $NAME
         
       - name: TEST CONFIG CHANGE 测试修改后config
