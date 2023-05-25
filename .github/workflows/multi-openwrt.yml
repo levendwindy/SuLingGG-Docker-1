@@ -100,7 +100,7 @@ jobs:
           export CONFIG_FILE=$(echo ${{ matrix.TARGETS }} | awk -F '，' '{print $2}')".config"
           echo "CONFIG_FILE=$CONFIG_FILE" >> $GITHUB_ENV
           
-          REPO_URL='https://'$(echo ${{ matrix.TARGETS }} | awk -F '，' '{print $3}') 
+          REPO_URL='https://github.com/'$(echo ${{ matrix.TARGETS }} | awk -F '，' '{print $3}') 
           echo "REPO_URL=$REPO_URL" >> $GITHUB_ENV
           
           export REPO_BRANCH=$(echo ${{ matrix.TARGETS }} | awk -F '，' '{print $4}')
