@@ -101,11 +101,14 @@ jobs:
         run: |
           sudo mkdir -p /workdir
           sudo chown $USER:$GROUPS /workdir
+          
+      - name: workdir
+        working-directory: /workdir
+        run: |
+          mkdir openwrt
+          ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
       
       - name: TEST CONFIG CHANGE 测试修改前config
-        working-directory: /workdir
-          ### [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE openwrt/.config
-          ### cd openwrt
         run: |
           pwd
           ls -al
