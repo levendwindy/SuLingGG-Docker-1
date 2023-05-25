@@ -146,7 +146,6 @@ jobs:
         
       - name: TEST CONFIG CHANGE 测试修改后config
         run: |
-          chmod +x REVISECONFIG.sh 
           bash REVISECONFIG.sh  $NAME
           echo "修改后"
           cat .config
