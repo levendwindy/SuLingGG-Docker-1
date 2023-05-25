@@ -142,12 +142,12 @@ jobs:
           cat .config
           echo "修改前"
           ls -al
-          cp $GITHUB_WORKSPACE/Shell/REVISECONFIG.sh .
+          cp Shell/REVISECONFIG.sh .
+          ls -al
           chmod +x REVISECONFIG.sh &&  ./REVISECONFIG.sh  $NAME
         
       - name: TEST CONFIG CHANGE 测试修改后config
         run: |
-          cd openwrt
           cat .config
           echo "修改后"
           
