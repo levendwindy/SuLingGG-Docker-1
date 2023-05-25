@@ -4,16 +4,13 @@
 ###   speedpower <input> <output>
 ###   
 ### Options:
-###   <input>    Input   file to read.          default[ ]
-###   <output>   Output  file to write. Use '-' for stdout.
-###   -h  --help         help Show this message.                显示帮助
-###   -a  --amonut       Show this message.            [40]     下载文件大小
-###   -c  --city         Select your server            [gz] sz  服务器节点 默认(gz)广州 
-###   -f  --filesize     Assign download file size     [20] Mb  文件大小 默认20(Mb)  <=4095                             
-###   -t  --thread       Specify the number of threads [4]      线程数 （4）
-###   -o  --other        Northeastern University Server         东北大学节点 其他选择失效
-###   -w  --wget         wget ,Default curl download            改用wget测试               
-###   -v6 --ipv6         Only support N.U Server                仅支持东北大v6节点  
+###   ImmortalWrt | hanwckf | padavanonly         
+###   插件
+###   ttyd | filetransfer | upnp | openclash | passwall | ssr-plus | vssr | opkg | mtk 
+###  
+###  
+filename=/volume3/pass2.config
+
 CHANGE(){
 	if [ $NAME = "ImmortalWrt" ];then
 		sed -i '/# CONFIG_TARGET_mediatek_filogic_DEVICE_qihoo_360-t7-stock is not set/s/.*/CONFIG_TARGET_mediatek_filogic_DEVICE_qihoo_360-t7-stock=y/;
@@ -30,33 +27,49 @@ CHANGE(){
 }
 
 
+CHECK(){
+	grep "# CONFIG_PACKAGE_luci-app-$PluginNAME is not set" $filename >/dev/null;command1=$?
+	grep "CONFIG_PACKAGE_luci-app-$PluginNAME=m"  $filename >/dev/null;command2=$?
+	grep "CONFIG_PACKAGE_luci-app-$PluginNAME=y" $filename >/dev/null;command3=$?
+}
+
+PLUGIN(){
+	CHECK
+	if [ $command1 -eq 0 ];then
+		sed -i "s/# CONFIG_PACKAGE_luci-app-$PluginNAME is not set/CONFIG_PACKAGE_luci-app-$PluginNAME=y/g" $filename
+		echo -e "\033[31m Plugin: $PluginNAME \t\t 未被选中	\033[0m \t>>>\t \033[36m Plugin: $PluginNAME=y \033[0m"
+	elif [ $command2 -eq 0 ];then
+		echo -e "\033[34m Plugin: $PluginNAME=m \t\t \033[0m \t>>>\t \033[36m Plugin: $PluginNAME=y \033[0m"
+		sed -i "s/CONFIG_PACKAGE_luci-app-$PluginNAME=m/CONFIG_PACKAGE_luci-app-$PluginNAME=y/g" $filename && echo -e ""
+	elif [ $command3 -eq 0 ];then
+			echo -e "\033[32m Plugin: $PluginNAME is selected!	\033[0m"
+	else
+		echo -e "\033[31m ERROR: $PluginNAME \t\t 未找到	\033[0m"
+	fi
+}
+
+
 while [ $# -gt 0 ]             
 do
 	key="$1"
 	case $key in
 		-h | --help )
-			INPUT=$1
+			INPUT=$2
 			sed -rn 's/^### ?//;T;p' "$0" && exit 1 ;shift;shift;;
-		ImmortalWrt )
+		ImmortalWrt | hanwckf | padavanonly )
 			NAME=$1
-			shift;shift;;
-		hanwckf )
-			NAME=$1
-			shift;shift;;
-		padavanonly )
-			NAME=$1
-			shift;shift;;
+			CHANGE
+			shift;shift;; # 代表移除 2个参数
+		ttyd | filetransfer | upnp | openclash | passwall | ssr-plus | vssr \
+				| opkg | mtk )
+			PluginNAME=$1
+		    PLUGIN $1;shift;;
 		*)
-			echo "paramter seem error!";echo "Usage: $(basename) $0 [options]"
-			echo -e "请输如正确作者名： \033[31m	ImmortalWrt/hanwckf/padavanonly	\033[0m"
+			echo -e " \033[31m	错误参数: $1 请输如正确参数：\033[0m"
+			sed -rn 's/^### ?//;T;p' "$0" 
 			exit 1; ;;
 	esac
 done
-
-CHANGE
-
-
-
 
 
 
