@@ -30,53 +30,53 @@ export NUM=$((NUM+1))
 
 
 #1.2	upnp+ttyd+filetransfer
-export mini-BIN=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-BIN-mini'
-export mini-FACTORY=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-factory-mini'
-export mini-SYSUPGRADE=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-sysupgrade-mini'
+export mini_BIN=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-BIN-mini'
+export mini_FACTORY=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-factory-mini'
+export mini_SYSUPGRADE=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-sysupgrade-mini'
 
-echo "mini-BIN=${mini-BIN}" >> $GITHUB_ENV
-echo "mini-FACTORY=${mini-FACTORY}" >> $GITHUB_ENV
-echo "mini-SYSUPGRADE=${mini-SYSUPGRADE}" >> $GITHUB_ENV
+echo "mini_BIN=${mini_BIN}" >> $GITHUB_ENV
+echo "mini_FACTORY=${mini_FACTORY}" >> $GITHUB_ENV
+echo "mini_SYSUPGRADE=${mini_SYSUPGRADE}" >> $GITHUB_ENV
 
 export NUM=$((NUM+1))
 #1.3	 ssrplus
-export ssrplus-BIN=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-BIN-ssrplus'
-export ssrplus-FACTORY=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-factory-ssrplus'
-export ssrplus-SYSUPGRADE=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-sysupgrade-ssrplus'
+export ssrplus_BIN=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-BIN-ssrplus'
+export ssrplus_FACTORY=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-factory-ssrplus'
+export ssrplus_SYSUPGRADE=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-sysupgrade-ssrplus'
 
-echo "ssrplus-BIN=${ssrplus-BIN}" >> $GITHUB_ENV
-echo "ssrplus-FACTORY=${ssrplus-FACTORY}" >> $GITHUB_ENV
-echo "ssrplus-SYSUPGRADE=${ssrplus-SYSUPGRADE}" >> $GITHUB_ENV
+echo "ssrplus_BIN=${ssrplus_BIN}" >> $GITHUB_ENV
+echo "ssrplus_FACTORY=${ssrplus_FACTORY}" >> $GITHUB_ENV
+echo "ssrplus_SYSUPGRADE=${ssrplus_SYSUPGRADE}" >> $GITHUB_ENV
 
 export NUM=$((NUM+1))
 #1.4	passwall
-export passwall-BIN=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-BIN-passwall'
-export passwall-FACTORY=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-factory-passwall'
-export passwall-SYSUPGRADE=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-sysupgrade-passwall'
+export passwall_BIN=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-BIN-passwall'
+export passwall_FACTORY=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-factory-passwall'
+export passwall_SYSUPGRADE=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-sysupgrade-passwall'
 
-echo "passwall-BIN=${passwall-BIN}" >> $GITHUB_ENV
-echo "passwall-FACTORY=${passwall-FACTORY}" >> $GITHUB_ENV
-echo "passwall-SYSUPGRADE=${passwall-SYSUPGRADE}" >> $GITHUB_ENV
+echo "passwall_BIN=${passwall_BIN}" >> $GITHUB_ENV
+echo "passwall_FACTORY=${passwall_FACTORY}" >> $GITHUB_ENV
+echo "passwall_SYSUPGRADE=${passwall_SYSUPGRADE}" >> $GITHUB_ENV
 
 export NUM=$((NUM+1))
 #1.5	openclash
-export openclash-BIN=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-BIN-openclash'
-export openclash-FACTORY=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-factory-openclash'
-export openclash-SYSUPGRADE=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-sysupgrade-openclash'
+export openclash_BIN=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-BIN-openclash'
+export openclash_FACTORY=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-factory-openclash'
+export openclash_SYSUPGRADE=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-sysupgrade-openclash'
 
-echo "openclash-BIN=${openclash-BIN}" >> $GITHUB_ENV
-echo "openclash-FACTORY=${openclash-FACTORY}" >> $GITHUB_ENV
-echo "openclash-SYSUPGRADE=${openclash-SYSUPGRADE}" >> $GITHUB_ENV
+echo "openclash_BIN=${openclash_BIN}" >> $GITHUB_ENV
+echo "openclash_FACTORY=${openclash_FACTORY}" >> $GITHUB_ENV
+echo "openclash_SYSUPGRADE=${openclash_SYSUPGRADE}" >> $GITHUB_ENV
 
 export NUM=$((NUM+1))
-#1.6	openclash-ssrplus-passwall
-export openclash-ssrplus-passwall-BIN=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-BIN-openclash-ssrplus-passwall'
-export openclash-ssrplus-passwall-FACTORY=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-factory-openclash-ssrplus-passwall'
-export openclash-ssrplus-passwall-SYSUPGRADE=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-sysupgrade-openclash-ssrplus-passwall'
+#1.6	openclash_ssrplus_passwall
+export openclash_ssrplus_passwall_BIN=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-BIN-openclash-ssrplus-passwall'
+export openclash_ssrplus_passwall_FACTORY=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-factory-openclash-ssrplus-passwall'
+export openclash_ssrplus_passwall_SYSUPGRADE=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-sysupgrade-openclash-ssrplus-passwall'
 
-echo "openclash-ssrplus-passwall-BIN=${openclash-ssrplus-passwall-BIN}" >> $GITHUB_ENV
-echo "openclash-ssrplus-passwall-FACTORY=${openclash-ssrplus-passwall-FACTORY}" >> $GITHUB_ENV
-echo "openclash-ssrplus-passwall-SYSUPGRADE=${openclash-ssrplus-passwall-SYSUPGRADE}" >> $GITHUB_ENV
+echo "openclash_ssrplus_passwall_BIN=${openclash_ssrplus_passwall_BIN}" >> $GITHUB_ENV
+echo "openclash_ssrplus_passwall_FACTORY=${openclash_ssrplus_passwall_FACTORY}" >> $GITHUB_ENV
+echo "openclash_ssrplus_passwall_SYSUPGRADE=${openclash_ssrplus_passwall_SYSUPGRADE}" >> $GITHUB_ENV
 
 export NUM=$((NUM+1))
 		  
