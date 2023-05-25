@@ -24,7 +24,6 @@ CHANGE(){
 	else
 		echo -e "请输如正确作者名： \033[31m	ImmortalWrt/hanwckf/padavanonly	\033[0m"
 	fi
-	grep "CONFIG_PACKAGE_luci-app-$PluginNAME=y" $filename
 }
 
 
@@ -47,6 +46,7 @@ PLUGIN(){
 	else
 		echo -e "\033[31m ERROR: $PluginNAME \t\t 未找到	\033[0m"
 	fi
+	grep "CONFIG_PACKAGE_luci-app-$PluginNAME=y" $filename
 }
 
 
