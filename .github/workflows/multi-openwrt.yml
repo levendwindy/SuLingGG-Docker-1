@@ -184,14 +184,15 @@ jobs:
       - name: 1.File Name
         working-directory: /workdir
         run: |
-          export FILENAME=$SERIALNUM'.'360T7-'$NAME'-108M'
-          export BIN=$SERIALNUM'.'360T7-'$NAME'-108M-BIN'
-          export FACTORY=$SERIALNUM'.'360T7-'$NAME'-108M-squashfs-factory'
-          export SYSUPGRADE=$SERIALNUM'.'360T7-'$NAME'-108M-squashfs-sysupgrade'
+          export FILENAME=$SERIALNUM'.0-'360T7-'$NAME'-108M'
+          export BIN=$SERIALNUM'.0-'360T7-'$NAME'-108M-BIN'
+          export FACTORY=$SERIALNUM'.0-'360T7-'$NAME'-108M-squashfs-factory'
+          export SYSUPGRADE=$SERIALNUM'.0-'360T7-'$NAME'-108M-squashfs-sysupgrade'
           echo "FILENAME=$FILENAME" >> $GITHUB_ENV
           echo "BIN=$BIN" >> $GITHUB_ENV
           echo "FACTORY=$FACTORY" >> $GITHUB_ENV
           echo "SYSUPGRADE=$SYSUPGRADE" >> $GITHUB_ENV
+
           
       - name : 1.Upload BIN
         uses: actions/upload-artifact@master
@@ -213,6 +214,11 @@ jobs:
           name: ${{ env.SYSUPGRADE }}
           path: openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
           if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
+          
+      - name : 1.Delete BIN
+        run: |
+          rm -rf openwrt/bin
+     
 
 
 
