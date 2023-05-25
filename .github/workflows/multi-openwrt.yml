@@ -149,7 +149,7 @@ jobs:
           echo '---------------------------------------------------------------'
           $GITHUB_WORKSPACE/Shell/$DIY_P1_SH
 
-      - name: 测试！改.config
+      - name: 测试！改.config 
           # [ -e files ] && cp files openwrt/files
         run: |
           [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE .
