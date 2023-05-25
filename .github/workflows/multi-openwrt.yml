@@ -115,27 +115,8 @@ jobs:
           
       - name: 1.File Name
         run: |
-          export FILENAME=$SERIAL'.$NUM-360T7-'$NAME'-108M'
-          export BIN=$SERIAL'.$NUM-360T7-'$NAME'-108M-BIN'
-          export FACTORY=$SERIAL'.$NUM-360T7-'$NAME'-108M-squashfs-factory'
-          export SYSUPGRADE=$SERIAL'.$NUM-360T7-'$NAME'-108M-squashfs-sysupgrade'
-          
-          echo "FILENAME=$FILENAME" >> $GITHUB_ENV
-          echo "BIN=$BIN" >> $GITHUB_ENV
-          echo "FACTORY=$FACTORY" >> $GITHUB_ENV
-          echo "SYSUPGRADE=$SYSUPGRADE" >> $GITHUB_ENV
-          
-          export VanillaFILENAME=$SERIAL'.$NUM-360T7-'$NAME
-          export VanillaBIN=$SERIAL'.$NUM-360T7-'$NAME'-BIN'
-          export VanillaFACTORY=$SERIAL'.$NUM-360T7-'$NAME'-squashfs-factory'
-          export VanillaSYSUPGRADE=$SERIAL'.$NUM-360T7-'$NAME'-squashfs-sysupgrade'
-          
-          echo "VanillaFILENAME=$VanillaFILENAME" >> $GITHUB_ENV
-          echo "VanillaBIN=$VanillaBIN" >> $GITHUB_ENV
-          echo "VanillaFACTORY=$VanillaFACTORY" >> $GITHUB_ENV
-          echo "VanillaSYSUPGRADE=$VanillaSYSUPGRADE" >> $GITHUB_ENV
-          
-          export NUM=$(($NUM+1)) && echo "NUM=$NUM" >> $GITHUB_ENV
+          chmod +x Shell/FileName.sh
+          bash Shell/FileName.sh
 
       - name: Initialization Environment
         if: env.ENVIRONMENT == 'true'
@@ -230,14 +211,10 @@ jobs:
           name: ${{ env.SYSUPGRADE }}
           path: openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
           if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
-          
-      - name : 1.Delete BIN
+
+      - name: 2. 构建原厂Uboot 修改前config 删除 /bin
         run: |
           rm -rf openwrt/bin
-     
-    
-      - name: 2. 构建原厂Uboot 修改前config
-        run: |
           rm -rf openwrt/.config
           [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE openwrt/
           cp Shell/REVISECONFIG.sh openwrt/
@@ -256,7 +233,8 @@ jobs:
       - name: 2.Download package
         id: package2
         run: |
-          cd openwrt && make defconfig && make download -j$DOWNLOAD
+          cd openwrt && rm -rf tmp
+          make defconfig && make download -j$DOWNLOAD
           find dl -size -1024c -exec ls -l {} \; 
           find dl -size -1024c -exec rm -f {} \;
         
@@ -291,6 +269,69 @@ jobs:
           if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
           
       - name : 2.Upload Vanilla sysupgrade
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ env.VanillaSYSUPGRADE }}
+          path: openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
+          if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
+
+ 
+      - name: 3. 构建原厂Uboot 修改前config 删除 /bin
+        run: |
+          rm -rf openwrt/bin   && rm -rf tmp
+          rm -rf openwrt/.config
+          [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE openwrt/
+          cp Shell/REVISECONFIG.sh openwrt/
+          cd openwrt && mv $CONFIG_FILE .config
+          echo "修改前"
+          cat .config
+        
+      - name: 3.修改后config
+        run: |
+          cd openwrt 
+          ./REVISECONFIG.sh  $NAME
+          echo "修改后"
+          cat .config
+
+      - name: 3.Download package
+        id: package3
+        run: |
+          cd openwrt  && rm -rf tmp
+          make defconfig && make download -j$DOWNLOAD
+          find dl -size -1024c -exec ls -l {} \; 
+          find dl -size -1024c -exec rm -f {} \;
+        
+      - name: 3.Compile
+        id: compile_3
+        run: |
+          cd openwrt
+          echo -e "$(nproc) thread compile"
+          [[ $NPROC -eq 0 ]] && make -j$(nproc) || make -j$NPROC
+          echo "::set-output name=status::success"
+        
+      - name: 3.Compile failure
+        if: ${{ failure() }}
+        id: Compile_failure_3
+        run: |
+          cd openwrt && make -j1 V=s 
+          echo "::set-output name=status::success"  ; fi
+
+          
+      - name : 3.Upload Vanilla BIN
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ env.VanillaBIN }}
+          path: openwrt/bin/
+          if-no-files-found: error # error 'warn' or 'ignore' are also available, defaults to `warn`
+          
+      - name : 3.Upload Vanilla factory
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ env.VanillaFACTORY }}
+          path: openwrt/bin/targets/*/*/*squashfs-factory.bin
+          if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
+          
+      - name : 3.Upload Vanilla sysupgrade
         uses: actions/upload-artifact@master
         with:
           name: ${{ env.VanillaSYSUPGRADE }}
