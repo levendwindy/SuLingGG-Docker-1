@@ -132,23 +132,6 @@ jobs:
           echo -e "\033[31m ORTHER:  $ORTHER  \033[0m"
           
           echo "matrix.TARGETS: ${{ matrix.TARGETS }}"
-      
-        
-      - name: TEST CONFIG CHANGE 测试修改前config
-        run: |
-          ### [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE openwrt/.config
-          ### cd openwrt
-          [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE .config
-          cp Shell/REVISECONFIG.sh REVISECONFIG.sh
-          ls -al
-          cat .config
-          echo "修改前"
-        
-      - name: TEST CONFIG CHANGE 测试修改后config
-        run: |
-          bash REVISECONFIG.sh  $NAME
-          echo "修改后"
-          cat .config
           
       - name: Clone source code
         working-directory: /workdir
@@ -164,6 +147,26 @@ jobs:
           cd openwrt
           echo '---------------------------------------------------------------'
           $GITHUB_WORKSPACE/Shell/$DIY_P1_SH
+      
+        
+      - name: TEST CONFIG CHANGE 测试修改前config
+        run: |
+          ### [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE openwrt/.config
+          ### cd openwrt
+          [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE openwrt/.config
+          cp Shell/REVISECONFIG.sh openwrt/REVISECONFIG.sh
+          ls -al openwrt
+          echo "修改前"
+          cat .config
+        
+      - name: TEST CONFIG CHANGE 测试修改后config
+        run: |
+          cd openwrt
+          chmod +x ./REVISECONFIG.sh
+          echo "成功赋权"
+          ./REVISECONFIG.sh  $NAME
+          echo "修改后"
+          cat .config
           
       - name: Update feeds
         run: cd openwrt && ./scripts/feeds update -a
