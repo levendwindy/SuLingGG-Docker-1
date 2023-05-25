@@ -116,6 +116,7 @@ jobs:
           chmod +x Shell/FileName.sh
           export NUM=0
           bash Shell/FileName.sh $NUM $GITHUB_ENV
+          export NUM=$((NUM+1))
           echo "NUM: $NUM" 
           
       - name: Initialization Environment
