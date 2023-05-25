@@ -2,19 +2,7 @@
 
 NUM=$1
 GITHUB_ENV=$2
-#1.0	108M
-export FILENAME=$SERIAL'.'$NUM'-360T7-'$NAME'-108M'
-export BIN=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-BIN'
-export FACTORY=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-factory'
-export SYSUPGRADE=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-sysupgrade'
-
-echo "FILENAME=$FILENAME" >> $GITHUB_ENV
-echo "BIN=$BIN" >> $GITHUB_ENV
-echo "FACTORY=$FACTORY" >> $GITHUB_ENV
-echo "SYSUPGRADE=$SYSUPGRADE" >> $GITHUB_ENV
-
-export NUM=$((NUM+1))
-#1.1	stock（非108M 原厂Uboot）
+#1.0	stock（非108M 原厂Uboot）
 export VanillaFILENAME=$SERIAL'.'$NUM'-360T7-'$NAME
 export VanillaBIN=$SERIAL'.'$NUM'-360T7-'$NAME'-BIN'
 export VanillaFACTORY=$SERIAL'.'$NUM'-360T7-'$NAME'-factory'
@@ -26,6 +14,21 @@ echo "VanillaFACTORY=$VanillaFACTORY" >> $GITHUB_ENV
 echo "VanillaSYSUPGRADE=$VanillaSYSUPGRADE" >> $GITHUB_ENV
 
 export NUM=$((NUM+1))
+
+#1.1	108M
+export FILENAME=$SERIAL'.'$NUM'-360T7-'$NAME'-108M'
+export BIN=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-BIN'
+export FACTORY=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-factory'
+export SYSUPGRADE=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-sysupgrade'
+
+echo "FILENAME=$FILENAME" >> $GITHUB_ENV
+echo "BIN=$BIN" >> $GITHUB_ENV
+echo "FACTORY=$FACTORY" >> $GITHUB_ENV
+echo "SYSUPGRADE=$SYSUPGRADE" >> $GITHUB_ENV
+
+export NUM=$((NUM+1))
+
+
 #1.2	upnp+ttyd+filetransfer
 export mini-BIN=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-BIN-mini'
 export mini-FACTORY=$SERIAL'.'$NUM'-360T7-'$NAME'-108M-factory-mini'
