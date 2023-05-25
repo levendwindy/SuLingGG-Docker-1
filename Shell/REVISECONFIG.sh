@@ -39,13 +39,13 @@ do
 			sed -rn 's/^### ?//;T;p' "$0" && exit 1 ;shift;shift;;
 		ImmortalWrt )
 			NAME=$1
-			CHANGE;shift;shift;;
+			shift;shift;;
 		hanwckf )
 			NAME=$1
-			CHANGE;shift;shift;;
+			shift;shift;;
 		padavanonly )
 			NAME=$1
-			CHANGE;shift;shift;;
+			shift;shift;;
 		*)
 			echo "paramter seem error!";echo "Usage: $(basename) $0 [options]"
 			echo -e "请输如正确作者名： \033[31m	ImmortalWrt/hanwckf/padavanonly	\033[0m"
@@ -53,6 +53,7 @@ do
 	esac
 done
 
+CHANGE
 
 
 
