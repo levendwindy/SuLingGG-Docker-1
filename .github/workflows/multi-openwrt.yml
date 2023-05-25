@@ -1,5 +1,5 @@
 name: Multi-OpenWrt Images
- 
+
 env:
   TZ: Asia/Shanghai
   # 下载线程数 DOWNLOAD
@@ -9,7 +9,7 @@ env:
   # 构建原版Uboot
   Vanilla: true
   # 环境 true 
-  ENVIRONMENT: tru
+  ENVIRONMENT: true
 
 on:
   workflow_dispatch:
@@ -132,40 +132,31 @@ jobs:
           echo -e "\033[31m ORTHER:  $ORTHER  \033[0m"
           
           echo "matrix.TARGETS: ${{ matrix.TARGETS }}"
-        
-      - name: TEST CONFIG CHANGE 测试修改前config
-        env:
-          DEBIAN_FRONTEND: noninteractive
-        run: |
-          sudo mkdir -p /workdir
-          sudo chown $USER:$GROUPS /workdir
           
-      - name: workdir
-        working-directory: /workdir
+      - name: 1.File Name
         run: |
-          mkdir openwrt
-          ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
-      
-      - name: TEST CONFIG CHANGE 测试修改前config
-        run: |
-          pwd
-          ls -al
-          [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE .
-          cp Shell/REVISECONFIG.sh .
-          echo "修改前"
-          cat .config
-        
-      - name: TEST CONFIG CHANGE 测试修改后config
-          # cd openwrt
-        run: |
-          ls -al
-          chmod +x ./REVISECONFIG.sh
-          echo "成功赋权"
-          ./REVISECONFIG.sh  $NAME
-          echo "修改后"
-          cat .config
+          export FILENAME=$SERIALNUM'.0-360T7-'$NAME'-108M'
+          export BIN=$SERIALNUM'.0-360T7-'$NAME'-108M-BIN'
+          export FACTORY=$SERIALNUM'.0-360T7-'$NAME'-108M-squashfs-factory'
+          export SYSUPGRADE=$SERIALNUM'.0-360T7-'$NAME'-108M-squashfs-sysupgrade'
+          
+          echo "FILENAME=$FILENAME" >> $GITHUB_ENV
+          echo "BIN=$BIN" >> $GITHUB_ENV
+          echo "FACTORY=$FACTORY" >> $GITHUB_ENV
+          echo "SYSUPGRADE=$SYSUPGRADE" >> $GITHUB_ENV
+          
+          export VanillaFILENAME=$SERIALNUM'.0-360T7-'$NAME
+          export VanillaBIN=$SERIALNUM'.0-360T7-'$NAME'-BIN'
+          export VanillaFACTORY=$SERIALNUM'.0-360T7-'$NAME'-squashfs-factory'
+          export VanillaSYSUPGRADE=$SERIALNUM'.0-360T7-'$NAME'-squashfs-sysupgrade'
+          
+          echo "VanillaFILENAME=$VanillaFILENAME" >> $GITHUB_ENV
+          echo "VanillaBIN=$VanillaBIN" >> $GITHUB_ENV
+          echo "VanillaFACTORY=$VanillaFACTORY" >> $GITHUB_ENV
+          echo "VanillaSYSUPGRADE=$VanillaSYSUPGRADE" >> $GITHUB_ENV
           
       - name: Clone source code
+        working-directory: /workdir
         run: |
           df -hT $PWD
           git clone $REPO_URL -b $REPO_BRANCH openwrt
@@ -194,8 +185,8 @@ jobs:
           cd openwrt
           $GITHUB_WORKSPACE/Shell/$DIY_P2_SH
 
-      - name: Download package
-        id: package
+      - name: Download package_1
+        id: package_
         run: |
           cd openwrt && make defconfig && make download -j$DOWNLOAD
           find dl -size -1024c -exec ls -l {} \; 
@@ -219,18 +210,6 @@ jobs:
       - name: 1.Check space usage
         if: (!cancelled())
         run: df -hT
-          
-      - name: 1.File Name
-        working-directory: /workdir
-        run: |
-          export FILENAME=$SERIALNUM'.0-'360T7-'$NAME'-108M'
-          export BIN=$SERIALNUM'.0-'360T7-'$NAME'-108M-BIN'
-          export FACTORY=$SERIALNUM'.0-'360T7-'$NAME'-108M-squashfs-factory'
-          export SYSUPGRADE=$SERIALNUM'.0-'360T7-'$NAME'-108M-squashfs-sysupgrade'
-          echo "FILENAME=$FILENAME" >> $GITHUB_ENV
-          echo "BIN=$BIN" >> $GITHUB_ENV
-          echo "FACTORY=$FACTORY" >> $GITHUB_ENV
-          echo "SYSUPGRADE=$SYSUPGRADE" >> $GITHUB_ENV
 
           
       - name : 1.Upload BIN
@@ -258,7 +237,66 @@ jobs:
         run: |
           rm -rf openwrt/bin
      
+    
+      - name: 2.修改前config
+        run: |
+          rm -rf openwrt/.config
+          [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE openwrt/.config
+          cp Shell/REVISECONFIG.sh openwrt/
+          cd openwrt
+          echo "修改前"
+          cat .config
+        
+      - name: 2.修改后config
+        run: |
+          cd openwrt
+          ./REVISECONFIG.sh  $NAME
+          echo "修改后"
+          cat .config
 
+      - name: 2.Download package
+        id: package2
+        run: |
+          cd openwrt && make defconfig && make download -j$DOWNLOAD
+          find dl -size -1024c -exec ls -l {} \; 
+          find dl -size -1024c -exec rm -f {} \;
+        
+      - name: 2.Compile
+        id: compile_2
+        run: |
+          cd openwrt
+          echo -e "$(nproc) thread compile"
+          [[ $NPROC -eq 0 ]] && make -j$(nproc) || make -j$NPROC
+          echo "::set-output name=status::success"
+        
+      - name: 2.Compile failure
+        if: ${{ failure() }}
+        id: Compile_failure_2
+        run: |
+          cd openwrt && make -j1 V=s 
+          echo "::set-output name=status::success"  ; fi
+
+          
+      - name : 2.Upload Vanilla BIN
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ env.VanillaBIN }}
+          path: openwrt/bin/
+          if-no-files-found: error # error 'warn' or 'ignore' are also available, defaults to `warn`
+          
+      - name : 2.Upload Vanilla factory
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ env.VanillaFACTORY }}
+          path: openwrt/bin/targets/*/*/*squashfs-factory.bin
+          if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
+          
+      - name : 2.Upload Vanilla sysupgrade
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ env.VanillaSYSUPGRADE }}
+          path: openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
+          if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
 
 
           
