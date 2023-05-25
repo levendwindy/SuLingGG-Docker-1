@@ -35,6 +35,5 @@ echo "VanillaSYSUPGRADE： $VanillaSYSUPGRADE"
 
 
 export NUM=$((NUM+1))
-echo "NUM=$NUM" >> $GITHUB_ENV
 
 export GITHUB_ENV
