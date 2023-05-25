@@ -96,13 +96,17 @@ jobs:
           sudo chown $USER:$GROUPS /workdir
         
       - name: TEST CONFIG CHANGE 测试修改前config
+        working-directory: /workdir
+        run: |
+          sudo mkdir -p /workdir
+          sudo chown $USER:$GROUPS /workdir
+      
+      - name: TEST CONFIG CHANGE 测试修改前config
         env:
           DEBIAN_FRONTEND: noninteractive
           ### [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE openwrt/.config
           ### cd openwrt
         run: |
-          sudo mkdir -p /workdir
-          sudo chown $USER:$GROUPS /workdir
           pwd
           ls -al
           [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE .config
