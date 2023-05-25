@@ -10,6 +10,8 @@ env:
   Vanilla: true
   # 环境 true 
   ENVIRONMENT: true
+  # 1.0
+  NUM: 0
 
 on:
   workflow_dispatch:
@@ -83,8 +85,8 @@ jobs:
       - name: Generate Variables
         id: env
         run: |
-          export SERIALNUM=$(echo ${{ matrix.TARGETS }} | awk -F '，' '{print $1}')
-          echo "SERIALNUM=$SERIALNUM" >> $GITHUB_ENV
+          export SERIAL=$(echo ${{ matrix.TARGETS }} | awk -F '，' '{print $1}')
+          echo "SERIAL=$SERIAL" >> $GITHUB_ENV
           export NAME=$(echo ${{ matrix.TARGETS }} | awk -F '，' '{print $2}')
           echo "NAME=$NAME" >> $GITHUB_ENV
           export CONFIG_FILE=$(echo ${{ matrix.TARGETS }} | awk -F '，' '{print $2}')".config"
@@ -100,7 +102,7 @@ jobs:
           export ORTHER=$(echo ${{ matrix.TARGETS }} | awk -F '，' '{print $7}')
           echo "ORTHER=$ORTHER" >> $GITHUB_ENV
           
-          echo -e "\033[31m SERIALNUM:  $SERIALNUM \033[0m"
+          echo -e "\033[31m SERIAL:  $SERIAL \033[0m"
           echo -e "\033[31m NAME:  $NAME \033[0m"
           echo -e "\033[31m CONFIG_FILE:  $CONFIG_FILE \033[0m"
           echo -e "\033[31m REPO_URL:  $REPO_URL \033[0m"
@@ -113,25 +115,27 @@ jobs:
           
       - name: 1.File Name
         run: |
-          export FILENAME=$SERIALNUM'.0-360T7-'$NAME'-108M'
-          export BIN=$SERIALNUM'.0-360T7-'$NAME'-108M-BIN'
-          export FACTORY=$SERIALNUM'.0-360T7-'$NAME'-108M-squashfs-factory'
-          export SYSUPGRADE=$SERIALNUM'.0-360T7-'$NAME'-108M-squashfs-sysupgrade'
+          export FILENAME=$SERIAL'.$NUM-360T7-'$NAME'-108M'
+          export BIN=$SERIAL'.$NUM-360T7-'$NAME'-108M-BIN'
+          export FACTORY=$SERIAL'.$NUM-360T7-'$NAME'-108M-squashfs-factory'
+          export SYSUPGRADE=$SERIAL'.$NUM-360T7-'$NAME'-108M-squashfs-sysupgrade'
           
           echo "FILENAME=$FILENAME" >> $GITHUB_ENV
           echo "BIN=$BIN" >> $GITHUB_ENV
           echo "FACTORY=$FACTORY" >> $GITHUB_ENV
           echo "SYSUPGRADE=$SYSUPGRADE" >> $GITHUB_ENV
           
-          export VanillaFILENAME=$SERIALNUM'.0-360T7-'$NAME
-          export VanillaBIN=$SERIALNUM'.0-360T7-'$NAME'-BIN'
-          export VanillaFACTORY=$SERIALNUM'.0-360T7-'$NAME'-squashfs-factory'
-          export VanillaSYSUPGRADE=$SERIALNUM'.0-360T7-'$NAME'-squashfs-sysupgrade'
+          export VanillaFILENAME=$SERIAL'.$NUM-360T7-'$NAME
+          export VanillaBIN=$SERIAL'.$NUM-360T7-'$NAME'-BIN'
+          export VanillaFACTORY=$SERIAL'.$NUM-360T7-'$NAME'-squashfs-factory'
+          export VanillaSYSUPGRADE=$SERIAL'.$NUM-360T7-'$NAME'-squashfs-sysupgrade'
           
           echo "VanillaFILENAME=$VanillaFILENAME" >> $GITHUB_ENV
           echo "VanillaBIN=$VanillaBIN" >> $GITHUB_ENV
           echo "VanillaFACTORY=$VanillaFACTORY" >> $GITHUB_ENV
           echo "VanillaSYSUPGRADE=$VanillaSYSUPGRADE" >> $GITHUB_ENV
+          
+          export NUM=$(($NUM+1)) && echo "NUM=$NUM" >> $GITHUB_ENV
 
       - name: Initialization Environment
         if: env.ENVIRONMENT == 'true'
