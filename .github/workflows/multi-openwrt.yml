@@ -178,8 +178,8 @@ jobs:
         run: cd openwrt && ./scripts/feeds install -a
 
       - name: Load custom configuration
+          # [ -e files ] && cp files openwrt/files
         run: |
-          [ -e files ] && cp files openwrt/files
           [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE openwrt/
           chmod +x Shell/$DIY_P2_SH
           cd openwrt
