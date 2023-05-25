@@ -134,7 +134,7 @@ jobs:
           echo "VanillaSYSUPGRADE=$VanillaSYSUPGRADE" >> $GITHUB_ENV
 
       - name: Initialization Environment
-        if: env.Environment == 'true'
+        if: env.ENVIRONMENT == 'true'
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
