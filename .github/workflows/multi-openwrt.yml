@@ -239,7 +239,7 @@ jobs:
           rm -rf openwrt/bin
      
     
-      - name: 2.修改前config
+      - name: 2. 构建原厂Uboot 修改前config
         run: |
           rm -rf openwrt/.config
           [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE openwrt/
