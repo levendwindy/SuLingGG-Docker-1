@@ -139,14 +139,14 @@ jobs:
           ### [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE openwrt/.config
           ### cd openwrt
           [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE .config
+          cp Shell/REVISECONFIG.sh .
+          ls -al
           cat .config
           echo "修改前"
-          ls -al
-          cp Shell/REVISECONFIG.sh .
-          chmod +x REVISECONFIG.sh &&  ./REVISECONFIG.sh "$NAME"
         
       - name: TEST CONFIG CHANGE 测试修改后config
         run: |
+          chmod +x REVISECONFIG.sh &&  ./REVISECONFIG.sh "$NAME"
           cat .config
           echo "修改后"
           
