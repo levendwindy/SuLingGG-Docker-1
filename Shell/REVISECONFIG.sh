@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 ###
 ### Usage:
 ###   speedpower <input> <output>
@@ -9,7 +9,7 @@
 ###   ttyd | filetransfer | upnp | openclash | passwall | ssr-plus | vssr | opkg | mtk 
 ###  
 ###  
-filename=/volume3/pass2.config
+filename=.config
 
 CHANGE(){
 	if [ $NAME = "ImmortalWrt" ];then
@@ -70,6 +70,8 @@ do
 			exit 1; ;;
 	esac
 done
+
+
 
 
 
