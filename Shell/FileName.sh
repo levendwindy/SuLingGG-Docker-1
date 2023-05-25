@@ -1,6 +1,7 @@
 #!/usr/bin/bash
 
 NUM=$1
+GITHUB_ENV=$2
 
 export FILENAME=$SERIAL'.$NUM-360T7-'$NAME'-108M'
 export BIN=$SERIAL'.$NUM-360T7-'$NAME'-108M-BIN'
