@@ -146,9 +146,10 @@ jobs:
         
       - name: TEST CONFIG CHANGE 测试修改后config
         run: |
-          chmod +x REVISECONFIG.sh &&  ./REVISECONFIG.sh "$NAME"
-          cat .config
+          chmod +x REVISECONFIG.sh 
+          REVISECONFIG.sh "$NAME"
           echo "修改后"
+          cat .config
           
       - name: Clone source code
         working-directory: /workdir
