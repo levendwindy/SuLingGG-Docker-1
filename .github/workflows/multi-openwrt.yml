@@ -136,17 +136,21 @@ jobs:
         
       - name: TEST CONFIG CHANGE 测试修改前config
         run: |
+          mkdir -p /workdir/openwrt
+          ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
           ### [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE openwrt/.config
           ### cd openwrt
-          [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE .config
+          [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE  openwrt/.config
+          cd openwrt
           cat .config
           echo "修改前"
           ls -al
           cp $GITHUB_WORKSPACE/Shell/REVISECONFIG.sh .
-          chmod +x REVISECONFIG.sh &&  ./REVISECONFIG.sh padavanonly $NAME
+          chmod +x REVISECONFIG.sh &&  ./REVISECONFIG.sh  $NAME
         
       - name: TEST CONFIG CHANGE 测试修改后config
         run: |
+          cd openwrt
           cat .config
           echo "修改后"
           
