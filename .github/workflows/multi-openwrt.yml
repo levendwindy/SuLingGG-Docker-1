@@ -94,38 +94,6 @@ jobs:
           sudo timedatectl set-timezone "$TZ"
           sudo mkdir -p /workdir
           sudo chown $USER:$GROUPS /workdir
-        
-      - name: TEST CONFIG CHANGE 测试修改前config
-        env:
-          DEBIAN_FRONTEND: noninteractive
-        run: |
-          sudo mkdir -p /workdir
-          sudo chown $USER:$GROUPS /workdir
-          
-      - name: workdir
-        working-directory: /workdir
-        run: |
-          mkdir openwrt
-          ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
-      
-      - name: TEST CONFIG CHANGE 测试修改前config
-        run: |
-          pwd
-          ls -al
-          [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE .config
-          cp Shell/REVISECONFIG.sh .
-          echo "修改前"
-          cat .config
-        
-      - name: TEST CONFIG CHANGE 测试修改后config
-          # cd openwrt
-        run: |
-          ls -al
-          chmod +x ./REVISECONFIG.sh
-          echo "成功赋权"
-          ./REVISECONFIG.sh  $NAME
-          echo "修改后"
-          cat .config
 
       - name: Generate Variables
         id: env
@@ -164,6 +132,38 @@ jobs:
           echo -e "\033[31m ORTHER:  $ORTHER  \033[0m"
           
           echo "matrix.TARGETS: ${{ matrix.TARGETS }}"
+        
+      - name: TEST CONFIG CHANGE 测试修改前config
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          sudo mkdir -p /workdir
+          sudo chown $USER:$GROUPS /workdir
+          
+      - name: workdir
+        working-directory: /workdir
+        run: |
+          mkdir openwrt
+          ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
+      
+      - name: TEST CONFIG CHANGE 测试修改前config
+        run: |
+          pwd
+          ls -al
+          [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE .config
+          cp Shell/REVISECONFIG.sh .
+          echo "修改前"
+          cat .config
+        
+      - name: TEST CONFIG CHANGE 测试修改后config
+          # cd openwrt
+        run: |
+          ls -al
+          chmod +x ./REVISECONFIG.sh
+          echo "成功赋权"
+          ./REVISECONFIG.sh  $NAME
+          echo "修改后"
+          cat .config
           
       - name: Clone source code
         run: |
