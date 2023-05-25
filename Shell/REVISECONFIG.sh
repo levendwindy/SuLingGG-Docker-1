@@ -46,7 +46,7 @@ PLUGIN(){
 	else
 		echo -e "\033[31m ERROR: $PluginNAME \t\t 未找到	\033[0m"
 	fi
-	grep "CONFIG_PACKAGE_luci-app-$PluginNAME=y" $filename
+	grep "CONFIG_PACKAGE_luci-app-$PluginNAME=y" $filename >> tmp.log
 }
 
 
@@ -72,7 +72,7 @@ do
 	esac
 done
 
-
+cat tmp.log
 
 
 
