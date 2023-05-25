@@ -150,7 +150,7 @@ jobs:
         run: |
           pwd
           ls -al
-          [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE .config
+          [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE .
           cp Shell/REVISECONFIG.sh .
           echo "修改前"
           cat .config
