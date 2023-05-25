@@ -117,7 +117,8 @@ jobs:
         run: |
           chmod +x Shell/FileName.sh
           bash Shell/FileName.sh
-
+          echo $GITHUB_ENV
+          
       - name: Initialization Environment
         if: env.ENVIRONMENT == 'true'
         env:
