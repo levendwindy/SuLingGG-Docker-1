@@ -9,7 +9,7 @@ env:
   # 构建原版Uboot
   Vanilla: true
   # 环境 true 
-  ENVIRONMENT: tru 
+  ENVIRONMENT: true
 
 on:
   workflow_dispatch:
@@ -148,15 +148,6 @@ jobs:
           cd openwrt
           echo '---------------------------------------------------------------'
           $GITHUB_WORKSPACE/Shell/$DIY_P1_SH
-
-      - name: 测试！改.config 
-          # [ -e files ] && cp files openwrt/files
-        run: |
-          [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE .
-          mv $CONFIG_FILE .config
-          chmod +x Shell/REVISECONFIG.sh
-          $GITHUB_WORKSPACE/Shell/REVISECONFIG.sh $NAME upnp openclash ssr-plus
-      
           
       - name: Update feeds
         run: cd openwrt && ./scripts/feeds update -a
@@ -221,7 +212,7 @@ jobs:
           path: openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
           if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
 
-      - name: 2. 构建原厂Uboot 修改前config 删除 /bin
+      - name: 0. 构建原厂Uboot 修改前config 删除 /bin
         run: |
           rm -rf openwrt/bin
           rm -rf openwrt/.config
@@ -232,18 +223,78 @@ jobs:
           mv $CONFIG_FILE .config
           echo "修改前"
           cat .config
-        
-      - name: 2.修改后config
+          
+      - name: 0.修改后config
         run: |
           cd openwrt
           ./REVISECONFIG.sh  $NAME
           echo "修改后"
           cat .config
 
+      - name: 0.Download package
+        id: package0
+        run: |
+          cd openwrt && rm -rf tmp
+          make defconfig && make download -j$DOWNLOAD
+          find dl -size -1024c -exec ls -l {} \; 
+          find dl -size -1024c -exec rm -f {} \;
+        
+      - name: 0.Compile
+        id: compile_0
+        run: |
+          cd openwrt
+          echo -e "$(nproc) thread compile"
+          [[ $NPROC -eq 0 ]] && make -j$(nproc) || make -j$NPROC
+        
+      - name: 0.Compile failure
+        if: ${{ failure() }}
+        id: Compile_failure_0
+        run: |
+          cd openwrt && make -j1 V=s 
+
+          
+      - name : 0.Upload Vanilla BIN stock（非108M 原厂Uboot）
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ env.VanillaBIN }}
+          path: openwrt/bin/
+          if-no-files-found: error # error 'warn' or 'ignore' are also available, defaults to `warn`
+          
+      - name : 0.Upload Vanilla factory（非108M 原厂Uboot）
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ env.VanillaFACTORY }}
+          path: openwrt/bin/targets/*/*/*squashfs-factory.bin
+          if-no-files-found: ignore # error 'warn' or 'ignore' are also available, defaults to `warn`
+          
+      - name : 0.Upload Vanilla sysupgrade（非108M 原厂Uboot）
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ env.VanillaSYSUPGRADE }}
+          path: openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
+          if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
+
+ 
+      - name: 2. 108M-upnp+ttyd+filetransfer
+        run: |
+          rm -rf openwrt/bin   && rm -rf tmp
+          rm -rf openwrt/.config
+          [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE openwrt/
+          cd openwrt && mv $CONFIG_FILE .config
+          echo "修改前"
+          cat .config
+          
+      - name: 2.修改后config
+        run: |
+          cd openwrt 
+          ./REVISECONFIG.sh upnp ttyd filetransfer
+          echo "修改后"
+          cat .config
+
       - name: 2.Download package
         id: package2
         run: |
-          cd openwrt && rm -rf tmp
+          cd openwrt  && rm -rf tmp
           make defconfig && make download -j$DOWNLOAD
           find dl -size -1024c -exec ls -l {} \; 
           find dl -size -1024c -exec rm -f {} \;
@@ -254,14 +305,12 @@ jobs:
           cd openwrt
           echo -e "$(nproc) thread compile"
           [[ $NPROC -eq 0 ]] && make -j$(nproc) || make -j$NPROC
-          echo "::set-output name=status::success"
         
       - name: 2.Compile failure
         if: ${{ failure() }}
         id: Compile_failure_2
         run: |
           cd openwrt && make -j1 V=s 
-          echo "::set-output name=status::success"  ; fi
 
           
       - name : 2.Upload Vanilla BIN
@@ -270,23 +319,9 @@ jobs:
           name: ${{ env.VanillaBIN }}
           path: openwrt/bin/
           if-no-files-found: error # error 'warn' or 'ignore' are also available, defaults to `warn`
-          
-      - name : 2.Upload Vanilla factory
-        uses: actions/upload-artifact@master
-        with:
-          name: ${{ env.VanillaFACTORY }}
-          path: openwrt/bin/targets/*/*/*squashfs-factory.bin
-          if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
-          
-      - name : 2.Upload Vanilla sysupgrade
-        uses: actions/upload-artifact@master
-        with:
-          name: ${{ env.VanillaSYSUPGRADE }}
-          path: openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
-          if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
 
- 
-      - name: 3. 108M-插件版-ttyd-filetransfer
+############################################################################################
+      - name: 3.108M-ssrplus
         run: |
           rm -rf openwrt/bin   && rm -rf tmp
           rm -rf openwrt/.config
@@ -294,16 +329,14 @@ jobs:
           cd openwrt && mv $CONFIG_FILE .config
           echo "修改前"
           cat .config
-        
+          
       - name: 3.修改后config
         run: |
           cd openwrt 
-          ./REVISECONFIG.sh  $NAME
-          echo "修改后"
-          cat .config
+          ./REVISECONFIG.sh upnp ttyd filetransfer ssr-plus
 
       - name: 3.Download package
-        id: package3
+        id: package_3
         run: |
           cd openwrt  && rm -rf tmp
           make defconfig && make download -j$DOWNLOAD
@@ -316,14 +349,12 @@ jobs:
           cd openwrt
           echo -e "$(nproc) thread compile"
           [[ $NPROC -eq 0 ]] && make -j$(nproc) || make -j$NPROC
-          echo "::set-output name=status::success"
         
       - name: 3.Compile failure
         if: ${{ failure() }}
         id: Compile_failure_3
         run: |
           cd openwrt && make -j1 V=s 
-          echo "::set-output name=status::success"  ; fi
 
           
       - name : 3.Upload Vanilla BIN
@@ -332,20 +363,140 @@ jobs:
           name: ${{ env.VanillaBIN }}
           path: openwrt/bin/
           if-no-files-found: error # error 'warn' or 'ignore' are also available, defaults to `warn`
+
+############################################################################################
+      - name: 4.108M-passwall
+        run: |
+          rm -rf openwrt/bin   && rm -rf tmp
+          rm -rf openwrt/.config
+          [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE openwrt/
+          cd openwrt && mv $CONFIG_FILE .config
+          echo "修改前"
+          cat .config
           
-      - name : 3.Upload Vanilla factory
+      - name: 4.修改后config
+        run: |
+          cd openwrt 
+          ./REVISECONFIG.sh upnp ttyd filetransfer passwall
+
+      - name: 4.Download package
+        id: package_4
+        run: |
+          cd openwrt  && rm -rf tmp
+          make defconfig && make download -j$DOWNLOAD
+          find dl -size -1024c -exec ls -l {} \; 
+          find dl -size -1024c -exec rm -f {} \;
+        
+      - name: 4.Compile
+        id: compile_4
+        run: |
+          cd openwrt
+          echo -e "$(nproc) thread compile"
+          [[ $NPROC -eq 0 ]] && make -j$(nproc) || make -j$NPROC
+        
+      - name: 4.Compile failure
+        if: ${{ failure() }}
+        id: Compile_failure_4
+        run: |
+          cd openwrt && make -j1 V=s 
+
+          
+      - name : 4.Upload Vanilla BIN
         uses: actions/upload-artifact@master
         with:
-          name: ${{ env.VanillaFACTORY }}
-          path: openwrt/bin/targets/*/*/*squashfs-factory.bin
-          if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
+          name: ${{ env.VanillaBIN }}
+          path: openwrt/bin/
+          if-no-files-found: error # error 'warn' or 'ignore' are also available, defaults to `warn`
+
+############################################################################################
+      - name: 5.108M-openclash
+        run: |
+          rm -rf openwrt/bin   && rm -rf tmp
+          rm -rf openwrt/.config
+          [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE openwrt/
+          cd openwrt && mv $CONFIG_FILE .config
+          echo "修改前"
+          cat .config
           
-      - name : 3.Upload Vanilla sysupgrade
+      - name: 5.修改后config
+        run: |
+          cd openwrt 
+          ./REVISECONFIG.sh upnp ttyd filetransfer openclash
+
+      - name: 5.Download package
+        id: package_5
+        run: |
+          cd openwrt  && rm -rf tmp
+          make defconfig && make download -j$DOWNLOAD
+          find dl -size -1024c -exec ls -l {} \; 
+          find dl -size -1024c -exec rm -f {} \;
+        
+      - name: 5.Compile
+        id: compile_5
+        run: |
+          cd openwrt
+          echo -e "$(nproc) thread compile"
+          [[ $NPROC -eq 0 ]] && make -j$(nproc) || make -j$NPROC
+        
+      - name: 5.Compile failure
+        if: ${{ failure() }}
+        id: Compile_failure_5
+        run: |
+          cd openwrt && make -j1 V=s 
+
+          
+      - name : 5.Upload Vanilla BIN
         uses: actions/upload-artifact@master
         with:
-          name: ${{ env.VanillaSYSUPGRADE }}
-          path: openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
-          if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
+          name: ${{ env.VanillaBIN }}
+          path: openwrt/bin/
+          if-no-files-found: error # error 'warn' or 'ignore' are also available, defaults to `warn`
+
+############################################################################################
+      - name: 6.108M-openclash-ssrplus-passwall
+        run: |
+          rm -rf openwrt/bin   && rm -rf tmp
+          rm -rf openwrt/.config
+          [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE openwrt/
+          cd openwrt && mv $CONFIG_FILE .config
+          echo "修改前"
+          cat .config
+          
+      - name: 6.修改后config
+        run: |
+          cd openwrt 
+          ./REVISECONFIG.sh upnp ttyd filetransfer openclash ssr-plus passwall
+
+      - name: 6.Download package
+        id: package_6
+        run: |
+          cd openwrt  && rm -rf tmp
+          make defconfig && make download -j$DOWNLOAD
+          find dl -size -1024c -exec ls -l {} \; 
+          find dl -size -1024c -exec rm -f {} \;
+        
+      - name: 6.Compile
+        id: compile_6
+        run: |
+          cd openwrt
+          echo -e "$(nproc) thread compile"
+          [[ $NPROC -eq 0 ]] && make -j$(nproc) || make -j$NPROC
+          echo "::set-output name=status::success"
+        
+      - name: 6.Compile failure
+        if: ${{ failure() }}
+        id: Compile_failure_6
+        run: |
+          cd openwrt && make -j1 V=s 
+          echo "::set-output name=status::success"  ; fi
+
+          
+      - name : 6.Upload Vanilla BIN
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ env.VanillaBIN }}
+          path: openwrt/bin/
+          if-no-files-found: error # error 'warn' or 'ignore' are also available, defaults to `warn`
 
 
           
