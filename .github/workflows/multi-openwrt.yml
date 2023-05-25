@@ -9,7 +9,7 @@ env:
   # 构建原版Uboot
   Vanilla: true
   # 环境 true 
-  ENVIRONMENT: true
+  ENVIRONMENT: tru
 
 on:
   workflow_dispatch:
@@ -94,6 +94,25 @@ jobs:
           sudo timedatectl set-timezone "$TZ"
           sudo mkdir -p /workdir
           sudo chown $USER:$GROUPS /workdir
+        
+      - name: TEST CONFIG CHANGE 测试修改前config
+        run: |
+          ### [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE openwrt/.config
+          ### cd openwrt
+          [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE .config
+          cp Shell/REVISECONFIG.sh .
+          ls -al openwrt
+          echo "修改前"
+          cat .config
+        
+      - name: TEST CONFIG CHANGE 测试修改后config
+        run: |
+          # cd openwrt
+          chmod +x ./REVISECONFIG.sh
+          echo "成功赋权"
+          ./REVISECONFIG.sh  $NAME
+          echo "修改后"
+          cat .config
 
       - name: Generate Variables
         id: env
@@ -147,25 +166,6 @@ jobs:
           echo '---------------------------------------------------------------'
           $GITHUB_WORKSPACE/Shell/$DIY_P1_SH
       
-        
-      - name: TEST CONFIG CHANGE 测试修改前config
-        run: |
-          ### [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE openwrt/.config
-          ### cd openwrt
-          [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE openwrt/.config
-          cp Shell/REVISECONFIG.sh openwrt/REVISECONFIG.sh
-          ls -al openwrt
-          echo "修改前"
-          cat .config
-        
-      - name: TEST CONFIG CHANGE 测试修改后config
-        run: |
-          cd openwrt
-          chmod +x ./REVISECONFIG.sh
-          echo "成功赋权"
-          ./REVISECONFIG.sh  $NAME
-          echo "修改后"
-          cat .config
           
       - name: Update feeds
         run: cd openwrt && ./scripts/feeds update -a
