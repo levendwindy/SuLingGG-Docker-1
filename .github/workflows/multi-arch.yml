@@ -18,8 +18,8 @@ on:
         description: "Target to build (platform/target/subtarget)"
         required: false
         default: "all"
-  schedule:
-    - cron: 0 0 * * *
+#  schedule:
+  #  - cron: 0 0 * * *
 
 jobs:
   Config:
