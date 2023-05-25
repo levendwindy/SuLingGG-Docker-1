@@ -136,12 +136,9 @@ jobs:
         
       - name: TEST CONFIG CHANGE 测试修改前config
         run: |
-          mkdir /workdir/openwrt
-          ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
           ### [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE openwrt/.config
           ### cd openwrt
-          [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE  openwrt/.config
-          cd openwrt
+          [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE  .config
           cat .config
           echo "修改前"
           ls -al
