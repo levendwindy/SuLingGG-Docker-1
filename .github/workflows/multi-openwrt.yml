@@ -278,12 +278,11 @@ jobs:
           if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
 
  
-      - name: 3. 构建原厂Uboot 修改前config 删除 /bin
+      - name: 3. 108M-插件版-ttyd-filetransfer
         run: |
           rm -rf openwrt/bin   && rm -rf tmp
           rm -rf openwrt/.config
           [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE openwrt/
-          cp Shell/REVISECONFIG.sh openwrt/
           cd openwrt && mv $CONFIG_FILE .config
           echo "修改前"
           cat .config
