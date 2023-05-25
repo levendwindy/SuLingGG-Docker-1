@@ -24,6 +24,7 @@ CHANGE(){
 	else
 		echo -e "请输如正确作者名： \033[31m	ImmortalWrt/hanwckf/padavanonly	\033[0m"
 	fi
+	grep "CONFIG_PACKAGE_luci-app-$PluginNAME=y" $filename
 }
 
 
@@ -59,7 +60,7 @@ do
 		ImmortalWrt | hanwckf | padavanonly )
 			NAME=$1
 			CHANGE
-			shift;shift;; # 代表移除 2个参数
+			shift;; # shift;shift;;代表移除 2个参数
 		ttyd | filetransfer | upnp | openclash | passwall | ssr-plus | vssr \
 				| opkg | mtk )
 			PluginNAME=$1
