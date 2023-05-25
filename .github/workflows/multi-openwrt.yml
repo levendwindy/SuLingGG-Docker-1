@@ -1,12 +1,15 @@
 name: Multi-OpenWrt Images
 
 env:
-  # PREFIX_URL: https://storage.openwrt.cc/snapshots/targets
   TZ: Asia/Shanghai
   # 下载线程数 DOWNLOAD
   DOWNLOAD: 8
   # 编译核心数 0 默认最多
   NPROC: 0
+  # 构建原版Uboot
+  Vanilla: true
+  # 环境 true
+  ENVIRONMENT: tru
 
 on:
   workflow_dispatch:
@@ -35,12 +38,13 @@ jobs:
         env:
           INPUT_TARGET: ${{ github.event.inputs.INPUT_TARGET }}
         run: |
+          ### 两个变量判断是否相等 [ "$var1" = "$var2" ] 不相等 || 则判断   "$INPUT_TARGET" = ""  是否相等
           if [ "$INPUT_TARGET" = "all" ] || [ "$INPUT_TARGET" = "" ]; then
             export TARGETS="$(cat config/openwrt.config)"
           else
             export TARGETS="$INPUT_TARGET"
           fi
-          ## TARGETS="arm_cortex-a9_vfpv3-d16/mvebu/cortexa9/linux-arm-v7 i386_pentium4/x86/generic/linux-386/386 x86_64/x86/64/linux-amd64/amd64"
+          ### TARGETS="arm_cortex-a9_vfpv3-d16/mvebu/cortexa9/linux-arm-v7 i386_pentium4/x86/generic/linux-386/386 x86_64/x86/64/linux-amd64/amd64"
           echo -e "\033[31m INPUT_TARGET=${INPUT_TARGETT} \033[0m"
           echo -e "\033[31m TARGETS=${INPUT_TARGET} \033[0m"
           echo -e "\033[31m INPUT_TARGET: \033[0m $INPUT_TARGET"
@@ -50,6 +54,8 @@ jobs:
           JSON='{"config": ["default"], "targets":['
           FIRST=1
           for TARGET in $TARGETS; do
+            ### -ne 两数不等返回为真 [[  ]]：双括号表示高级字符串处理函数
+            ### 可写成 [[ $FIRST -eq 1 ]] || JSON="$JSON"','
             echo -e "\033[31m FIRST: $FIRST \033[0m"
             [[ $FIRST -ne 1 ]] && JSON="$JSON"','
             echo -e "\033[31m JSON1: $JSON \033[0m"
@@ -75,6 +81,7 @@ jobs:
         uses: actions/checkout@main
 
       - name: Initialization Environment
+        if: env.Environment == 'true'
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
@@ -125,6 +132,21 @@ jobs:
           echo -e "\033[31m ORTHER:  $ORTHER  \033[0m"
           
           echo "matrix.TARGETS: ${{ matrix.TARGETS }}"
+      
+        
+      - name: TEST CONFIG CHANGE 测试修改前config
+        run: |
+          ### [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE openwrt/.config
+          ### cd openwrt
+          [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE .config
+          cat .config
+          echo "修改前"
+          $GITHUB_WORKSPACE/Shell/$REVISECONFIG
+        
+      - name: TEST CONFIG CHANGE 测试修改后config
+        run: |
+          cat .config
+          echo "修改后"
           
       - name: Clone source code
         working-directory: /workdir
@@ -135,7 +157,7 @@ jobs:
 
       - name: Load custom feeds
         run: |
-          # [ -e config/$FEEDS_CONF ] && mv config/$FEEDS_CONF openwrt/feeds.conf.default
+          # [ -e config/$FEEDS_CONF ] && cp config/$FEEDS_CONF openwrt/feeds.conf.default
           chmod +x Shell/$DIY_P1_SH
           cd openwrt
           echo '---------------------------------------------------------------'
@@ -149,8 +171,8 @@ jobs:
 
       - name: Load custom configuration
         run: |
-          [ -e files ] && mv files openwrt/files
-          [ -e config/$CONFIG_FILE ] && mv config/$CONFIG_FILE openwrt/.config
+          [ -e files ] && cp files openwrt/files
+          [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE openwrt/.config
           chmod +x Shell/$DIY_P2_SH
           cd openwrt
           $GITHUB_WORKSPACE/Shell/$DIY_P2_SH
