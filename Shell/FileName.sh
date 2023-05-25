@@ -1,23 +1,13 @@
 #!/usr/bin/bash
-local FILENAME=$SERIAL'.$NUM-360T7-'$NAME'-108M'
-local BIN=$SERIAL'.$NUM-360T7-'$NAME'-108M-BIN'
-local FACTORY=$SERIAL'.$NUM-360T7-'$NAME'-108M-squashfs-factory'
-local SYSUPGRADE=$SERIAL'.$NUM-360T7-'$NAME'-108M-squashfs-sysupgrade'
-
-export FILENAME
-export BIN
-export FACTORY
-export SYSUPGRADE
+export FILENAME=$SERIAL'.$NUM-360T7-'$NAME'-108M'
+export BIN=$SERIAL'.$NUM-360T7-'$NAME'-108M-BIN'
+export FACTORY=$SERIAL'.$NUM-360T7-'$NAME'-108M-squashfs-factory'
+export SYSUPGRADE=$SERIAL'.$NUM-360T7-'$NAME'-108M-squashfs-sysupgrade'
 
 echo "FILENAME=$FILENAME" >> $GITHUB_ENV
 echo "BIN=$BIN" >> $GITHUB_ENV
 echo "FACTORY=$FACTORY" >> $GITHUB_ENV
 echo "SYSUPGRADE=$SYSUPGRADE" >> $GITHUB_ENV
-
-local VanillaFILENAME=$SERIAL'.$NUM-360T7-'$NAME
-local VanillaBIN=$SERIAL'.$NUM-360T7-'$NAME'-BIN'
-local VanillaFACTORY=$SERIAL'.$NUM-360T7-'$NAME'-squashfs-factory'
-local VanillaSYSUPGRADE=$SERIAL'.$NUM-360T7-'$NAME'-squashfs-sysupgrade'
 
 export VanillaFILENAME=$SERIAL'.$NUM-360T7-'$NAME
 export VanillaBIN=$SERIAL'.$NUM-360T7-'$NAME'-BIN'
