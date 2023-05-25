@@ -135,7 +135,6 @@ jobs:
       
         
       - name: TEST CONFIG CHANGE 测试修改前config
-        working-directory: /workdir
         run: |
           ### [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE openwrt/.config
           ### cd openwrt
