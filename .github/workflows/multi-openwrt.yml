@@ -101,7 +101,6 @@ jobs:
           ### cd openwrt
           [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE .config
           cp Shell/REVISECONFIG.sh .
-          ls -al openwrt
           echo "修改前"
           cat .config
         
