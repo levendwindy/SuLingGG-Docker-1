@@ -9,7 +9,7 @@ env:
   # 构建原版Uboot
   Vanilla: true
   # 环境 true 
-  ENVIRONMENT: true
+  ENVIRONMENT: tru
 
 on:
   workflow_dispatch:
@@ -155,7 +155,7 @@ jobs:
           [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE .
           mv $CONFIG_FILE .config
           chmod +x Shell/REVISECONFIG.sh
-          $GITHUB_WORKSPACE/Shell/REVISECONFIG.sh $NAME upnp openclash
+          $GITHUB_WORKSPACE/Shell/REVISECONFIG.sh $NAME upnp openclash ssr-plus
       
           
       - name: Update feeds
