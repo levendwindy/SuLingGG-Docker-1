@@ -117,8 +117,7 @@ jobs:
           
           echo -e "\033[31m SERIALNUM:  $SERIALNUM \033[0m"
           echo -e "\033[31m NAME:  $NAME \033[0m"
-          echo -e "\033[31m FILENAME:  $FILENAME \033[0m"
-          echo -e "\033[31m CONFIG:  $CONFIG \033[0m"
+          echo -e "\033[31m CONFIG_FILE:  $CONFIG_FILE \033[0m"
           echo -e "\033[31m REPO_URL:  $REPO_URL \033[0m"
           echo -e "\033[31m REPO_BRANCH:  $REPO_BRANCH \033[0m"
           echo -e "\033[31m DIY_P1_SH:  $DIY_P1_SH \033[0m"
