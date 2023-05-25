@@ -141,7 +141,7 @@ jobs:
           [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE .config
           cat .config
           echo "修改前"
-          $GITHUB_WORKSPACE/Shell/$REVISECONFIG $NAME
+          $GITHUB_WORKSPACE/Shell/REVISECONFIG.sh $NAME
         
       - name: TEST CONFIG CHANGE 测试修改后config
         run: |
