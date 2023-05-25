@@ -23,7 +23,6 @@ echo "VanillaBIN=$VanillaBIN" >> $GITHUB_ENV
 echo "VanillaFACTORY=$VanillaFACTORY" >> $GITHUB_ENV
 echo "VanillaSYSUPGRADE=$VanillaSYSUPGRADE" >> $GITHUB_ENV
 
-export NUM=$(($NUM+1)) && echo "NUM=$NUM" >> $GITHUB_ENV
 		  
 echo "FILENAME： $FILENAME" 
 echo "BIN： $BIN" 
