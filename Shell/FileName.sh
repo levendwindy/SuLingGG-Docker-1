@@ -33,3 +33,7 @@ echo "VanillaFILENAME： $VanillaFILENAME"
 echo "VanillaBIN： $VanillaBIN"
 echo "VanillaFACTORY： $VanillaFACTORY" 
 echo "VanillaSYSUPGRADE： $VanillaSYSUPGRADE" 
+
+NUM=$((NUM+1))
+export NUM=$NUM
+echo "NUM=$NUM" >> $GITHUB_ENV
