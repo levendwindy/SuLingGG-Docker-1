@@ -1,4 +1,7 @@
 #!/usr/bin/bash
+
+NUM=$1
+
 export FILENAME=$SERIAL'.$NUM-360T7-'$NAME'-108M'
 export BIN=$SERIAL'.$NUM-360T7-'$NAME'-108M-BIN'
 export FACTORY=$SERIAL'.$NUM-360T7-'$NAME'-108M-squashfs-factory'
