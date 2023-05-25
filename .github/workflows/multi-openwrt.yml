@@ -276,7 +276,7 @@ jobs:
 
 ###########################################################################################
  
-      - name: 2. 108M-upnp+ttyd+filetransfer
+      - name: 2. 108M-+ttyd+filetransfer
         run: |
           rm -rf openwrt/bin   && rm -rf tmp
           rm -rf openwrt/.config
@@ -288,7 +288,7 @@ jobs:
       - name: 2.修改后config
         run: |
           cd openwrt 
-          ./REVISECONFIG.sh upnp ttyd filetransfer
+          ./REVISECONFIG.sh  ttyd filetransfer
           echo "修改后"
           cat .config
 
@@ -334,7 +334,7 @@ jobs:
       - name: 3.修改后config
         run: |
           cd openwrt 
-          ./REVISECONFIG.sh upnp ttyd filetransfer ssr-plus
+          ./REVISECONFIG.sh  ttyd filetransfer ssr-plus
 
       - name: 3.Download package
         id: package_3
@@ -378,7 +378,7 @@ jobs:
       - name: 4.修改后config
         run: |
           cd openwrt 
-          ./REVISECONFIG.sh upnp ttyd filetransfer passwall
+          ./REVISECONFIG.sh  ttyd filetransfer passwall
 
       - name: 4.Download package
         id: package_4
@@ -422,7 +422,7 @@ jobs:
       - name: 5.修改后config
         run: |
           cd openwrt 
-          ./REVISECONFIG.sh upnp ttyd filetransfer openclash
+          ./REVISECONFIG.sh  ttyd filetransfer openclash
 
       - name: 5.Download package
         id: package_5
@@ -466,7 +466,7 @@ jobs:
       - name: 6.修改后config
         run: |
           cd openwrt 
-          ./REVISECONFIG.sh upnp ttyd filetransfer openclash ssr-plus passwall
+          ./REVISECONFIG.sh  ttyd filetransfer openclash ssr-plus passwall
 
       - name: 6.Download package
         id: package_6
