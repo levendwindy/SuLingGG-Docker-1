@@ -108,6 +108,10 @@ do
 				vssr_INCLUDE_ShadowsocksR_Libev_Server | vssr_INCLUDE_Trojan | vssr_INCLUDE_Xray | vssr_INCLUDE_Xray_plugin )
 			PluginNAME=$1
 		   	PLUGIN $1;shift;;
+		tc-tiny )
+			NAME=$1
+			KOMD
+			shift;; # shift;shift;;代表移除 2个参数 
 		*)
 			echo -e " \033[31m	错误参数: $1 请输如正确参数：\033[0m"
 			sed -rn 's/^### ?//;T;p' "$0" 
