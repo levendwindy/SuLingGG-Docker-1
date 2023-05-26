@@ -58,7 +58,7 @@ mv mtk_hnat package/mtk/drivers/mt_wifi
 ls -al package/mtk/drivers/
 }
 
-MTK_HNAT
+#MTK_HNAT
 echo '-------------------------------------------------------------------------------------------------'
 MT_WIFI
 
