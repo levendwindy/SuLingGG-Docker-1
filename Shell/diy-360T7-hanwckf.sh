@@ -49,13 +49,13 @@ MTK_HNAT(){
 }
 
 MT_WIFI(){
-echo '替换 mtk  drivers  mt_wifi'
-# 替换 mtk  drivers  mt_wifi
-ls -al package/mtk/drivers/
-package/mtk/drivers/mt_wifi
-svn co https://github.com/padavanonly/immortalwrtARM/trunk/package/mtk/drivers/mt_wifi
-mv mtk_hnat package/mtk/drivers/mt_wifi
-ls -al package/mtk/drivers/
+  echo '替换 mtk  drivers  mt_wifi'
+  # 替换 mtk  drivers  mt_wifi
+  rm -rf package/mtk/drivers/mt_wifi
+  ls -al package/mtk/drivers/
+  svn co https://github.com/padavanonly/immortalwrtARM/trunk/package/mtk/drivers/mt_wifi
+  mv mt_wifi package/mtk/drivers/mt_wifi
+  ls -al package/mtk/drivers/
 }
 
 #MTK_HNAT
