@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 NUM=0
-GITHUB_ENV=$2
+GITHUB_ENV=$1
 #1.0	stock（非108M 原厂Uboot）
 export VanillaFILENAME=$SERIAL'.'$NUM'-360T7-'$NAME
 export VanillaBIN=$VanillaFILENAME'-BIN'
