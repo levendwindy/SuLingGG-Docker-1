@@ -10,8 +10,15 @@ env:
   Vanilla: true
   # 环境 true
   ENVIRONMENT: true
+  # 开启SSH
   SSH: tru 
-
+  # 开启SSH 原厂固件
+  VanillaUboot: tru
+  # 编译插件版
+  PLUGINver: tru
+  # 安装 tc 插件
+  TC: true
+  
 on:
   workflow_dispatch:
     inputs:
@@ -173,6 +180,11 @@ jobs:
           cd openwrt
           mv $CONFIG_FILE .config
           $GITHUB_WORKSPACE/Shell/$DIY_P2_SH
+
+      - name: tc-tiny
+        if: env.TC == 'true'
+        run: |
+          cd openwrt
           ./REVISECONFIG.sh tc-tiny
 
       - name: Download package_1
@@ -222,6 +234,7 @@ jobs:
 
 ###########################################################################################
       - name: 0. 构建原厂Uboot 修改前config 删除 /bin
+        if: env.VanillaUboot == 'true'
         run: |
           rm -rf openwrt/bin openwrt/.config
           cp config/$CONFIG_FILE openwrt/
@@ -231,12 +244,14 @@ jobs:
           cat .config
           
       - name: 0.修改后config
+        if: env.VanillaUboot == 'true'
         run: |
           cd openwrt && ./REVISECONFIG.sh  $NAME
           echo "修改后"
           cat .config
 
       - name: 0.Download package
+        if: env.VanillaUboot == 'true'
         id: package0
         run: |
           cd openwrt && rm -rf tmp
@@ -245,6 +260,7 @@ jobs:
           find dl -size -1024c -exec rm -f {} \;
         
       - name: 0.Compile
+        if: env.VanillaUboot == 'true'
         id: compile_0
         run: |
           cd openwrt
@@ -259,6 +275,7 @@ jobs:
 
           
       - name : 0.Upload Vanilla BIN stock（非108M 原厂Uboot）
+        if: env.VanillaUboot == 'true'
         uses: actions/upload-artifact@master
         with:
           name: ${{ env.VanillaBIN }}
@@ -266,6 +283,7 @@ jobs:
           if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
           
       - name : 0.Upload Vanilla factory（非108M 原厂Uboot）
+        if: env.VanillaUboot == 'true'
         uses: actions/upload-artifact@master
         with:
           name: ${{ env.VanillaFACTORY }}
@@ -273,6 +291,7 @@ jobs:
           if-no-files-found: ignore # error 'warn' or 'ignore' are also available, defaults to `warn`
           
       - name : 0.Upload Vanilla sysupgrade（非108M 原厂Uboot）
+        if: env.VanillaUboot == 'true'
         uses: actions/upload-artifact@master
         with:
           name: ${{ env.VanillaSYSUPGRADE }}
@@ -282,6 +301,7 @@ jobs:
 ###########################################################################################
  
       - name: 2. 108M  ttyd filetransfer
+        if: env.PLUGINver == 'true'
         run: |
           rm -rf openwrt/bin openwrt/.config
           cp config/$CONFIG_FILE openwrt/
@@ -290,6 +310,7 @@ jobs:
           cat .config
           
       - name: 2.修改后config
+        if: env.PLUGINver == 'true'
         run: |
           cd openwrt 
           ./REVISECONFIG.sh  ttyd filetransfer
@@ -297,6 +318,7 @@ jobs:
           cat .config
 
       - name: 2.Download package
+        if: env.PLUGINver == 'true'
         id: package2
         run: |
           cd openwrt  && rm -rf tmp
@@ -305,6 +327,7 @@ jobs:
           find dl -size -1024c -exec rm -f {} \;
         
       - name: 2.Compile
+        if: env.PLUGINver == 'true'
         id: compile_2
         run: |
           cd openwrt
@@ -319,6 +342,7 @@ jobs:
 
           
       - name : 2.Upload Vanilla BIN
+        if: env.PLUGINver == 'true'
         uses: actions/upload-artifact@master
         with:
           name: ${{ env.mini_BIN }}
@@ -326,6 +350,7 @@ jobs:
           if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
 
       - name : 2.Upload factory
+        if: env.PLUGINver == 'true'
         uses: actions/upload-artifact@master
         with:
           name: ${{ env.mini_FACTORY }}
@@ -333,6 +358,7 @@ jobs:
           if-no-files-found: ignore # error 'warn' or 'ignore' are also available, defaults to `warn`
           
       - name : 2.Upload sysupgrade
+        if: env.PLUGINver == 'true'
         uses: actions/upload-artifact@master
         with:
           name: ${{ env.mini_SYSUPGRADE }}
@@ -341,6 +367,7 @@ jobs:
 
 ############################################################################################
       - name: 3.108M ssrplus
+        if: env.PLUGINver == 'true'
         run: |
           rm -rf openwrt/bin openwrt/.config
           cp config/$CONFIG_FILE openwrt/
@@ -349,11 +376,13 @@ jobs:
           cat .config
           
       - name: 3.修改后config
+        if: env.PLUGINver == 'true'
         run: |
           cd openwrt 
           ./REVISECONFIG.sh  ttyd filetransfer ssr-plus
 
       - name: 3.Download package
+        if: env.PLUGINver == 'true'
         id: package_3
         run: |
           cd openwrt  && rm -rf tmp
@@ -362,6 +391,7 @@ jobs:
           find dl -size -1024c -exec rm -f {} \;
         
       - name: 3.Compile
+        if: env.PLUGINver == 'true'
         id: compile_3
         run: |
           cd openwrt
@@ -376,6 +406,7 @@ jobs:
 
           
       - name : 3.Upload Vanilla BIN
+        if: env.PLUGINver == 'true'
         uses: actions/upload-artifact@master
         with:
           name: ${{ env.ssrplus_BIN }}
@@ -383,6 +414,7 @@ jobs:
           if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
 
       - name : 3.Upload factory
+        if: env.PLUGINver == 'true'
         uses: actions/upload-artifact@master
         with:
           name: ${{ env.ssrplus_FACTORY }}
@@ -390,6 +422,7 @@ jobs:
           if-no-files-found: ignore # error 'warn' or 'ignore' are also available, defaults to `warn`
           
       - name : 3.Upload sysupgrade
+        if: env.PLUGINver == 'true'
         uses: actions/upload-artifact@master
         with:
           name: ${{ env.ssrplus_SYSUPGRADE }}
@@ -397,6 +430,7 @@ jobs:
           if-no-files-found: ignore
 ############################################################################################
       - name: 4.108M passwall
+        if: env.PLUGINver == 'true'
         run: |
           rm -rf openwrt/bin openwrt/.config
           cp config/$CONFIG_FILE openwrt/
@@ -405,11 +439,13 @@ jobs:
           cat .config
           
       - name: 4.修改后config
+        if: env.PLUGINver == 'true'
         run: |
           cd openwrt 
           ./REVISECONFIG.sh  ttyd filetransfer passwall
 
       - name: 4.Download package
+        if: env.PLUGINver == 'true'
         id: package_4
         run: |
           cd openwrt  && rm -rf tmp
@@ -418,6 +454,7 @@ jobs:
           find dl -size -1024c -exec rm -f {} \;
         
       - name: 4.Compile
+        if: env.PLUGINver == 'true'
         id: compile_4
         run: |
           cd openwrt
@@ -432,6 +469,7 @@ jobs:
 
           
       - name : 4.Upload Vanilla BIN
+        if: env.PLUGINver == 'true'
         uses: actions/upload-artifact@master
         with:
           name: ${{ env.passwall_BIN }}
@@ -439,6 +477,7 @@ jobs:
           if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
 
       - name : 4.Upload factory
+        if: env.PLUGINver == 'true'
         uses: actions/upload-artifact@master
         with:
           name: ${{ env.passwall_FACTORY }}
@@ -446,6 +485,7 @@ jobs:
           if-no-files-found: ignore # error 'warn' or 'ignore' are also available, defaults to `warn`
           
       - name : 4.Upload sysupgrade
+        if: env.PLUGINver == 'true'
         uses: actions/upload-artifact@master
         with:
           name: ${{ env.passwall_SYSUPGRADE }}
@@ -453,6 +493,7 @@ jobs:
           if-no-files-found: ignore
 ############################################################################################
       - name: 5.108M openclash
+        if: env.PLUGINver == 'true'
         run: |
           rm -rf openwrt/bin openwrt/.config
           cp config/$CONFIG_FILE openwrt/
@@ -461,11 +502,13 @@ jobs:
           cat .config
           
       - name: 5.修改后config
+        if: env.PLUGINver == 'true'
         run: |
           cd openwrt 
           ./REVISECONFIG.sh  ttyd filetransfer openclash
 
       - name: 5.Download package
+        if: env.PLUGINver == 'true'
         id: package_5
         run: |
           cd openwrt  && rm -rf tmp
@@ -474,6 +517,7 @@ jobs:
           find dl -size -1024c -exec rm -f {} \;
         
       - name: 5.Compile
+        if: env.PLUGINver == 'true'
         id: compile_5
         run: |
           cd openwrt
@@ -488,6 +532,7 @@ jobs:
 
           
       - name : 5.Upload Vanilla BIN
+        if: env.PLUGINver == 'true'
         uses: actions/upload-artifact@master
         with:
           name: ${{ env.openclash_BIN }}
@@ -495,6 +540,7 @@ jobs:
           if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
 
       - name : 5.Upload factory
+        if: env.PLUGINver == 'true'
         uses: actions/upload-artifact@master
         with:
           name: ${{ env.openclash_FACTORY }}
@@ -502,6 +548,7 @@ jobs:
           if-no-files-found: ignore # error 'warn' or 'ignore' are also available, defaults to `warn`
           
       - name : 5.Upload sysupgrade
+        if: env.PLUGINver == 'true'
         uses: actions/upload-artifact@master
         with:
           name: ${{ env.openclash_SYSUPGRADE }}
@@ -509,6 +556,7 @@ jobs:
           if-no-files-found: ignore
 ############################################################################################
       - name: 6.108M openclash ssrplus passwall
+        if: env.PLUGINver == 'true'
         run: |
           rm -rf openwrt/bin openwrt/.config
           cp config/$CONFIG_FILE openwrt/
@@ -517,11 +565,13 @@ jobs:
           cat .config
           
       - name: 6.修改后config
+        if: env.PLUGINver == 'true'
         run: |
           cd openwrt 
           ./REVISECONFIG.sh  ttyd filetransfer openclash ssr-plus passwall
 
       - name: 6.Download package
+        if: env.PLUGINver == 'true'
         id: package_6
         run: |
           cd openwrt  && rm -rf tmp
@@ -530,6 +580,7 @@ jobs:
           find dl -size -1024c -exec rm -f {} \;
         
       - name: 6.Compile
+        if: env.PLUGINver == 'true'
         id: compile_6
         run: |
           cd openwrt
@@ -544,6 +595,7 @@ jobs:
 
           
       - name : 6.Upload Vanilla BIN
+        if: env.PLUGINver == 'true'
         uses: actions/upload-artifact@master
         with:
           name: ${{ env.openclash_ssrplus_passwall_BIN }}
@@ -551,6 +603,7 @@ jobs:
           if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
 
       - name : 6.Upload factory
+        if: env.PLUGINver == 'true'
         uses: actions/upload-artifact@master
         with:
           name: ${{ env.openclash_ssrplus_passwall_FACTORY }}
@@ -558,6 +611,7 @@ jobs:
           if-no-files-found: ignore # error 'warn' or 'ignore' are also available, defaults to `warn`
           
       - name : 6.Upload sysupgrade
+        if: env.PLUGINver == 'true'
         uses: actions/upload-artifact@master
         with:
           name: ${{ env.openclash_ssrplus_passwall_SYSUPGRADE }}
