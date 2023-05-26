@@ -13,11 +13,11 @@ env:
   # 开启SSH
   SSH: tru 
   # 开启SSH 原厂固件
-  VanillaUboot: true
+  VanillaUboot: tru
   # 编译插件版       
-  PLUGINver: true
+  PLUGINver: tru
   # 安装 tc 插件
-  TC: tru
+  TC: true
   
 on:
   workflow_dispatch:
@@ -185,7 +185,7 @@ jobs:
         if: env.TC == 'true'
         run: |
           cd openwrt
-          ./REVISECONFIG.sh tc-tiny
+          ./REVISECONFIG.sh tc-tiny kmod-sched kmod-sched-cake kmod-sched-connmark kmod-sched-ipset
           cat .config
 
       - name: Download package_1
