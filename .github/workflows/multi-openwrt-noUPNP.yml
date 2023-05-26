@@ -125,8 +125,7 @@ jobs:
       - name: 1.File Name
         run: |
           chmod +x Shell/FileName.sh
-          export NUM=0
-          bash Shell/FileName.sh $NUM $GITHUB_ENV
+          bash Shell/FileName.sh  $GITHUB_ENV
           export NUM=$((NUM+1))
           echo "NUM: $NUM" 
           
@@ -212,7 +211,7 @@ jobs:
         with:
           name: ${{ env.FACTORY }}
           path: openwrt/bin/targets/*/*/*squashfs-factory.bin
-          if-no-files-found: ignore # error 'warn' or 'ignore' are also available, defaults to `warn`
+          if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
           
       - name : 1.Upload sysupgrade
         uses: actions/upload-artifact@master
@@ -326,6 +325,20 @@ jobs:
           path: openwrt/bin/
           if-no-files-found: error # error 'warn' or 'ignore' are also available, defaults to `warn`
 
+      - name : 2.Upload factory
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ env.mini_FACTORY }}
+          path: openwrt/bin/targets/*/*/*squashfs-factory.bin
+          if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
+          
+      - name : 2.Upload sysupgrade
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ env.mini_SYSUPGRADE }}
+          path: openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
+          if-no-files-found: warn
+
 ############################################################################################
       - name: 3.108M ssrplus
         run: |
@@ -369,6 +382,19 @@ jobs:
           path: openwrt/bin/
           if-no-files-found: error # error 'warn' or 'ignore' are also available, defaults to `warn`
 
+      - name : 3.Upload factory
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ env.ssrplus_FACTORY }}
+          path: openwrt/bin/targets/*/*/*squashfs-factory.bin
+          if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
+          
+      - name : 3.Upload sysupgrade
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ env.ssrplus_SYSUPGRADE }}
+          path: openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
+          if-no-files-found: warn
 ############################################################################################
       - name: 4.108M passwall
         run: |
@@ -412,6 +438,19 @@ jobs:
           path: openwrt/bin/
           if-no-files-found: error # error 'warn' or 'ignore' are also available, defaults to `warn`
 
+      - name : 4.Upload factory
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ env.passwall_FACTORY }}
+          path: openwrt/bin/targets/*/*/*squashfs-factory.bin
+          if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
+          
+      - name : 4.Upload sysupgrade
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ env.passwall_SYSUPGRADE }}
+          path: openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
+          if-no-files-found: warn
 ############################################################################################
       - name: 5.108M openclash
         run: |
@@ -455,6 +494,19 @@ jobs:
           path: openwrt/bin/
           if-no-files-found: error # error 'warn' or 'ignore' are also available, defaults to `warn`
 
+      - name : 5.Upload factory
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ env.openclash_FACTORY }}
+          path: openwrt/bin/targets/*/*/*squashfs-factory.bin
+          if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
+          
+      - name : 5.Upload sysupgrade
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ env.openclash_SYSUPGRADE }}
+          path: openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
+          if-no-files-found: warn
 ############################################################################################
       - name: 6.108M openclash ssrplus passwall
         run: |
@@ -498,6 +550,19 @@ jobs:
           path: openwrt/bin/
           if-no-files-found: error # error 'warn' or 'ignore' are also available, defaults to `warn`
 
+      - name : 6.Upload factory
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ env.openclash_ssrplus_passwall_FACTORY }}
+          path: openwrt/bin/targets/*/*/*squashfs-factory.bin
+          if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
+          
+      - name : 6.Upload sysupgrade
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ env.openclash_ssrplus_passwall_SYSUPGRADE }}
+          path: openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
+          if-no-files-found: warn
 
           
           
