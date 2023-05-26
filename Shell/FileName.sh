@@ -19,7 +19,7 @@ export NUM=$((NUM+1))
 export FILENAME=$SERIAL'.'$NUM'-360T7-108M-'$NAME
 export BIN=$FILENAME'-BIN'
 export FACTORY=$FILENAME'-factory'
-export SYSUPGRADE=$$FILENAME'-sysupgrade'
+export SYSUPGRADE=$FILENAME'-sysupgrade'
 
 #echo "FILENAME=$FILENAME" >> $GITHUB_ENV
 echo "BIN=$BIN" >> $GITHUB_ENV
