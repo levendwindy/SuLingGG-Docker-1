@@ -15,13 +15,32 @@ touch /tmp/tmp.log
 CHANGE(){
 	if [ $NAME = "ImmortalWrt" ];then
 		sed -i '/# CONFIG_TARGET_mediatek_filogic_DEVICE_qihoo_360-t7-stock is not set/s/.*/CONFIG_TARGET_mediatek_filogic_DEVICE_qihoo_360-t7-stock=y/;
-            /CONFIG_TARGET_mediatek_filogic_DEVICE_qihoo_360-t7-ubootmod=y/s/.*/# CONFIG_TARGET_mediatek_filogic_DEVICE_qihoo_360-t7-ubootmod is not set/;
-			/CONFIG_TARGET_PROFILE="DEVICE_qihoo_360-t7-ubootmod"/s/.*/CONFIG_TARGET_PROFILE="DEVICE_qihoo_360-t7-stock"/' .config
+            		/CONFIG_TARGET_mediatek_filogic_DEVICE_qihoo_360-t7-ubootmod=y/s/.*/# CONFIG_TARGET_mediatek_filogic_DEVICE_qihoo_360-t7-ubootmod is not set/;
+			/CONFIG_TARGET_PROFILE="DEVICE_qihoo_360-t7-ubootmod"/s/.*/CONFIG_TARGET_PROFILE="DEVICE_qihoo_360-t7-stock"/' .config && \
+				echo -e "\033[31m 360-t7-stock is not set \t \033[0m \t >>> \t \033[36m 360-t7-stock=y \033[0m" \
+				echo -e "\033[31m 360-t7-ubootmod=y \t \033[0m \t >>> \t \033[36m 360-t7-ubootmod is not set \033[0m" \
+				echo -e '\033[31m "DEVICE_qihoo_360-t7-ubootmod" \t \033[0m \t >>> \t \033[36m "DEVICE_qihoo_360-t7-stock" \033[0m' || \
+					echo -e "\033[31m 360-t7-stock is not set \t \033[0m \t >>> \t \033[31m 替换失败 \033[0m" \
+					echo -e "\033[31m 360-t7-ubootmod=y \t \033[0m \t >>> \t \033[31m 替换失败 \033[0m" \
+					echo -e '\033[31m "DEVICE_qihoo_360-t7-ubootmod" \t \033[0m \t >>> \t \033[31m 替换失败 \033[0m'
+		grep 'CONFIG_TARGET_mediatek_filogic_DEVICE_qihoo_360-t7-stock' $filename >> /tmp/tmp.log
+		grep 'CONFIG_TARGET_mediatek_filogic_DEVICE_qihoo_360-t7-ubootmod' $filename >> /tmp/tmp.log
+		grep 'CONFIG_TARGET_PROFILE=' $filename >> /tmp/tmp.log
 # 或 [ c1 -o c2 ] 、[ c1 ] || [  c2 ]        与 [ c1 -a c2 ]、[ c1 ] && [ c2 ]
 	elif [ $NAME = "hanwckf" -o $NAME = "padavanonly" ];then
 		sed -i '/# CONFIG_TARGET_mediatek_mt7981_DEVICE_mt7981-360-t7 is not set/s/.*/CONFIG_TARGET_mediatek_mt7981_DEVICE_mt7981-360-t7=y/;
-            /CONFIG_TARGET_mediatek_mt7981_DEVICE_mt7981-360-t7-108M=y/s/.*/# CONFIG_TARGET_mediatek_mt7981_DEVICE_mt7981-360-t7-108M is not set/;
-			/CONFIG_TARGET_PROFILE="DEVICE_mt7981-360-t7-108M"/s/.*/CONFIG_TARGET_PROFILE="DEVICE_mt7981-360-t7"/' .config
+            		/CONFIG_TARGET_mediatek_mt7981_DEVICE_mt7981-360-t7-108M=y/s/.*/# CONFIG_TARGET_mediatek_mt7981_DEVICE_mt7981-360-t7-108M is not set/;
+			/CONFIG_TARGET_PROFILE="DEVICE_mt7981-360-t7-108M"/s/.*/CONFIG_TARGET_PROFILE="DEVICE_mt7981-360-t7"/' .config && \
+				echo -e "\033[31m 360-t7 is not set \t \033[0m \t >>> \t \033[36m 360-t7=y \033[0m" \
+				echo -e "\033[31m 360-t7-108M=y \t \033[0m \t >>> \t \033[36m 360-t7-108M is not set \033[0m" \
+				echo -e '\033[31m "DEVICE_mt7981-360-t7-108M" \t \033[0m \t >>> \t \033[36m "DEVICE_mt7981-360-t7" \033[0m'  || \
+					echo -e "\033[31m 360-t7 is not set \t \033[0m \t >>> \t \033[31m 替换失败 \033[0m" \
+					echo -e "\033[31m 360-t7-108M=y \t \033[0m \t >>> \t \033[31m 替换失败 \033[0m" \
+					echo -e '\033[31m "DEVICE_mt7981-360-t7-108M" \t \033[0m \t >>> \t \033[31m 替换失败 \033[0m'
+			
+		grep 'CONFIG_TARGET_mediatek_mt7981_DEVICE_mt7981-360-t7' $filename >> /tmp/tmp.log
+		grep 'CONFIG_TARGET_mediatek_mt7981_DEVICE_mt7981-360-t7-108M' $filename >> /tmp/tmp.log
+		grep 'CONFIG_TARGET_PROFILE="DEVICE_mt7981-360-t7-108M' $filename >> /tmp/tmp.log
 	else
 		echo -e "请输如正确作者名： \033[31m	ImmortalWrt/hanwckf/padavanonly	\033[0m"
 	fi
@@ -37,11 +56,13 @@ CHECK(){
 PLUGIN(){
 	CHECK
 	if [ $command1 -eq 0 ];then
-		sed -i "s/# CONFIG_PACKAGE_luci-app-$PluginNAME is not set/CONFIG_PACKAGE_luci-app-$PluginNAME=y/g" $filename
-		echo -e "\033[31m Plugin: $PluginNAME \t\t 未被选中	\033[0m \t>>>\t \033[36m Plugin: $PluginNAME=y \033[0m"
+		sed -i "s/# CONFIG_PACKAGE_luci-app-$PluginNAME is not set/CONFIG_PACKAGE_luci-app-$PluginNAME=y/g" $filename && \
+			echo -e "\033[31m Plugin: $PluginNAME \t\t 未被选中	\033[0m \t>>>\t \033[36m Plugin: $PluginNAME=y \033[0m" || \
+			echo -e "\033[31m Plugin: $PluginNAME \t\t 未被选中	\033[0m \t>>>\t \033[31m 替换失败 \033[0m"
 	elif [ $command2 -eq 0 ];then
-		echo -e "\033[34m Plugin: $PluginNAME=m \t\t \033[0m \t>>>\t \033[36m Plugin: $PluginNAME=y \033[0m"
-		sed -i "s/CONFIG_PACKAGE_luci-app-$PluginNAME=m/CONFIG_PACKAGE_luci-app-$PluginNAME=y/g" $filename && echo -e ""
+		echo -e "\033[34m Plugin: $PluginNAME=m \t\t \033[0m \t>>>\t \033[36m Plugin: $PluginNAME=y \033[0m" && \
+			sed -i "s/CONFIG_PACKAGE_luci-app-$PluginNAME=m/CONFIG_PACKAGE_luci-app-$PluginNAME=y/g" $filename  || \
+			echo -e "\033[31m Plugin: $PluginNAME \t\t 未被选中	\033[0m \t>>>\t \033[31m 替换失败 \033[0m"
 	elif [ $command3 -eq 0 ];then
 			echo -e "\033[32m Plugin: $PluginNAME is selected!	\033[0m"
 	else
