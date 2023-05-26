@@ -95,5 +95,5 @@ echo "VanillaBIN： $VanillaBIN"
 echo "VanillaFACTORY： $VanillaFACTORY" 
 echo "VanillaSYSUPGRADE： $VanillaSYSUPGRADE" 
 
-echo NUM=$NUM >> $GITHUB_ENV
+echo "NUM=$NUM" >> $GITHUB_ENV
 export GITHUB_ENV
