@@ -186,6 +186,7 @@ jobs:
         run: |
           cd openwrt
           ./REVISECONFIG.sh tc-tiny
+          cat .config
 
       - name: Download package_1
         id: package_
