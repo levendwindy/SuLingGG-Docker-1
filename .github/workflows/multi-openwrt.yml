@@ -125,9 +125,7 @@ jobs:
       - name: 1.File Name
         run: |
           chmod +x Shell/FileName.sh
-          export NUM=0
-          bash Shell/FileName.sh $NUM $GITHUB_ENV
-          export NUM=$((NUM+1))
+          bash Shell/FileName.sh  $GITHUB_ENV
           echo "NUM: $NUM" 
           
       - name: Initialization Environment
@@ -175,7 +173,6 @@ jobs:
           cd openwrt
           mv $CONFIG_FILE .config
           $GITHUB_WORKSPACE/Shell/$DIY_P2_SH
-          ./REVISECONFIG.sh tc-tiny
 
       - name: Download package_1
         id: package_
@@ -206,7 +203,7 @@ jobs:
         with:
           name: ${{ env.BIN }}
           path: openwrt/bin/
-          if-no-files-found: error # error 'warn' or 'ignore' are also available, defaults to `warn`
+          if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
           
       - name : 1.Upload factory
         uses: actions/upload-artifact@master
@@ -220,7 +217,7 @@ jobs:
         with:
           name: ${{ env.SYSUPGRADE }}
           path: openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
-          if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
+          if-no-files-found: ignore # error 'warn' or 'ignore' are also available, defaults to `warn`
 
 ###########################################################################################
       - name: 0. 构建原厂Uboot 修改前config 删除 /bin
@@ -265,7 +262,7 @@ jobs:
         with:
           name: ${{ env.VanillaBIN }}
           path: openwrt/bin/
-          if-no-files-found: error # error 'warn' or 'ignore' are also available, defaults to `warn`
+          if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
           
       - name : 0.Upload Vanilla factory（非108M 原厂Uboot）
         uses: actions/upload-artifact@master
@@ -279,11 +276,11 @@ jobs:
         with:
           name: ${{ env.VanillaSYSUPGRADE }}
           path: openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
-          if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
+          if-no-files-found: ignore # error 'warn' or 'ignore' are also available, defaults to `warn`
 
 ###########################################################################################
  
-      - name: 2. 108M ttyd filetransfer
+      - name: 2. 108M  ttyd filetransfer
         run: |
           rm -rf openwrt/bin openwrt/.config
           cp config/$CONFIG_FILE openwrt/
@@ -294,7 +291,7 @@ jobs:
       - name: 2.修改后config
         run: |
           cd openwrt 
-          ./REVISECONFIG.sh ttyd filetransfer
+          ./REVISECONFIG.sh  ttyd filetransfer
           echo "修改后"
           cat .config
 
@@ -325,7 +322,21 @@ jobs:
         with:
           name: ${{ env.mini_BIN }}
           path: openwrt/bin/
-          if-no-files-found: error # error 'warn' or 'ignore' are also available, defaults to `warn`
+          if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
+
+      - name : 2.Upload factory
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ env.mini_FACTORY }}
+          path: openwrt/bin/targets/*/*/*squashfs-factory.bin
+          if-no-files-found: ignore # error 'warn' or 'ignore' are also available, defaults to `warn`
+          
+      - name : 2.Upload sysupgrade
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ env.mini_SYSUPGRADE }}
+          path: openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
+          if-no-files-found: ignore
 
 ############################################################################################
       - name: 3.108M ssrplus
@@ -339,7 +350,7 @@ jobs:
       - name: 3.修改后config
         run: |
           cd openwrt 
-          ./REVISECONFIG.sh ttyd filetransfer ssr-plus
+          ./REVISECONFIG.sh  ttyd filetransfer ssr-plus
 
       - name: 3.Download package
         id: package_3
@@ -368,8 +379,21 @@ jobs:
         with:
           name: ${{ env.ssrplus_BIN }}
           path: openwrt/bin/
-          if-no-files-found: error # error 'warn' or 'ignore' are also available, defaults to `warn`
+          if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
 
+      - name : 3.Upload factory
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ env.ssrplus_FACTORY }}
+          path: openwrt/bin/targets/*/*/*squashfs-factory.bin
+          if-no-files-found: ignore # error 'warn' or 'ignore' are also available, defaults to `warn`
+          
+      - name : 3.Upload sysupgrade
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ env.ssrplus_SYSUPGRADE }}
+          path: openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
+          if-no-files-found: ignore
 ############################################################################################
       - name: 4.108M passwall
         run: |
@@ -382,7 +406,7 @@ jobs:
       - name: 4.修改后config
         run: |
           cd openwrt 
-          ./REVISECONFIG.sh ttyd filetransfer passwall
+          ./REVISECONFIG.sh  ttyd filetransfer passwall
 
       - name: 4.Download package
         id: package_4
@@ -411,8 +435,21 @@ jobs:
         with:
           name: ${{ env.passwall_BIN }}
           path: openwrt/bin/
-          if-no-files-found: error # error 'warn' or 'ignore' are also available, defaults to `warn`
+          if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
 
+      - name : 4.Upload factory
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ env.passwall_FACTORY }}
+          path: openwrt/bin/targets/*/*/*squashfs-factory.bin
+          if-no-files-found: ignore # error 'warn' or 'ignore' are also available, defaults to `warn`
+          
+      - name : 4.Upload sysupgrade
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ env.passwall_SYSUPGRADE }}
+          path: openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
+          if-no-files-found: ignore
 ############################################################################################
       - name: 5.108M openclash
         run: |
@@ -425,7 +462,7 @@ jobs:
       - name: 5.修改后config
         run: |
           cd openwrt 
-          ./REVISECONFIG.sh ttyd filetransfer openclash
+          ./REVISECONFIG.sh  ttyd filetransfer openclash
 
       - name: 5.Download package
         id: package_5
@@ -454,8 +491,21 @@ jobs:
         with:
           name: ${{ env.openclash_BIN }}
           path: openwrt/bin/
-          if-no-files-found: error # error 'warn' or 'ignore' are also available, defaults to `warn`
+          if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
 
+      - name : 5.Upload factory
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ env.openclash_FACTORY }}
+          path: openwrt/bin/targets/*/*/*squashfs-factory.bin
+          if-no-files-found: ignore # error 'warn' or 'ignore' are also available, defaults to `warn`
+          
+      - name : 5.Upload sysupgrade
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ env.openclash_SYSUPGRADE }}
+          path: openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
+          if-no-files-found: ignore
 ############################################################################################
       - name: 6.108M openclash ssrplus passwall
         run: |
@@ -468,7 +518,7 @@ jobs:
       - name: 6.修改后config
         run: |
           cd openwrt 
-          ./REVISECONFIG.sh ttyd filetransfer openclash ssr-plus passwall
+          ./REVISECONFIG.sh  ttyd filetransfer openclash ssr-plus passwall
 
       - name: 6.Download package
         id: package_6
@@ -497,18 +547,21 @@ jobs:
         with:
           name: ${{ env.openclash_ssrplus_passwall_BIN }}
           path: openwrt/bin/
-          if-no-files-found: error # error 'warn' or 'ignore' are also available, defaults to `warn`
+          if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
 
+      - name : 6.Upload factory
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ env.openclash_ssrplus_passwall_FACTORY }}
+          path: openwrt/bin/targets/*/*/*squashfs-factory.bin
+          if-no-files-found: ignore # error 'warn' or 'ignore' are also available, defaults to `warn`
+          
+      - name : 6.Upload sysupgrade
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ env.openclash_ssrplus_passwall_SYSUPGRADE }}
+          path: openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
+          if-no-files-found: ignore
 
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
           
           
