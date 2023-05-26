@@ -16,7 +16,7 @@ env:
   VanillaUboot: tru
   # 编译插件版       
   PLUGINver: tru
-  # 安装 tc 插件
+  # 安装 tc 插件 
   TC: true
   
 on:
