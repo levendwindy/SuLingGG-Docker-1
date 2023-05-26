@@ -10,7 +10,7 @@ env:
   Vanilla: true
   # 环境 true
   ENVIRONMENT: true
-  SSH: tru
+  SSH: tru 
 
 on:
   workflow_dispatch:
