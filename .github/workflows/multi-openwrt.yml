@@ -160,6 +160,7 @@ jobs:
         run: |
           [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE openwrt/
           chmod +x Shell/$DIY_P2_SH
+          chmod +x Shell/REVISECONFIG.sh && cp Shell/REVISECONFIG.sh openwrt/
           cd openwrt
           mv $CONFIG_FILE .config
           $GITHUB_WORKSPACE/Shell/$DIY_P2_SH
@@ -214,7 +215,6 @@ jobs:
         run: |
           rm -rf openwrt/bin openwrt/.config
           cp config/$CONFIG_FILE openwrt/
-          chmod +x Shell/REVISECONFIG.sh && cp Shell/REVISECONFIG.sh openwrt/
           cd openwrt
           mv $CONFIG_FILE .config
           echo "修改前"
