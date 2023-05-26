@@ -43,7 +43,7 @@ MTK_HNAT(){
   echo '替换 mtk_hnat'
   rm -rf target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/mtk_hnat
   ls -al target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/
-  svn co https://github.com/padavanonly/immortalwrtARM/trunk/target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/mtk_hnat
+  svn co https://github.com/padavanonly/immortalwrtARM/branches/mt7981/target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/mtk_hnat
   mv mtk_hnat target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/mtk_hnat
   ls -al target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/
 }
@@ -53,7 +53,7 @@ MT_WIFI(){
   # 替换 mtk  drivers  mt_wifi
   rm -rf package/mtk/drivers/mt_wifi
   ls -al package/mtk/drivers/
-  svn co https://github.com/padavanonly/immortalwrtARM/trunk/package/mtk/drivers/mt_wifi
+  svn co https://github.com/padavanonly/immortalwrtARM/branches/mt7981/package/mtk/drivers/mt_wifi
   mv mt_wifi package/mtk/drivers/mt_wifi
   ls -al package/mtk/drivers/
 }
