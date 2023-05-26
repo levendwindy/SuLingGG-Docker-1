@@ -173,6 +173,7 @@ jobs:
           cd openwrt
           mv $CONFIG_FILE .config
           $GITHUB_WORKSPACE/Shell/$DIY_P2_SH
+          ./REVISECONFIG.sh tc-tiny
 
       - name: Download package_1
         id: package_
