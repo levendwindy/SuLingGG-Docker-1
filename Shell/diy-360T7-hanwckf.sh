@@ -39,8 +39,14 @@ sed -i 's/pool.ntp.org/cn.pool.ntp.org/g'  package/base-files/files/bin/config_g
 # sed -i 's,mirrors.vsean.net,mirrors.cloud.tencent.com,g'  package/emortal/default-settings/files/99-default-settings-chinese
 
 # 替换hnat_nf_hook.c
-rm -rf target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/mtk_hnat
-ls -al target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/
-svn co https://github.com/padavanonly/immortalwrtARM/trunk/target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/mtk_hnat
-mv mtk_hnat target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/mtk_hnat
+# rm -rf target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/mtk_hnat
+# ls -al target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/
+# svn co https://github.com/padavanonly/immortalwrtARM/trunk/target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/mtk_hnat
+# mv mtk_hnat target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/mtk_hnat
+# ls -al target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/mtk_hnat
+
+rm -rf target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/mtk_hnat/hnat_nf_hook.c
 ls -al target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/mtk_hnat
+svn co https://github.com/padavanonly/immortalwrtARM/trunk/target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/mtk_hnat
+mv mtk_hnat/hnat_nf_hook.c target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/mtk_hnat/hnat_nf_hook.c
+ls -al target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/mtk_hnat/
