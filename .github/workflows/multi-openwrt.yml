@@ -13,7 +13,7 @@ env:
   # 开启SSH
   SSH: tru 
   # 开启SSH 原厂固件
-  VanillaUboot: tru
+  VanillaUboot: tru 
   # 编译插件版
   PLUGINver: tru
   # 安装 tc 插件
