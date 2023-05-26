@@ -85,27 +85,27 @@ do
 			shift;; # shift;shift;;代表移除 2个参数 
 		# APP
 		accesscontrol | acme | adblock | adbyby-fix | adbyby-plus | advanced-reboot | advancedsetting | ahcp | airplay2 | airwhu | aliddns | amule | appfilter | \
-		argon-config | aria2 | arpbind | asterisk | attendedsysupgrade | autoreboot | baidupcs-web | bcp38 | beardropper | bird1-ipv4 | bird1-ipv6 | bmx6 | brook-server | \
-		cd8021x | cifs | cifs-mount | cjdns | clamav | commands | cpufreq | cpulimit | cshark | cupsd | dawn | ddns | diag-core | diskman | diskman_INCLUDE_mdadm | dnscrypt-proxy | \
-		dnsforwarder | docker | dump1090 | dynapoint | eqos | fileassistant | filebrowser | filetransfer | frpc | frps | fwknopd | gost | gowebdav | guest-wifi | haproxy-tcp | \
-		hd-idle | hnet | https-dns-proxy | https_dns_proxy | ipsec-vpnd | ipsec-vpnserver-manyusers | iptvhelper | kcptun | kodexplorer | ksmbd | lxc | mentohust | minidlna | \
-		minieap | mjpg-streamer | music-remote-center | mwan3 | mwan3helper | mwol | n2n_v2 | naiveproxy | netdata | nfs | nft-qos | nginx-pingos | ngrokc | njitclient | nlbwmon | \
-		nps | ntpc | ocserv | oled | olsr | olsr-services | olsr-viz | olsrd2 | onliner | openclash | openvpn | openvpn-server | oscam | p910nd | pagekitec | passwall_Nftables_Transparent_Proxy | \
-		passwall_INCLUDE_Hysteria | passwall_INCLUDE_NaiveProxy | passwall_INCLUDE_Trojan_GO | polipo | pppoe-relay | pppoe-server | privoxy | ps3netsrv | qbittorrent | qos | \
-		radicale | ramfree | rclone | rp-pppoe-server | samba | samba4 | scutclient | serverchan | shadowsocks-libev | shairplay | siitwizard | simple-adblock | smartdns | smartinfo | \
-		smstool | socat | softethervpn | softethervpn5 | speederv2 | splash | sqm | squid | ssocks | ssr-libev-server | ssr-mudb-server | ssr-plus | ssr-plus_INCLUDE_Shadowsocks_NONE_Client | \
-		ssr-plus_INCLUDE_Shadowsocks_Libev_Client | ssr-plus_INCLUDE_Shadowsocks_NONE_Server | ssr-plus_INCLUDE_Shadowsocks_Libev_Server | ssr-plus_INCLUDE_NONE_V2RAY | ssr-plus_INCLUDE_V2ray | \
-		ssr-plus_INCLUDE_SagerNet_Core | ssr-plus_INCLUDE_Hysteria | ssr-plus_INCLUDE_NaiveProxy | ssr-plus_INCLUDE_Redsocks2 | ssrserver-python | statistics | syncdial | syncthing | sysuh3c | \
-		timecontrol | timewol | tinyproxy | transmission | travelmate | trojan-server | ttyd | turboacc-mtk_INCLUDE_DNSFORWARDER | turboacc-mtk_INCLUDE_DNSPROXY | udp2raw | udpxy | uhttpd | \
-		unblockmusic | unblockneteasemusic-go | unbound | usb-printer | usb3disable | uugamebooster | v2ray-server | verysync | vlmcsd | vnstat | vpn-policy-routing | vpnbypass | vsftpd | \
-		vssr_INCLUDE_Hysteria | watchcat | webadmin | webrestriction | weburl | wifischedule | wireguard | wol | wrtbwmon | xlnetacc | zerotier | \
-		passwall_INCLUDE_Shadowsocks_Libev_Client | passwall_INCLUDE_Shadowsocks_Libev_Server | passwall_INCLUDE_Shadowsocks_Rust_Client | passwall_INCLUDE_Shadowsocks_Rust_Server | \
-		passwall_INCLUDE_ShadowsocksR_Libev_Client | passwall_INCLUDE_ShadowsocksR_Libev_Server | passwall_INCLUDE_Simple_Obfs | passwall_INCLUDE_Trojan_Plus | passwall_INCLUDE_V2ray | \
-		passwall_INCLUDE_V2ray_Plugin | passwall_INCLUDE_Xray | passwall_INCLUDE_Xray_Plugin | rclone_INCLUDE_rclone-webui | rclone_INCLUDE_rclone-ng | ssr-plus_INCLUDE_Shadowsocks_Rust_Client | \
-		ssr-plus_INCLUDE_Shadowsocks_Rust_Server | ssr-plus_INCLUDE_Xray | ssr-plus_INCLUDE_ChinaDNS_NG | ssr-plus_INCLUDE_IPT2Socks | ssr-plus_INCLUDE_Kcptun | \
-		ssr-plus_INCLUDE_Shadowsocks_Simple_Obfs | ssr-plus_INCLUDE_Shadowsocks_V2ray_Plugin | ssr-plus_INCLUDE_ShadowsocksR_Libev_Client | ssr-plus_INCLUDE_ShadowsocksR_Libev_Server | \
-		ssr-plus_INCLUDE_Trojan | turboacc | turboacc-mtk | turboacc-mtk_INCLUDE_OFFLOADING | turboacc-mtk_INCLUDE_BBR_CCA | turboacc-mtk_INCLUDE_PDNSD | upnp | vssr | vssr_INCLUDE_Kcptun | \
-		vssr_INCLUDE_ShadowsocksR_Libev_Server | vssr_INCLUDE_Trojan | vssr_INCLUDE_Xray | vssr_INCLUDE_Xray_plugin )
+				argon-config | aria2 | arpbind | asterisk | attendedsysupgrade | autoreboot | baidupcs-web | bcp38 | beardropper | bird1-ipv4 | bird1-ipv6 | bmx6 | brook-server | \
+				cd8021x | cifs | cifs-mount | cjdns | clamav | commands | cpufreq | cpulimit | cshark | cupsd | dawn | ddns | diag-core | diskman | diskman_INCLUDE_mdadm | dnscrypt-proxy | \
+				dnsforwarder | docker | dump1090 | dynapoint | eqos | fileassistant | filebrowser | filetransfer | frpc | frps | fwknopd | gost | gowebdav | guest-wifi | haproxy-tcp | \
+				hd-idle | hnet | https-dns-proxy | https_dns_proxy | ipsec-vpnd | ipsec-vpnserver-manyusers | iptvhelper | kcptun | kodexplorer | ksmbd | lxc | mentohust | minidlna | \
+				minieap | mjpg-streamer | music-remote-center | mwan3 | mwan3helper | mwol | n2n_v2 | naiveproxy | netdata | nfs | nft-qos | nginx-pingos | ngrokc | njitclient | nlbwmon | \
+				nps | ntpc | ocserv | oled | olsr | olsr-services | olsr-viz | olsrd2 | onliner | openclash | openvpn | openvpn-server | oscam | p910nd | pagekitec | passwall_Nftables_Transparent_Proxy | \
+				passwall_INCLUDE_Hysteria | passwall_INCLUDE_NaiveProxy | passwall_INCLUDE_Trojan_GO | polipo | pppoe-relay | pppoe-server | privoxy | ps3netsrv | qbittorrent | qos | \
+				radicale | ramfree | rclone | rp-pppoe-server | samba | samba4 | scutclient | serverchan | shadowsocks-libev | shairplay | siitwizard | simple-adblock | smartdns | smartinfo | \
+				smstool | socat | softethervpn | softethervpn5 | speederv2 | splash | sqm | squid | ssocks | ssr-libev-server | ssr-mudb-server | ssr-plus | ssr-plus_INCLUDE_Shadowsocks_NONE_Client | \
+				ssr-plus_INCLUDE_Shadowsocks_Libev_Client | ssr-plus_INCLUDE_Shadowsocks_NONE_Server | ssr-plus_INCLUDE_Shadowsocks_Libev_Server | ssr-plus_INCLUDE_NONE_V2RAY | ssr-plus_INCLUDE_V2ray | \
+				ssr-plus_INCLUDE_SagerNet_Core | ssr-plus_INCLUDE_Hysteria | ssr-plus_INCLUDE_NaiveProxy | ssr-plus_INCLUDE_Redsocks2 | ssrserver-python | statistics | syncdial | syncthing | sysuh3c | \
+				timecontrol | timewol | tinyproxy | transmission | travelmate | trojan-server | ttyd | turboacc-mtk_INCLUDE_DNSFORWARDER | turboacc-mtk_INCLUDE_DNSPROXY | udp2raw | udpxy | uhttpd | \
+				unblockmusic | unblockneteasemusic-go | unbound | usb-printer | usb3disable | uugamebooster | v2ray-server | verysync | vlmcsd | vnstat | vpn-policy-routing | vpnbypass | vsftpd | \
+				vssr_INCLUDE_Hysteria | watchcat | webadmin | webrestriction | weburl | wifischedule | wireguard | wol | wrtbwmon | xlnetacc | zerotier | \
+				passwall_INCLUDE_Shadowsocks_Libev_Client | passwall_INCLUDE_Shadowsocks_Libev_Server | passwall_INCLUDE_Shadowsocks_Rust_Client | passwall_INCLUDE_Shadowsocks_Rust_Server | \
+				passwall_INCLUDE_ShadowsocksR_Libev_Client | passwall_INCLUDE_ShadowsocksR_Libev_Server | passwall_INCLUDE_Simple_Obfs | passwall_INCLUDE_Trojan_Plus | passwall_INCLUDE_V2ray | \
+				passwall_INCLUDE_V2ray_Plugin | passwall_INCLUDE_Xray | passwall_INCLUDE_Xray_Plugin | rclone_INCLUDE_rclone-webui | rclone_INCLUDE_rclone-ng | ssr-plus_INCLUDE_Shadowsocks_Rust_Client | \
+				ssr-plus_INCLUDE_Shadowsocks_Rust_Server | ssr-plus_INCLUDE_Xray | ssr-plus_INCLUDE_ChinaDNS_NG | ssr-plus_INCLUDE_IPT2Socks | ssr-plus_INCLUDE_Kcptun | \
+				ssr-plus_INCLUDE_Shadowsocks_Simple_Obfs | ssr-plus_INCLUDE_Shadowsocks_V2ray_Plugin | ssr-plus_INCLUDE_ShadowsocksR_Libev_Client | ssr-plus_INCLUDE_ShadowsocksR_Libev_Server | \
+				ssr-plus_INCLUDE_Trojan | turboacc | turboacc-mtk | turboacc-mtk_INCLUDE_OFFLOADING | turboacc-mtk_INCLUDE_BBR_CCA | turboacc-mtk_INCLUDE_PDNSD | upnp | vssr | vssr_INCLUDE_Kcptun | \
+				vssr_INCLUDE_ShadowsocksR_Libev_Server | vssr_INCLUDE_Trojan | vssr_INCLUDE_Xray | vssr_INCLUDE_Xray_plugin )
 			PluginNAME=$1
 		   	PLUGIN $1;shift;;
 		*)
