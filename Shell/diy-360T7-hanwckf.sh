@@ -38,16 +38,31 @@ sed -i 's/pool.ntp.org/cn.pool.ntp.org/g'  package/base-files/files/bin/config_g
 # 替换源 
 # sed -i 's,mirrors.vsean.net,mirrors.cloud.tencent.com,g'  package/emortal/default-settings/files/99-default-settings-chinese
 
-# 替换mtk_hnat 文件夹
-rm -rf target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/mtk_hnat
-ls -al target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/
-svn co https://github.com/padavanonly/immortalwrtARM/trunk/target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/mtk_hnat
-mv mtk_hnat target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/mtk_hnat
-ls -al target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/
+# 替换mtk_hnat 文件夹 # 替换hnat_nf_hook.c 失败
+MTK_HNAT(){
+  echo '替换 mtk_hnat'
+  rm -rf target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/mtk_hnat
+  ls -al target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/
+  svn co https://github.com/padavanonly/immortalwrtARM/trunk/target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/mtk_hnat
+  mv mtk_hnat target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/mtk_hnat
+  ls -al target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/
+}
 
-# 替换hnat_nf_hook.c
-#rm -rf target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/mtk_hnat/hnat_nf_hook.c
-#ls -al target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/mtk_hnat
-#svn co https://github.com/padavanonly/immortalwrtARM/trunk/target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/mtk_hnat
-#mv mtk_hnat/hnat_nf_hook.c target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/mtk_hnat/hnat_nf_hook.c
-#ls -al target/linux/mediatek/files-5.4/drivers/net/ethernet/mediatek/mtk_hnat/
+MT_WIFI(){
+echo '替换 mtk  drivers  mt_wifi'
+# 替换 mtk  drivers  mt_wifi
+ls -al package/mtk/drivers/
+package/mtk/drivers/mt_wifi
+svn co https://github.com/padavanonly/immortalwrtARM/trunk/package/mtk/drivers/mt_wifi
+mv mtk_hnat package/mtk/drivers/mt_wifi
+ls -al package/mtk/drivers/
+}
+
+MTK_HNAT
+echo '-------------------------------------------------------------------------------------------------'
+MT_WIFI
+
+
+
+
+
