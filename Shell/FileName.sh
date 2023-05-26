@@ -76,7 +76,7 @@ echo "openclash_SYSUPGRADE=${openclash_SYSUPGRADE}" >> $GITHUB_ENV
 export NUM=$((NUM+1))
 #1.6	openclash_ssrplus_passwall
 export openclash_ssrplus_passwall_NAME=$SERIAL'.'$NUM'-360T7-108M-'$NAME'-openclash-ssrplus-passwall'
-export openclash_ssrplus_passwall_BIN=$ openclash_ssrplus_passwall_NAME'-BIN'
+export openclash_ssrplus_passwall_BIN=$openclash_ssrplus_passwall_NAME'-BIN'
 export openclash_ssrplus_passwall_FACTORY=$openclash_ssrplus_passwall_NAME'-factory'
 export openclash_ssrplus_passwall_SYSUPGRADE=$openclash_ssrplus_passwall_NAME'-sysupgrade'
 
