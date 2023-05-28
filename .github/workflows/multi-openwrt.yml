@@ -152,7 +152,7 @@ jobs:
           
       - name: TEST1
         run: |
-          cp config/hanwckf.config .
+          cp config/$CONFIG_FILE  .
           [ -e Shell/$DIY_P3_SH ] && chmod +x Shell/$DIY_P3_SH && cp Shell/$DIY_P3_SH .
           chmod +x Shell/REVISECONFIG.sh && cp Shell/REVISECONFIG.sh .
           ls -al
