@@ -150,13 +150,13 @@ jobs:
           sudo mkdir -p /workdir
           sudo chown $USER:$GROUPS /workdir
           
-      - name: TEST
+      - name: TEST1
         run: |
           cp config/hanwckf.config .
           [ -e Shell/$DIY_P3_SH ] && chmod +x Shell/$DIY_P3_SH && cp Shell/$DIY_P3_SH .
           chmod +x Shell/REVISECONFIG.sh && cp Shell/REVISECONFIG.sh .
           ls -al
-          [ -e $GITHUB_WORKSPACE/Shell/$DIY_P3_SH ] && $DIY_P3_SH
+          [ -e Shell/$DIY_P3_SH ] && $DIY_P3_SH
           cat .config
           
       - name: Clone source code
