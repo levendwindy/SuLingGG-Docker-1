@@ -15,9 +15,9 @@ env:
   # 开启SSH
   SSH: tru 
   # 开启SSH 原厂固件
-  VanillaUboot: tru
+  VanillaUboot: true
   # 编译插件版   
-  PLUGINver: tru
+  PLUGINver: true
   Release: true
   
   
@@ -260,39 +260,12 @@ jobs:
           if-no-files-found: ignore # error 'warn' or 'ignore' are also available, defaults to `warn`
       
       - name: 1.tar release
+        if: env.Release == 'true' && !failure() && !cancelled()
         run: |
           mkdir RELEASE
           tar zcvf RELEASE/$BIN.tar.gz openwrt/bin/
           tar zcvf RELEASE/$FACTORY.tar.gz openwrt/bin/targets/*/*/*squashfs-factory.bin
           tar zcvf RELEASE/$SYSUPGRADE.tar.gz openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
-          
-      
-      
-      - name: Generate release tag
-        if: env.Release == 'true' && !cancelled()
-        id: tag1
-      #   if: env.UPLOAD_RELEASE == 'true' && !cancelled()
-        #  [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer](${{ steps.cowtransfer.outputs.url }})" >> release.txt
-       #   [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
-        run: |
-          echo "::set-output name=release_tag::$(date +"%Y.%m.%d")"
-          touch release.txt 
-          echo "🔗 [Cowtransfer] " >> release.txt
-          echo "🔗 [WeTransfer] " >> release.txt
-          echo "::set-output name=status::success"
-
-      - name: Upload firmware to release
-        uses: softprops/action-gh-release@v1
-        if: steps.tag.outputs.status == 'success' && !cancelled() && env.Release == 'true'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ steps.tag1.outputs.release_tag }}
-          body_path: release.txt
-          files: |
-            RELEASE/$BIN.tar.gz
-            RELEASE/$FACTORY.tar.gz
-            RELEASE/$SYSUPGRADE.tar.gz
 
 ###########################################################################################
       - name: 0. 构建原厂Uboot 修改前config 删除 /bin
@@ -359,6 +332,14 @@ jobs:
           name: ${{ env.VanillaSYSUPGRADE }}
           path: openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
           if-no-files-found: ignore # error 'warn' or 'ignore' are also available, defaults to `warn`
+      
+      - name: 0.tar release
+        if: env.Release == 'true' && !failure() && !cancelled()
+        run: |
+          mkdir RELEASE
+          tar zcvf RELEASE/$VanillaBIN.tar.gz openwrt/bin/
+          tar zcvf RELEASE/$VanillaFACTORY.tar.gz openwrt/bin/targets/*/*/*squashfs-factory.bin
+          tar zcvf RELEASE/$VanillaSYSUPGRADE.tar.gz openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
 
 ###########################################################################################
  
@@ -426,6 +407,14 @@ jobs:
           name: ${{ env.mini_SYSUPGRADE }}
           path: openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
           if-no-files-found: ignore
+      
+      - name: 2.tar release
+        if: env.Release == 'true' && !failure() && !cancelled()
+        run: |
+          mkdir RELEASE
+          tar zcvf RELEASE/$mini_BIN.tar.gz openwrt/bin/
+          tar zcvf RELEASE/$mini_FACTORY.tar.gz openwrt/bin/targets/*/*/*squashfs-factory.bin
+          tar zcvf RELEASE/$mini_SYSUPGRADE.tar.gz openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
 
 ############################################################################################
       - name: 3.108M ssrplus
@@ -490,6 +479,15 @@ jobs:
           name: ${{ env.ssrplus_SYSUPGRADE }}
           path: openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
           if-no-files-found: ignore
+      
+      - name: 3.tar release
+        if: env.Release == 'true' && !failure() && !cancelled()
+        run: |
+          mkdir RELEASE
+          tar zcvf RELEASE/$ssrplus_BIN.tar.gz openwrt/bin/
+          tar zcvf RELEASE/$ssrplus_FACTORY.tar.gz openwrt/bin/targets/*/*/*squashfs-factory.bin
+          tar zcvf RELEASE/$ssrplus_SYSUPGRADE.tar.gz openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
+            
 ############################################################################################
       - name: 4.108M passwall
         if: env.PLUGINver == 'true'
@@ -553,6 +551,15 @@ jobs:
           name: ${{ env.passwall_SYSUPGRADE }}
           path: openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
           if-no-files-found: ignore
+      
+      - name: 4.tar release
+        if: env.Release == 'true' && !failure() && !cancelled()
+        run: |
+          mkdir RELEASE
+          tar zcvf RELEASE/$passwall_BIN.tar.gz openwrt/bin/
+          tar zcvf RELEASE/$passwall_FACTORY.tar.gz openwrt/bin/targets/*/*/*squashfs-factory.bin
+          tar zcvf RELEASE/$passwall_SYSUPGRADE.tar.gz openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
+          
 ############################################################################################
       - name: 5.108M openclash
         if: env.PLUGINver == 'true'
@@ -617,6 +624,14 @@ jobs:
           name: ${{ env.openclash_SYSUPGRADE }}
           path: openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
           if-no-files-found: ignore
+      
+      - name: 5.tar release
+        if: env.Release == 'true' && !failure() && !cancelled()
+        run: |
+          mkdir RELEASE
+          tar zcvf RELEASE/$openclash_BIN.tar.gz openwrt/bin/
+          tar zcvf RELEASE/$openclash_FACTORY.tar.gz openwrt/bin/targets/*/*/*squashfs-factory.bin
+          tar zcvf RELEASE/$openclash_SYSUPGRADE.tar.gz openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
 ############################################################################################
       - name: 6.108M openclash ssrplus passwall
         if: env.PLUGINver == 'true'
@@ -680,12 +695,18 @@ jobs:
           name: ${{ env.openclash_ssrplus_passwall_SYSUPGRADE }}
           path: openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
           if-no-files-found: ignore
-          
+      
+      - name: 6.tar release
+        if: env.Release == 'true' && !failure() && !cancelled()
+        run: |
+          mkdir RELEASE
+          tar zcvf RELEASE/$openclash_ssrplus_passwall_BIN.tar.gz openwrt/bin/
+          tar zcvf RELEASE/$openclash_ssrplus_passwall_FACTORY.tar.gz openwrt/bin/targets/*/*/*squashfs-factory.bin
+          tar zcvf RELEASE/$openclash_ssrplus_passwall_SYSUPGRADE.tar.gz openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
+      
       - name: Generate release tag
+        if: env.Release == 'true' && !failure()  && !cancelled()
         id: tag
-      #   if: env.UPLOAD_RELEASE == 'true' && !cancelled()
-        #  [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer](${{ steps.cowtransfer.outputs.url }})" >> release.txt
-       #   [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
         run: |
           echo "::set-output name=release_tag::$(date +"%Y.%m.%d")"
           touch release.txt 
@@ -695,13 +716,13 @@ jobs:
 
       - name: Upload firmware to release
         uses: softprops/action-gh-release@v1
-        if: steps.tag.outputs.status == 'success' && !cancelled()
+        if: steps.tag.outputs.status == 'success' && !cancelled() && env.Release == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ steps.tag.outputs.release_tag }}
           body_path: release.txt
-          files: release.txt
-
+          files: |
+            RELEASE/*
           
           
