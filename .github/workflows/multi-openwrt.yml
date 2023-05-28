@@ -50,7 +50,22 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: whoami
+        
+      - name: 1.TEST ssh
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: whoami
 
+          
+      - name : 1.TEST
+        if: env.PLUGINver == 'true' && !failure()
+        run: |
+          echo 'PLUGINver == true  且 没有失败  !failure()'
+        
       - name: Find Targets
         id: find-targets
         env:
@@ -619,7 +634,6 @@ jobs:
         id: Compile_failure_6
         run: |
           cd openwrt && make -j1 V=s 
-
           
       - name : 6.Upload Vanilla BIN
         if: env.PLUGINver == 'true'
