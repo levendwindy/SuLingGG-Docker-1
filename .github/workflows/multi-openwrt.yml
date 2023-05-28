@@ -134,6 +134,10 @@ jobs:
           chmod +x Shell/FileName.sh
           bash Shell/FileName.sh  $GITHUB_ENV
           echo "NUM: $NUM" 
+          [ -e Shell/$DIY_P3_SH ] && chmod +x Shell/$DIY_P3_SH  && \
+               chmod +x Shell/REVISECONFIG.sh && cp Shell/REVISECONFIG.sh config/ \
+               cd config  && mv $CONFIG_FILE .config  && bash $GITHUB_WORKSPACE/Shell/$DIY_P3_SH && \
+               mv .config $CONFIG_FILE
           
       - name: Initialization Environment
         if: env.ENVIRONMENT == 'true' && env.FAST != 'true'
@@ -176,13 +180,11 @@ jobs:
           # [ -e files ] && cp files openwrt/files
         run: |
           [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE openwrt/
-          [ -e Shell/$DIY_P3_SH ] && chmod +x Shell/$DIY_P3_SH && cp Shell/$DIY_P3_SH openwrt/
           chmod +x Shell/$DIY_P2_SH
           chmod +x Shell/REVISECONFIG.sh && cp Shell/REVISECONFIG.sh openwrt/
           cd openwrt
           mv $CONFIG_FILE .config
           $GITHUB_WORKSPACE/Shell/$DIY_P2_SH
-          [ -e $GITHUB_WORKSPACE/Shell/$DIY_P3_SH ] && $DIY_P3_SH
           cat .config
           
       - name: FAST Initialization Environment
@@ -259,7 +261,6 @@ jobs:
       - name: 0.修改后config
         if: env.VanillaUboot == 'true'
         run: |
-          [ -e $GITHUB_WORKSPACE/Shell/$DIY_P3_SH ] && $DIY_P3_SH
           cd openwrt && ./REVISECONFIG.sh  $NAME
           echo "修改后"
           cat .config
@@ -327,7 +328,6 @@ jobs:
         if: env.PLUGINver == 'true'
         run: |
           cd openwrt 
-          [ -e $GITHUB_WORKSPACE/Shell/$DIY_P3_SH ] && $DIY_P3_SH
           ./REVISECONFIG.sh  ttyd filetransfer
           echo "修改后"
           cat .config
@@ -394,7 +394,6 @@ jobs:
         if: env.PLUGINver == 'true'
         run: |
           cd openwrt 
-          [ -e $GITHUB_WORKSPACE/Shell/$DIY_P3_SH ] && $DIY_P3_SH
           ./REVISECONFIG.sh  ttyd filetransfer ssr-plus
 
       - name: 3.Download package
@@ -458,7 +457,6 @@ jobs:
         if: env.PLUGINver == 'true'
         run: |
           cd openwrt 
-          [ -e $GITHUB_WORKSPACE/Shell/$DIY_P3_SH ] && $DIY_P3_SH
           ./REVISECONFIG.sh  ttyd filetransfer passwall
 
       - name: 4.Download package
@@ -522,7 +520,6 @@ jobs:
         if: env.PLUGINver == 'true'
         run: |
           cd openwrt 
-          [ -e $GITHUB_WORKSPACE/Shell/$DIY_P3_SH ] && $DIY_P3_SH
           ./REVISECONFIG.sh  ttyd filetransfer openclash
           cat .config
 
@@ -587,7 +584,6 @@ jobs:
         if: env.PLUGINver == 'true'
         run: |
           cd openwrt 
-          [ -e $GITHUB_WORKSPACE/Shell/$DIY_P3_SH ] && $DIY_P3_SH
           ./REVISECONFIG.sh  ttyd filetransfer openclash ssr-plus passwall
           cat .config
 
