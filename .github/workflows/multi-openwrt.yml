@@ -50,15 +50,10 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: whoami
-        
+       
       - name: 1.TEST ssh
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
-          script: whoami
+        run: |
+          -a9_vfpv3-d
 
           
       - name : 1.TEST
