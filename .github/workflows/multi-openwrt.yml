@@ -56,10 +56,15 @@ jobs:
           -a9_vfpv3-d
 
           
-      - name : 1.TEST
+      - name : 1.TEST1
         if: env.PLUGINver == 'true' && !failure()
         run: |
           echo 'PLUGINver == true  且 没有失败  !failure()'
+          
+      - name : TEST2
+        if: env.PLUGINver == 'true' && failure()
+        run: |
+          echo 'PLUGINver == true  且 失败  failure()'
         
       - name: Find Targets
         id: find-targets
