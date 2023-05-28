@@ -150,21 +150,6 @@ jobs:
           sudo mkdir -p /workdir
           sudo chown $USER:$GROUPS /workdir
           
-      - name: TEST1
-        run: |
-          echo "config目录："
-          ls -al config/
-          echo "GITHUB_WORKSPACE目录："
-          ls -al $GITHUB_WORKSPACE
-          cp config/$CONFIG_FILE  .
-          mv $CONFIG_FILE .config
-          [ -e Shell/$DIY_P3_SH ] && chmod +x Shell/$DIY_P3_SH && cp Shell/$DIY_P3_SH .
-          chmod +x Shell/REVISECONFIG.sh && cp Shell/REVISECONFIG.sh .
-          echo "当前目录："
-          ls -al
-          [ -e Shell/$DIY_P3_SH ] && ./$DIY_P3_SH
-          cat .config
-          
       - name: Clone source code
        # working-directory: /workdir
         run: |
