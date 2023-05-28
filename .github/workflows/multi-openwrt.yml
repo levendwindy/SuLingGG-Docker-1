@@ -708,7 +708,7 @@ jobs:
         if: env.Release == 'true' && !failure()  && !cancelled()
         id: tag
         run: |
-          echo "::set-output name=release_tag::$(date +"%Y.%m.%d")"
+          echo "::set-output name=release_tag::$NAME-$(date +"%Y.%m.%d")"
           touch release.txt 
           echo "🔗 [Cowtransfer] " >> release.txt
           echo "🔗 [WeTransfer] " >> release.txt
