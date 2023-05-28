@@ -138,10 +138,10 @@ jobs:
       - name: 2.DIY_P3_SH
         run: |
           ls -al
-          [ -e Shell/$DIY_P3_SH ] && chmod +x Shell/$DIY_P3_SH  && \
-               chmod +x Shell/REVISECONFIG.sh && cp Shell/REVISECONFIG.sh config/ \
-               cd config  && mv $CONFIG_FILE .config  && bash $GITHUB_WORKSPACE/Shell/$DIY_P3_SH && \
-               mv .config $CONFIG_FILE
+          cd Shell 
+          [ -e $DIY_P3_SH ] && chmod +x $DIY_P3_SH && chmod +x Shell/REVISECONFIG.sh && \
+               cp $GITHUB_WORKSPACE/config/$CONFIG_FILE  .   && \
+               mv $CONFIG_FILE .config && ./$DIY_P3_SH ; mv .config $GITHUB_WORKSPACE/config/$CONFIG_FILE
           
       - name: Initialization Environment
         if: env.ENVIRONMENT == 'true' && env.FAST != 'true'
