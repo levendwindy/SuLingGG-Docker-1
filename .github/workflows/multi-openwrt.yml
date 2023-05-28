@@ -134,6 +134,10 @@ jobs:
           chmod +x Shell/FileName.sh
           bash Shell/FileName.sh  $GITHUB_ENV
           echo "NUM: $NUM" 
+          
+      - name: 2.DIY_P3_SH
+        run: |
+          ls -al
           [ -e Shell/$DIY_P3_SH ] && chmod +x Shell/$DIY_P3_SH  && \
                chmod +x Shell/REVISECONFIG.sh && cp Shell/REVISECONFIG.sh config/ \
                cd config  && mv $CONFIG_FILE .config  && bash $GITHUB_WORKSPACE/Shell/$DIY_P3_SH && \
