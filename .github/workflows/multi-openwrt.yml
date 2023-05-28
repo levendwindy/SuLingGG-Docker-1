@@ -15,9 +15,11 @@ env:
   # 开启SSH
   SSH: tru 
   # 开启SSH 原厂固件
-  VanillaUboot: true
+  VanillaUboot: tru
   # 编译插件版   
-  PLUGINver: true
+  PLUGINver: tru
+  Release: true
+  
   
 on:
   workflow_dispatch:
@@ -243,19 +245,54 @@ jobs:
           path: openwrt/bin/
           if-no-files-found: warn # error 'warn' or 'ignore' are also available, defaults to `warn`
           
-      - name : 1.Upload factory
+      - name: 1.Upload factory
         uses: actions/upload-artifact@master
         with:
           name: ${{ env.FACTORY }}
           path: openwrt/bin/targets/*/*/*squashfs-factory.bin
           if-no-files-found: ignore # error 'warn' or 'ignore' are also available, defaults to `warn`
           
-      - name : 1.Upload sysupgrade
+      - name: 1.Upload sysupgrade
         uses: actions/upload-artifact@master
         with:
           name: ${{ env.SYSUPGRADE }}
           path: openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
           if-no-files-found: ignore # error 'warn' or 'ignore' are also available, defaults to `warn`
+      
+      - name: 1.tar release
+        run: |
+          mkdir RELEASE
+          tar zcvf RELEASE/$BIN.tar.gz openwrt/bin/
+          tar zcvf RELEASE/$FACTORY.tar.gz openwrt/bin/targets/*/*/*squashfs-factory.bin
+          tar zcvf RELEASE/$SYSUPGRADE.tar.gz openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
+          
+      
+      
+      - name: Generate release tag
+        if: env.Release == 'true' && !cancelled()
+        id: tag1
+      #   if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+        #  [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer](${{ steps.cowtransfer.outputs.url }})" >> release.txt
+       #   [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
+        run: |
+          echo "::set-output name=release_tag::$(date +"%Y.%m.%d")"
+          touch release.txt 
+          echo "🔗 [Cowtransfer] " >> release.txt
+          echo "🔗 [WeTransfer] " >> release.txt
+          echo "::set-output name=status::success"
+
+      - name: Upload firmware to release
+        uses: softprops/action-gh-release@v1
+        if: steps.tag.outputs.status == 'success' && !cancelled() && env.Release == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.tag1.outputs.release_tag }}
+          body_path: release.txt
+          files: |
+            RELEASE/$BIN.tar.gz
+            RELEASE/$FACTORY.tar.gz
+            RELEASE/$SYSUPGRADE.tar.gz
 
 ###########################################################################################
       - name: 0. 构建原厂Uboot 修改前config 删除 /bin
@@ -643,6 +680,28 @@ jobs:
           name: ${{ env.openclash_ssrplus_passwall_SYSUPGRADE }}
           path: openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
           if-no-files-found: ignore
+          
+      - name: Generate release tag
+        id: tag
+      #   if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+        #  [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer](${{ steps.cowtransfer.outputs.url }})" >> release.txt
+       #   [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
+        run: |
+          echo "::set-output name=release_tag::$(date +"%Y.%m.%d")"
+          touch release.txt 
+          echo "🔗 [Cowtransfer] " >> release.txt
+          echo "🔗 [WeTransfer] " >> release.txt
+          echo "::set-output name=status::success"
+
+      - name: Upload firmware to release
+        uses: softprops/action-gh-release@v1
+        if: steps.tag.outputs.status == 'success' && !cancelled()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.tag.outputs.release_tag }}
+          body_path: release.txt
+          files: release.txt
 
           
           
