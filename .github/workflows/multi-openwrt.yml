@@ -262,7 +262,7 @@ jobs:
       - name: 1.tar release
         if: env.Release == 'true' && !failure() && !cancelled()
         run: |
-          mkdir RELEASE
+          sudo mkdir RELEASE
           tar zcvf RELEASE/$BIN.tar.gz openwrt/bin/
           tar zcvf RELEASE/$FACTORY.tar.gz openwrt/bin/targets/*/*/*squashfs-factory.bin
           tar zcvf RELEASE/$SYSUPGRADE.tar.gz openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
@@ -336,7 +336,6 @@ jobs:
       - name: 0.tar release
         if: env.Release == 'true' && !failure() && !cancelled()
         run: |
-          mkdir RELEASE
           tar zcvf RELEASE/$VanillaBIN.tar.gz openwrt/bin/
           tar zcvf RELEASE/$VanillaFACTORY.tar.gz openwrt/bin/targets/*/*/*squashfs-factory.bin
           tar zcvf RELEASE/$VanillaSYSUPGRADE.tar.gz openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
@@ -411,7 +410,7 @@ jobs:
       - name: 2.tar release
         if: env.Release == 'true' && !failure() && !cancelled()
         run: |
-          mkdir RELEASE
+
           tar zcvf RELEASE/$mini_BIN.tar.gz openwrt/bin/
           tar zcvf RELEASE/$mini_FACTORY.tar.gz openwrt/bin/targets/*/*/*squashfs-factory.bin
           tar zcvf RELEASE/$mini_SYSUPGRADE.tar.gz openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
@@ -483,7 +482,7 @@ jobs:
       - name: 3.tar release
         if: env.Release == 'true' && !failure() && !cancelled()
         run: |
-          mkdir RELEASE
+          
           tar zcvf RELEASE/$ssrplus_BIN.tar.gz openwrt/bin/
           tar zcvf RELEASE/$ssrplus_FACTORY.tar.gz openwrt/bin/targets/*/*/*squashfs-factory.bin
           tar zcvf RELEASE/$ssrplus_SYSUPGRADE.tar.gz openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
@@ -555,7 +554,7 @@ jobs:
       - name: 4.tar release
         if: env.Release == 'true' && !failure() && !cancelled()
         run: |
-          mkdir RELEASE
+          
           tar zcvf RELEASE/$passwall_BIN.tar.gz openwrt/bin/
           tar zcvf RELEASE/$passwall_FACTORY.tar.gz openwrt/bin/targets/*/*/*squashfs-factory.bin
           tar zcvf RELEASE/$passwall_SYSUPGRADE.tar.gz openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
@@ -628,7 +627,7 @@ jobs:
       - name: 5.tar release
         if: env.Release == 'true' && !failure() && !cancelled()
         run: |
-          mkdir RELEASE
+          
           tar zcvf RELEASE/$openclash_BIN.tar.gz openwrt/bin/
           tar zcvf RELEASE/$openclash_FACTORY.tar.gz openwrt/bin/targets/*/*/*squashfs-factory.bin
           tar zcvf RELEASE/$openclash_SYSUPGRADE.tar.gz openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
@@ -699,7 +698,7 @@ jobs:
       - name: 6.tar release
         if: env.Release == 'true' && !failure() && !cancelled()
         run: |
-          mkdir RELEASE
+          
           tar zcvf RELEASE/$openclash_ssrplus_passwall_BIN.tar.gz openwrt/bin/
           tar zcvf RELEASE/$openclash_ssrplus_passwall_FACTORY.tar.gz openwrt/bin/targets/*/*/*squashfs-factory.bin
           tar zcvf RELEASE/$openclash_ssrplus_passwall_SYSUPGRADE.tar.gz openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
