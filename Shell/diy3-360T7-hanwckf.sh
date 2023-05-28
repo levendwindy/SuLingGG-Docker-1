@@ -1,5 +1,4 @@
 #!/bin/bash
-
-COMMAND=$1
-$COMMAND tc-tiny kmod-sched kmod-sched-cake kmod-sched-connmark kmod-sched-ipset
+ls -al
+./REVISECONFIG.sh tc-tiny kmod-sched kmod-sched-cake kmod-sched-connmark kmod-sched-ipset
 echo '-----------------------------------------------'
