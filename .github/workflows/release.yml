@@ -43,8 +43,8 @@ jobs:
       run: |
         echo "::set-output name=release_tag::$(date +"%Y.%m.%d")"
         touch release.txt 
-        echo "🔗 [Cowtransfer]" >> release.txt
-        echo "🔗 [WeTransfer]" >> release.txt
+        echo "🔗 [Cowtransfer] asdas" >> release.txt
+        echo "🔗 [WeTransfer] asd" >> release.txt
         echo "::set-output name=status::success"
 
     - name: Upload firmware to release
