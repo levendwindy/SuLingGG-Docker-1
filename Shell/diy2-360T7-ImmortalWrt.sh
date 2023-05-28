@@ -57,6 +57,6 @@ FIREWALL_23_3(){
   ls -al package/network/config/
 }
 
-FIREWALL_21_3
-# FIREWALL_23_3
+# FIREWALL_21_3
+FIREWALL_23_3
 echo '-------------------------------------------------------------------------------------------------'
