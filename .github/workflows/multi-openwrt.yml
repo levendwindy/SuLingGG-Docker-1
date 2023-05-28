@@ -150,18 +150,19 @@ jobs:
           sudo mkdir -p /workdir
           sudo chown $USER:$GROUPS /workdir
           
+      - name: TEST
+        run: |
+          cp config/hanwckf.config .
+          [ -e Shell/$DIY_P3_SH ] && chmod +x Shell/$DIY_P3_SH && cp Shell/$DIY_P3_SH openwrt/
+          [ -e $GITHUB_WORKSPACE/Shell/$DIY_P3_SH ] && $DIY_P3_SH
+          cat .config
+          
       - name: Clone source code
        # working-directory: /workdir
         run: |
           df -hT $PWD
           git clone $REPO_URL -b $REPO_BRANCH openwrt
           ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
-          
-      - name: TEST
-        run: |
-          [ -e Shell/$DIY_P3_SH ] && chmod +x Shell/$DIY_P3_SH && cp Shell/$DIY_P3_SH openwrt/
-          [ -e $GITHUB_WORKSPACE/Shell/$DIY_P3_SH ] && $DIY_P3_SH
-          cat .config
           
       - name: Load custom feeds
         run: |
