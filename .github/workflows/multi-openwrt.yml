@@ -13,11 +13,9 @@ env:
   # 开启SSH
   SSH: tru 
   # 开启SSH 原厂固件
-  VanillaUboot: true
+  VanillaUboot: tru
   # 编译插件版         
-  PLUGINver: true
-  # 安装 tc 插件 
-  TC: true
+  PLUGINver: tru
   
 on:
   workflow_dispatch:
@@ -115,8 +113,8 @@ jobs:
           echo "DIY_P1_SH=$DIY_P1_SH" >> $GITHUB_ENV
           export DIY_P2_SH=$(echo ${{ matrix.TARGETS }} | awk -F '，' '{print $6}' )
           echo "DIY_P2_SH=$DIY_P2_SH" >> $GITHUB_ENV
-          export ORTHER=$(echo ${{ matrix.TARGETS }} | awk -F '，' '{print $7}')
-          echo "ORTHER=$ORTHER" >> $GITHUB_ENV
+          export DIY_P3_SH=$(echo ${{ matrix.TARGETS }} | awk -F '，' '{print $7}')
+          echo "DIY_P3_SH=$DIY_P3_SH" >> $GITHUB_ENV
           
           echo -e "\033[31m SERIAL:  $SERIAL \033[0m"
           echo -e "\033[31m NAME:  $NAME \033[0m"
@@ -125,7 +123,7 @@ jobs:
           echo -e "\033[31m REPO_BRANCH:  $REPO_BRANCH \033[0m"
           echo -e "\033[31m DIY_P1_SH:  $DIY_P1_SH \033[0m"
           echo -e "\033[31m DIY_P2_SH:  $DIY_P2_SH  \033[0m"
-          echo -e "\033[31m ORTHER:  $ORTHER  \033[0m"
+          echo -e "\033[31m DIY_P3_SH:  $DIY_P3_SH  \033[0m"
           
           echo "matrix.TARGETS: ${{ matrix.TARGETS }}"
           
@@ -171,21 +169,17 @@ jobs:
       - name: Install feeds
         run: cd openwrt && ./scripts/feeds install -a
 
-      - name: Load custom configuration
+      - name: 1.Load custom configuration
           # [ -e files ] && cp files openwrt/files
         run: |
           [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE openwrt/
+          [ -e Shell/$DIY_P3_SH ] && chmod +x Shell/$DIY_P3_SH && cp Shell/$DIY_P3_SH openwrt/
           chmod +x Shell/$DIY_P2_SH
           chmod +x Shell/REVISECONFIG.sh && cp Shell/REVISECONFIG.sh openwrt/
           cd openwrt
           mv $CONFIG_FILE .config
           $GITHUB_WORKSPACE/Shell/$DIY_P2_SH
-
-      - name: tc-tiny
-        if: env.TC == 'true'
-        run: |
-          cd openwrt
-          ./REVISECONFIG.sh tc-tiny kmod-sched kmod-sched-cake kmod-sched-connmark kmod-sched-ipset
+          [ -e $GITHUB_WORKSPACE/Shell/$DIY_P3_SH ] && $DIY_P3_SH
           cat .config
 
       - name: Download package_1
@@ -247,6 +241,7 @@ jobs:
       - name: 0.修改后config
         if: env.VanillaUboot == 'true'
         run: |
+          [ -e $GITHUB_WORKSPACE/Shell/$DIY_P3_SH ] && $DIY_P3_SH
           cd openwrt && ./REVISECONFIG.sh  $NAME
           echo "修改后"
           cat .config
@@ -314,6 +309,7 @@ jobs:
         if: env.PLUGINver == 'true'
         run: |
           cd openwrt 
+          [ -e $GITHUB_WORKSPACE/Shell/$DIY_P3_SH ] && $DIY_P3_SH
           ./REVISECONFIG.sh  ttyd filetransfer
           echo "修改后"
           cat .config
@@ -380,6 +376,7 @@ jobs:
         if: env.PLUGINver == 'true'
         run: |
           cd openwrt 
+          [ -e $GITHUB_WORKSPACE/Shell/$DIY_P3_SH ] && $DIY_P3_SH
           ./REVISECONFIG.sh  ttyd filetransfer ssr-plus
 
       - name: 3.Download package
@@ -443,6 +440,7 @@ jobs:
         if: env.PLUGINver == 'true'
         run: |
           cd openwrt 
+          [ -e $GITHUB_WORKSPACE/Shell/$DIY_P3_SH ] && $DIY_P3_SH
           ./REVISECONFIG.sh  ttyd filetransfer passwall
 
       - name: 4.Download package
@@ -506,7 +504,9 @@ jobs:
         if: env.PLUGINver == 'true'
         run: |
           cd openwrt 
+          [ -e $GITHUB_WORKSPACE/Shell/$DIY_P3_SH ] && $DIY_P3_SH
           ./REVISECONFIG.sh  ttyd filetransfer openclash
+          cat .config
 
       - name: 5.Download package
         if: env.PLUGINver == 'true'
@@ -569,7 +569,9 @@ jobs:
         if: env.PLUGINver == 'true'
         run: |
           cd openwrt 
+          [ -e $GITHUB_WORKSPACE/Shell/$DIY_P3_SH ] && $DIY_P3_SH
           ./REVISECONFIG.sh  ttyd filetransfer openclash ssr-plus passwall
+          cat .config
 
       - name: 6.Download package
         if: env.PLUGINver == 'true'
