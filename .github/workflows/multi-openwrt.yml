@@ -50,21 +50,6 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: whoami
-       
-      - name: 1.TEST ssh
-        run: |
-          -a9_vfpv3-d
-
-          
-      - name : 1.TEST1
-        if: env.PLUGINver == 'true' && !failure()
-        run: |
-          echo 'PLUGINver == true  且 没有失败  !failure()'
-          
-      - name : TEST2
-        if: env.PLUGINver == 'true' && failure()
-        run: |
-          echo 'PLUGINver == true  且 失败  failure()'
         
       - name: Find Targets
         id: find-targets
@@ -308,7 +293,7 @@ jobs:
           [[ $NPROC -eq 0 ]] && make -j$(nproc) || make -j$NPROC
         
       - name: 0.Compile failure
-        if: ${{ failure() }}
+        if: env.PLUGINver == 'true' && failure()
         id: Compile_failure_0
         run: |
           cd openwrt && make -j1 V=s 
@@ -375,7 +360,7 @@ jobs:
           [[ $NPROC -eq 0 ]] && make -j$(nproc) || make -j$NPROC
         
       - name: 2.Compile failure
-        if: ${{ failure() }}
+        if: env.PLUGINver == 'true' && failure()
         id: Compile_failure_2
         run: |
           cd openwrt && make -j1 V=s 
@@ -439,7 +424,7 @@ jobs:
           [[ $NPROC -eq 0 ]] && make -j$(nproc) || make -j$NPROC
         
       - name: 3.Compile failure
-        if: ${{ failure() }}
+        if: env.PLUGINver == 'true' && failure()
         id: Compile_failure_3
         run: |
           cd openwrt && make -j1 V=s 
@@ -502,7 +487,7 @@ jobs:
           [[ $NPROC -eq 0 ]] && make -j$(nproc) || make -j$NPROC
         
       - name: 4.Compile failure
-        if: ${{ failure() }}
+        if: env.PLUGINver == 'true' && failure()
         id: Compile_failure_4
         run: |
           cd openwrt && make -j1 V=s 
@@ -566,7 +551,7 @@ jobs:
           [[ $NPROC -eq 0 ]] && make -j$(nproc) || make -j$NPROC
         
       - name: 5.Compile failure
-        if: ${{ failure() }}
+        if: env.PLUGINver == 'true' && failure()
         id: Compile_failure_5
         run: |
           cd openwrt && make -j1 V=s 
@@ -630,7 +615,7 @@ jobs:
           [[ $NPROC -eq 0 ]] && make -j$(nproc) || make -j$NPROC
         
       - name: 6.Compile failure
-        if: ${{ failure() }}
+        if: env.PLUGINver == 'true' && failure()
         id: Compile_failure_6
         run: |
           cd openwrt && make -j1 V=s 
