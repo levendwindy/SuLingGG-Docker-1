@@ -155,6 +155,7 @@ jobs:
           ls -al
           cp config/hanwckf.config .
           [ -e Shell/$DIY_P3_SH ] && chmod +x Shell/$DIY_P3_SH && cp Shell/$DIY_P3_SH .
+          chmod +x Shell/REVISECONFIG.sh && cp Shell/REVISECONFIG.sh .
           [ -e $GITHUB_WORKSPACE/Shell/$DIY_P3_SH ] && $DIY_P3_SH
           cat .config
           
