@@ -170,6 +170,7 @@ jobs:
         run: cd openwrt && ./scripts/feeds install -a
 
       - name: 1.Load custom configuration
+         # [-e ] 判断对象是否存在 -f 常规文件 -d 目录
           # [ -e files ] && cp files openwrt/files
         run: |
           [ -e config/$CONFIG_FILE ] && cp config/$CONFIG_FILE openwrt/
@@ -179,7 +180,7 @@ jobs:
           cd openwrt
           mv $CONFIG_FILE .config
           $GITHUB_WORKSPACE/Shell/$DIY_P2_SH
-          [ -e $GITHUB_WORKSPACE/Shell/$DIY_P3_SH ] && $DIY_P3_SH
+          [ -e $GITHUB_WORKSPACE/Shell/$DIY_P3_SH ] && $DIY_P3_SH REVISECONFIG.sh
           cat .config
 
       - name: Download package_1
