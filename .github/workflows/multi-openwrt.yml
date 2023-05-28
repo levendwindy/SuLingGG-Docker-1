@@ -156,7 +156,13 @@ jobs:
           df -hT $PWD
           git clone $REPO_URL -b $REPO_BRANCH openwrt
           ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
-
+          
+      - name: TEST
+        run: |
+          [ -e Shell/$DIY_P3_SH ] && chmod +x Shell/$DIY_P3_SH && cp Shell/$DIY_P3_SH openwrt/
+          [ -e $GITHUB_WORKSPACE/Shell/$DIY_P3_SH ] && $DIY_P3_SH
+          cat .config
+          
       - name: Load custom feeds
         run: |
           # [ -e config/$FEEDS_CONF ] && cp config/$FEEDS_CONF openwrt/feeds.conf.default
@@ -184,7 +190,7 @@ jobs:
           $GITHUB_WORKSPACE/Shell/$DIY_P2_SH
           [ -e $GITHUB_WORKSPACE/Shell/$DIY_P3_SH ] && $DIY_P3_SH
           cat .config
-
+          
       - name: FAST Initialization Environment
         if: env.ENVIRONMENT == 'true' && env.FAST == 'true'
         env:
