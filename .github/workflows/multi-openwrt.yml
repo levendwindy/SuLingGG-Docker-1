@@ -146,6 +146,7 @@ jobs:
               mv $CONFIG_FILE .config 
               ./$DIY_P3_SH 
               mv .config $GITHUB_WORKSPACE/config/$CONFIG_FILE
+              cat $GITHUB_WORKSPACE/config/$CONFIG_FILE
           fi
           
       - name: Initialization Environment
