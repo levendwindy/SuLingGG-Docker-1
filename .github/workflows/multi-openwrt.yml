@@ -182,7 +182,7 @@ jobs:
           cd openwrt
           mv $CONFIG_FILE .config
           $GITHUB_WORKSPACE/Shell/$DIY_P2_SH
-          [ -e $GITHUB_WORKSPACE/Shell/$DIY_P3_SH ] && $DIY_P3_SH REVISECONFIG.sh
+          [ -e $GITHUB_WORKSPACE/Shell/$DIY_P3_SH ] && $DIY_P3_SH
           cat .config
 
       - name: FAST Initialization Environment
