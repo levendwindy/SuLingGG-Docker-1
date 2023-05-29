@@ -40,7 +40,7 @@ jobs:
             echo '6'
             git branch -M master
             echo '5'
-            git add *
+            git add 360.txt
             echo '1'
             git remote add RouterFirmware git@github.com:levendwindy/RouterFirmware.git
             echo '2'
