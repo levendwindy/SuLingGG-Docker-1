@@ -46,11 +46,11 @@ jobs:
             mkdir openwrt
             cd openwrt
             touch 360.txt
-            if [ ! -f /home/op/.ssh ];then 
-              mkdir -p /home/op/.ssh/
+            if [ ! -f ~/.ssh ];then 
+              mkdir -p ~/.ssh
             fi
-            cat $SSH_KEY >> /home/op/.ssh/id_rsa
-            cat /home/op/.ssh/id_rsa
+            cat $SSH_KEY >> ~/.ssh/id_rsa
+            cat ~/.ssh/id_rsa
             git config --global user.email $EMAIL_GITHUB
             git config --global user.name  $NAME_GITHUB
             git init
