@@ -27,6 +27,7 @@ jobs:
             #git branch -M master
             #echo '5'
            # git remote add origin git@github.com:levendwindy/RouterFirmware.git
+            # ssh-agent -s
         run: |
             if [ ! -f ~/.ssh ];then 
               mkdir -p ~/.ssh  && echo '创建 .ssh 文件夹 成功 '
@@ -34,7 +35,6 @@ jobs:
             tee << EOF > ~/.ssh/id_rsa
             ${{ secrets.SSH_KEY }}
             EOF
-            ssh-agent -s
             ssh-add ~/.ssh/id_rsa
             sudo chmod -R 600  ~/.ssh
             echo '创建 id_rsa 文件 成功 '
