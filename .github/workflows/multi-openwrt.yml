@@ -338,7 +338,7 @@ jobs:
         if: env.Release == 'true' && !failure() && !cancelled()
         run: |
           tar zcvf RELEASE/$VanillaBIN.tar.gz openwrt/bin/
-          tar zcvf RELEASE/$VanillaFACTORY.tar.gz openwrt/bin/targets/*/*/*squashfs-factory.bin
+          tar zcvf RELEASE/$VanillaFACTORY.tar.gz openwrt/bin/targets/*/*/*squashfs-factory.bin || echo "/$VanillaBIN 不含factory"
           tar zcvf RELEASE/$VanillaSYSUPGRADE.tar.gz openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
 
 ###########################################################################################
