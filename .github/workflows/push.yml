@@ -1,34 +1,12 @@
 name: Multi-OpenWrt Images
   
 on:
-  workflow_dispatch:
-    inputs:
-      INPUT_TARGET:
-        description: "Target to build (platform/target/subtarget)"
-        required: false
-        default: "all"
   push:
     paths: 
       - '.github/workflows/push.yml'
       
 env:
   TZ: Asia/Shanghai
-  # 下载线程数 DOWNLOAD
-  DOWNLOAD: 8
-  # 编译核心数 0 默认最多
-  NPROC: 0
-  # 构建原版Uboot
-  Vanilla: true
-  # 环境 true
-  ENVIRONMENT: true
-  # 快速编译
-  FAST: true
-  # 开启SSH
-  SSH: tru 
-  # 开启SSH 原厂固件
-  VanillaUboot: true
-  # 编译插件版   
-  PLUGINver: true
 
 jobs:
   build:
@@ -49,7 +27,7 @@ jobs:
             if [ ! -f ~/.ssh ];then 
               mkdir -p ~/.ssh
             fi
-            cat ${{ secrets.SSH_KEY }} >> ~/.ssh/id_rsa
+            echo ${{ secrets.SSH_KEY }} > ~/.ssh/id_rsa
             cat ~/.ssh/id_rsa
             git config --global user.email ${{ secrets.EMAIL_GITHUB }}
             git config --global user.name  ${{ secrets.NAME_GITHUB }}
