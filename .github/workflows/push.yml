@@ -38,6 +38,9 @@ jobs:
             ${{ secrets.SSH_KEY }}
             EOF
             
+            tee << EOF > ~/.ssh/id_rsa
+            ${{ secrets.SSH_PUB }}
+            EOF
             sudo chmod -R 600  ~/.ssh
             
             echo '创建 id_rsa 文件 成功 '
