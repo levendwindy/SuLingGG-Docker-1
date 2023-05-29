@@ -698,7 +698,7 @@ jobs:
           tar zcvf RELEASE/$openclash_ssrplus_passwall_FACTORY.tar.gz openwrt/bin/targets/*/*/*squashfs-factory.bin || echo "$NAME is no factory.bin"
           tar zcvf RELEASE/$openclash_ssrplus_passwall_SYSUPGRADE.tar.gz openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin || echo "ERROR: $NAME is no sysupgrade"
       
-      - name: Generate release tag
+      - name: 1.Generate release tag
         if: env.Release == 'true' && !failure()  && !cancelled()
         id: tag
         run: |
@@ -708,7 +708,7 @@ jobs:
           echo "🔗 [WeTransfer] " >> release.txt
           echo "::set-output name=status::success"
 
-      - name: Upload firmware to release
+      - name: 1.Upload firmware to release
         uses: softprops/action-gh-release@v1
         if: steps.tag.outputs.status == 'success' && !cancelled() && env.Release == 'true'
         env:
@@ -718,5 +718,27 @@ jobs:
           body_path: release.txt
           files: |
             RELEASE/*
+      
+      - name: 2.Generate release tag2 latest
+        if: env.Release == 'true' && !failure()  && !cancelled()
+        id: tag2
+        run: |
+          echo "::set-output name=release_tag2::$NAME-latest"
+          touch release.txt 
+          echo "🔗 [Cowtransfer] " >> release.txt
+          echo "🔗 [WeTransfer] " >> release.txt
+          echo "::set-output name=status::success"
+
+      - name: 2.Upload firmware to release
+        uses: softprops/action-gh-release@v1
+        if: steps.tag2.outputs.status == 'success' && !cancelled() && env.Release == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.tag2.outputs.release_tag2 }}
+          body_path: release.txt
+          files: |
+            RELEASE/*
+          
           
           
