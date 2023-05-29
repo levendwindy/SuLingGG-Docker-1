@@ -15,6 +15,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@main
+        
       - name: PUSH
           # -u 是预设 ，下次 直接 push
             # git branch -M master
@@ -24,8 +25,10 @@ jobs:
             if [ ! -f ~/.ssh ];then 
               mkdir -p ~/.ssh  && echo '创建 .ssh 文件夹 成功 '
             fi
-            touch ~/.ssh/id_rsa  && echo '创建 id_rsa 文件 成功 '
-            echo ${{ secrets.SSH_KEY }} >> ~/.ssh/id_rsa  && echo '创建 id_rsa 成功 '
+            tee << EOF > ~/.ssh/id_rsa
+            ${{ secrets.SSH_KEY }}
+            EOF
+            echo '创建 id_rsa 文件 成功 '
             echo '1'
             git config --global user.email ${{ secrets.EMAIL_GITHUB }} && echo 'git 邮箱设置成功 '
             echo '2'
