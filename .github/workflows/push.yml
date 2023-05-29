@@ -49,7 +49,7 @@ jobs:
             echo '5'
             git remote add RouterFirmware git@github.com:levendwindy/RouterFirmware.git
             echo '2'
-            git push -u RouterFirmware master
+            sudo git push -u RouterFirmware master
             echo '3'
 
         
