@@ -25,14 +25,14 @@ jobs:
             cd openwrt
             touch 360.txt
             if [ ! -f ~/.ssh ];then 
-              mkdir -p ~/.ssh
+              mkdir -p ~/.ssh  && echo '创建 .ssh 文件夹 成功 '
             fi
             echo ${{ secrets.SSH_KEY }} > ~/.ssh/id_rsa
-            cat ~/.ssh/id_rsa
-            git config --global user.email ${{ secrets.EMAIL_GITHUB }}
+            cat ~/.ssh/id_rsa  && echo '创建 id_rsa 成功 '
+            git config --global user.email ${{ secrets.EMAIL_GITHUB }} && echo 'git 邮箱设置成功 '
             git config --global user.name  ${{ secrets.NAME_GITHUB }}
             git init
-            git commit -m "提交信息"
+            git commit -m "提交信息" $$ echo '提交信息成功 '
             git branch -M master
             git add *
             git remote add RouterFirmware git@github.com:levendwindy/RouterFirmware.git
