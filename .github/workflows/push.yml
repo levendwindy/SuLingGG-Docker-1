@@ -38,7 +38,7 @@ jobs:
             cd openwrt
             touch 360.txt
             git init
-            git commit -m "提交信息" $$ echo '提交信息成功 '
+            git commit -m "提交信息" && echo '提交信息成功 '
             git branch -M master
             git add *
             git remote add RouterFirmware git@github.com:levendwindy/RouterFirmware.git
