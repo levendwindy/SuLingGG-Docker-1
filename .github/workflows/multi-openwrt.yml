@@ -262,11 +262,10 @@ jobs:
       - name: 1.tar release
         if: env.Release == 'true' && !failure() && !cancelled()
         run: |
-          
           mkdir RELEASE
-          tar zcvf RELEASE/$BIN.tar.gz openwrt/bin/
-          tar zcvf RELEASE/$FACTORY.tar.gz openwrt/bin/targets/*/*/*squashfs-factory.bin
-          tar zcvf RELEASE/$SYSUPGRADE.tar.gz openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
+          tar zcvf RELEASE/$BIN.tar.gz openwrt/bin/ || echo "$NAME is no directory BIN"
+          tar zcvf RELEASE/$FACTORY.tar.gz openwrt/bin/targets/*/*/*squashfs-factory.bin || echo "$NAME is no factory.bin"
+          tar zcvf RELEASE/$SYSUPGRADE.tar.gz openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin || echo "ERROR: $NAME is no sysupgrade"
 
 ###########################################################################################
       - name: 0. 构建原厂Uboot 修改前config 删除 /bin
@@ -337,9 +336,9 @@ jobs:
       - name: 0.tar release
         if: env.Release == 'true' && !failure() && !cancelled()
         run: |
-          tar zcvf RELEASE/$VanillaBIN.tar.gz openwrt/bin/
-          tar zcvf RELEASE/$VanillaFACTORY.tar.gz openwrt/bin/targets/*/*/*squashfs-factory.bin || echo "/$VanillaBIN 不含factory"
-          tar zcvf RELEASE/$VanillaSYSUPGRADE.tar.gz openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
+          tar zcvf RELEASE/$VanillaBIN.tar.gz openwrt/bin/ || echo "$NAME is no directory BIN"
+          tar zcvf RELEASE/$VanillaFACTORY.tar.gz openwrt/bin/targets/*/*/*squashfs-factory.bin || echo "$NAME is no factory.bin"
+          tar zcvf RELEASE/$VanillaSYSUPGRADE.tar.gz openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin || echo "ERROR: $NAME is no sysupgrade"
 
 ###########################################################################################
  
@@ -411,10 +410,9 @@ jobs:
       - name: 2.tar release
         if: env.Release == 'true' && !failure() && !cancelled()
         run: |
-
-          tar zcvf RELEASE/$mini_BIN.tar.gz openwrt/bin/
-          tar zcvf RELEASE/$mini_FACTORY.tar.gz openwrt/bin/targets/*/*/*squashfs-factory.bin
-          tar zcvf RELEASE/$mini_SYSUPGRADE.tar.gz openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
+          tar zcvf RELEASE/$mini_BIN.tar.gz openwrt/bin/ || echo "$NAME is no directory BIN"
+          tar zcvf RELEASE/$mini_FACTORY.tar.gz openwrt/bin/targets/*/*/*squashfs-factory.bin || echo "$NAME is no factory.bin"
+          tar zcvf RELEASE/$mini_SYSUPGRADE.tar.gz openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin || echo "ERROR: $NAME is no sysupgrade"
 
 ############################################################################################
       - name: 3.108M ssrplus
@@ -483,10 +481,9 @@ jobs:
       - name: 3.tar release
         if: env.Release == 'true' && !failure() && !cancelled()
         run: |
-          
-          tar zcvf RELEASE/$ssrplus_BIN.tar.gz openwrt/bin/
-          tar zcvf RELEASE/$ssrplus_FACTORY.tar.gz openwrt/bin/targets/*/*/*squashfs-factory.bin
-          tar zcvf RELEASE/$ssrplus_SYSUPGRADE.tar.gz openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
+          tar zcvf RELEASE/$ssrplus_BIN.tar.gz openwrt/bin/ || echo "$NAME is no directory BIN"
+          tar zcvf RELEASE/$ssrplus_FACTORY.tar.gz openwrt/bin/targets/*/*/*squashfs-factory.bin || echo "$NAME is no factory.bin"
+          tar zcvf RELEASE/$ssrplus_SYSUPGRADE.tar.gz openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin || echo "ERROR: $NAME is no sysupgrade"
             
 ############################################################################################
       - name: 4.108M passwall
@@ -555,10 +552,9 @@ jobs:
       - name: 4.tar release
         if: env.Release == 'true' && !failure() && !cancelled()
         run: |
-          
-          tar zcvf RELEASE/$passwall_BIN.tar.gz openwrt/bin/
-          tar zcvf RELEASE/$passwall_FACTORY.tar.gz openwrt/bin/targets/*/*/*squashfs-factory.bin
-          tar zcvf RELEASE/$passwall_SYSUPGRADE.tar.gz openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
+          tar zcvf RELEASE/$passwall_BIN.tar.gz openwrt/bin/ || echo "$NAME is no directory BIN"
+          tar zcvf RELEASE/$passwall_FACTORY.tar.gz openwrt/bin/targets/*/*/*squashfs-factory.bin || echo "$NAME is no factory.bin"
+          tar zcvf RELEASE/$passwall_SYSUPGRADE.tar.gz openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin || echo "ERROR: $NAME is no sysupgrade"
           
 ############################################################################################
       - name: 5.108M openclash
@@ -628,10 +624,9 @@ jobs:
       - name: 5.tar release
         if: env.Release == 'true' && !failure() && !cancelled()
         run: |
-          
-          tar zcvf RELEASE/$openclash_BIN.tar.gz openwrt/bin/
-          tar zcvf RELEASE/$openclash_FACTORY.tar.gz openwrt/bin/targets/*/*/*squashfs-factory.bin
-          tar zcvf RELEASE/$openclash_SYSUPGRADE.tar.gz openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
+          tar zcvf RELEASE/$openclash_BIN.tar.gz openwrt/bin/ || echo "$NAME is no directory BIN"
+          tar zcvf RELEASE/$openclash_FACTORY.tar.gz openwrt/bin/targets/*/*/*squashfs-factory.bin || echo "$NAME is no factory.bin"
+          tar zcvf RELEASE/$openclash_SYSUPGRADE.tar.gz openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin || echo "ERROR: $NAME is no sysupgrade"
 ############################################################################################
       - name: 6.108M openclash ssrplus passwall
         if: env.PLUGINver == 'true'
@@ -699,10 +694,9 @@ jobs:
       - name: 6.tar release
         if: env.Release == 'true' && !failure() && !cancelled()
         run: |
-          
-          tar zcvf RELEASE/$openclash_ssrplus_passwall_BIN.tar.gz openwrt/bin/
-          tar zcvf RELEASE/$openclash_ssrplus_passwall_FACTORY.tar.gz openwrt/bin/targets/*/*/*squashfs-factory.bin
-          tar zcvf RELEASE/$openclash_ssrplus_passwall_SYSUPGRADE.tar.gz openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin
+          tar zcvf RELEASE/$openclash_ssrplus_passwall_BIN.tar.gz openwrt/bin/ || echo "$NAME is no directory BIN"
+          tar zcvf RELEASE/$openclash_ssrplus_passwall_FACTORY.tar.gz openwrt/bin/targets/*/*/*squashfs-factory.bin || echo "$NAME is no factory.bin"
+          tar zcvf RELEASE/$openclash_ssrplus_passwall_SYSUPGRADE.tar.gz openwrt/bin/targets/*/*/*squashfs-sysupgrade.bin || echo "ERROR: $NAME is no sysupgrade"
       
       - name: Generate release tag
         if: env.Release == 'true' && !failure()  && !cancelled()
