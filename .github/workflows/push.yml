@@ -36,12 +36,12 @@ jobs:
             touch 360.txt
             git init
             echo '4'
+            git add *
+            echo '1'
             git commit -m "提交信息" && echo '提交信息成功 '
             echo '6'
             git branch -M master
             echo '5'
-            git add 360.txt
-            echo '1'
             git remote add RouterFirmware git@github.com:levendwindy/RouterFirmware.git
             echo '2'
             git push -u RouterFirmware master
