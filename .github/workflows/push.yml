@@ -34,7 +34,8 @@ jobs:
             tee << EOF > ~/.ssh/id_rsa
             ${{ secrets.SSH_KEY }}
             EOF
-            
+            ssh-agent -s
+            ssh-add ~/.ssh/id_rsa
             sudo chmod -R 600  ~/.ssh
             echo '创建 id_rsa 文件 成功 '
             mkdir openwrt
