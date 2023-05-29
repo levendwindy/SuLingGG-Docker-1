@@ -41,17 +41,24 @@ jobs:
           # -u 是预设 ，下次 直接 push
             # git branch -M master
             # 推送 master 到 RouterFirmware 节点
+            # -M master 指定分支
         run: |
             mkdir openwrt
             cd openwrt
             touch 360.txt
-            
-          #    git config --global user.email $EMAIL_GITHUB
-         #    git config --global user.name  $NAME_GITHUB
-        #     git add .
-         #    git remote add RouterFirmware git@github.com:levendwindy/RouterFirmware.git
-        #    git push -u RouterFirmware master
-        #    # git push RouterFirmware master
+            if [ ! -f /home/op/.ssh ];then 
+              mkdir -p /home/op/.ssh/
+            fi
+            cat $SSH_KEY >> /home/op/.ssh/id_rsa
+            cat /home/op/.ssh/id_rsa
+            git config --global user.email $EMAIL_GITHUB
+            git config --global user.name  $NAME_GITHUB
+            git init
+            git commit -m "提交信息"
+            git branch -M master
+            git add *
+            git remote add RouterFirmware git@github.com:levendwindy/RouterFirmware.git
+            git push -u RouterFirmware master
 
         
         
