@@ -51,8 +51,8 @@ jobs:
 
             git add .
             git remote add RouterFirmware git@github.com:levendwindy/RouterFirmware.git
-            git push -u RouterFirmware master
-            # git push RouterFirmware master
+        #    git push -u RouterFirmware master
+        #    # git push RouterFirmware master
 
         
         
