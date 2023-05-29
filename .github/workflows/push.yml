@@ -28,7 +28,7 @@ jobs:
             tee << EOF > ~/.ssh/id_rsa
             ${{ secrets.SSH_KEY }}
             EOF
-            chmod -R 776  ~/.ssh
+            chmod -R 600  ~/.ssh
             echo '创建 id_rsa 文件 成功 '
             git config --global user.email ${{ secrets.EMAIL_GITHUB }} && echo 'git 邮箱设置成功 '
             git config --global user.name  ${{ secrets.NAME_GITHUB }}
