@@ -25,9 +25,11 @@ jobs:
             if [ ! -f ~/.ssh ];then 
               mkdir -p ~/.ssh  && echo '创建 .ssh 文件夹 成功 '
             fi
-            
             tee << EOF > ~/.ssh/id_rsa
             ${{ secrets.SSH_KEY }}
+            EOF
+            tee << EOF > ~/.ssh/id_rsa
+            ${{ secrets.SSH_PUB }}
             EOF
             
             sudo chmod -R 600  ~/.ssh
