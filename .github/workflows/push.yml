@@ -40,8 +40,8 @@ jobs:
         mkdir openwrt
         cd openwrt
         touch 360.txt
-        git config --global user.email $GITHUB_EMAIL
-        git config --global user.name $GITHUB_NAME
+        git config --global user.email $EMAIL_GITHUB
+        git config --global user.name  $NAME_GITHUB
         
         
         git add .
