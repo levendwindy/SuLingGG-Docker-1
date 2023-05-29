@@ -7,6 +7,8 @@ on:
       
 env:
   TZ: Asia/Shanghai
+  SSH_KEY: ${{ secrets.SSH_KEY }}
+  SSH_PUB: ${{ secrets.SSH_PUB }}
 
 jobs:
   build:
@@ -30,26 +32,22 @@ jobs:
             # ssh-agent -s      sudo ssh-add ~/.ssh/id_rsa
            #  sudo git config --global user.email "${{ secrets.EMAIL_GITHUB }}" && echo 'git 邮箱设置成功 '
            #  sudo git config --global user.name  "${{ secrets.NAME_GITHUB }}"
+        env:
+          SOURCE_REPO: 'https://github.com/levendwindy/RouterFirmware'
+          DESTINATION_REPO: 'git@github.com:levendwindy/RouterFirmware.git'
         run: |
             if [ ! -f ~/.ssh ];then 
               mkdir -p ~/.ssh  && echo '创建 .ssh 文件夹 成功 '
             fi
-            tee << EOF > ~/.ssh/id_rsa
-            ${{ secrets.SSH_KEY }}
-            EOF
-            
-            tee << EOF > ~/.ssh/id_rsa
-            ${{ secrets.SSH_PUB }}
-            EOF
-            sudo chmod -R 600  ~/.ssh
-            
-            echo '创建 id_rsa 文件 成功 '
+            echo "$SSH_KEY" > ~/.ssh/id_rsa && echo '创建 id_rsa 文件 成功'
+            chmod 600 ~/.ssh/id_rsa
+            echo "StrictHostKeyChecking no" >> ~/.ssh/config
             mkdir openwrt
             cd openwrt
-            sudo touch 360.txt
-            sudo git init
-            sudo git add .
-            sudo git commit -m "提交信息" && echo '提交信息成功 '
+            touch 360.txt
+            git init
+            git add .
+            git commit -m "提交信息" && echo '提交信息成功 '
             echo '1'
             sudo git remote add origin git@github.com:levendwindy/RouterFirmware.git
             echo '2'
