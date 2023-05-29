@@ -1,0 +1,61 @@
+name: Multi-OpenWrt Images
+  
+on:
+  workflow_dispatch:
+    inputs:
+      INPUT_TARGET:
+        description: "Target to build (platform/target/subtarget)"
+        required: false
+        default: "all"
+  push:
+    paths: 
+      - '.github/workflows/push.yml'
+      
+env:
+  TZ: Asia/Shanghai
+  # 下载线程数 DOWNLOAD
+  DOWNLOAD: 8
+  # 编译核心数 0 默认最多
+  NPROC: 0
+  # 构建原版Uboot
+  Vanilla: true
+  # 环境 true
+  ENVIRONMENT: true
+  # 快速编译
+  FAST: true
+  # 开启SSH
+  SSH: tru 
+  # 开启SSH 原厂固件
+  VanillaUboot: true
+  # 编译插件版   
+  PLUGINver: true
+
+jobs:
+  build:
+    #runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
+    steps:
+    - name: PUSH
+      run: |
+        mkdir openwrt
+        cd openwrt
+        touch 360.txt
+        git config --global user.email $GITHUB_EMAIL
+        git config --global user.name $GITHUB_NAME
+        
+        
+        git add .
+        git remote add RouterFirmware git@github.com:levendwindy/RouterFirmware.git
+        # -u 是预设 ，下次 直接 push
+        # git branch -M master
+        git push -u RouterFirmware master
+        # 推送 master 到 RouterFirmware 节点
+        # git push RouterFirmware master
+        
+        
+        
+        
+        
+        
+        
+        
