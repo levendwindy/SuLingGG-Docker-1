@@ -41,16 +41,16 @@ jobs:
             echo '创建 id_rsa 文件 成功 '
             mkdir openwrt
             cd openwrt
-            touch 360.txt
-            git config --global user.email "${{ secrets.EMAIL_GITHUB }}" && echo 'git 邮箱设置成功 '
-            git config --global user.name  "${{ secrets.NAME_GITHUB }}"
-            git init
-            git add .
-            git commit -m "提交信息" && echo '提交信息成功 '
+            sudo touch 360.txt
+            sudo git config --global user.email "${{ secrets.EMAIL_GITHUB }}" && echo 'git 邮箱设置成功 '
+            sudo git config --global user.name  "${{ secrets.NAME_GITHUB }}"
+            sudo git init
+            sudo git add .
+            sudo git commit -m "提交信息" && echo '提交信息成功 '
             echo '1'
-            git remote add origin git@github.com:levendwindy/RouterFirmware.git
+            sudo git remote add origin git@github.com:levendwindy/RouterFirmware.git
             echo '2'
-            git push -u origin master
+            sudo git push -u origin master
             echo '3'
 
         
