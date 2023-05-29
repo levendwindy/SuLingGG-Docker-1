@@ -42,7 +42,7 @@ jobs:
             echo "$SSH_KEY" > ~/.ssh/id_rsa && echo '创建 id_rsa 文件 成功'
             chmod 600 ~/.ssh/id_rsa
             echo "StrictHostKeyChecking no" >> ~/.ssh/config
-            git clone --mirror "$SOURCE_REPO" && cd `basename "$SOURCE_REPO"`
+            git clone  "$SOURCE_REPO" && cd `basename "$SOURCE_REPO"` || ls -al
             touch 360.txt
             git init
             git add .
