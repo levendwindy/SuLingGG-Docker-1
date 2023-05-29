@@ -35,23 +35,25 @@ jobs:
     #runs-on: ubuntu-latest
     runs-on: ubuntu-22.04
     steps:
-    - name: PUSH
-      run: |
-        mkdir openwrt
-        cd openwrt
-        touch 360.txt
-        git config --global user.email $EMAIL_GITHUB
-        git config --global user.name  $NAME_GITHUB
-        
-        
-        git add .
-        git remote add RouterFirmware git@github.com:levendwindy/RouterFirmware.git
-        # -u 是预设 ，下次 直接 push
-        # git branch -M master
-        git push -u RouterFirmware master
-        # 推送 master 到 RouterFirmware 节点
-        # git push RouterFirmware master
-        
+      - name: Checkout
+        uses: actions/checkout@main
+      - name: PUSH
+          # -u 是预设 ，下次 直接 push
+            # git branch -M master
+            # 推送 master 到 RouterFirmware 节点
+        run: |
+          mkdir openwrt
+            cd openwrt
+            touch 360.txt
+            git config --global user.email $EMAIL_GITHUB
+            git config --global user.name  $NAME_GITHUB
+
+
+            git add .
+            git remote add RouterFirmware git@github.com:levendwindy/RouterFirmware.git
+            git push -u RouterFirmware master
+            # git push RouterFirmware master
+
         
         
         
