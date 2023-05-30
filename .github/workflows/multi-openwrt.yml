@@ -131,7 +131,7 @@ jobs:
             echo "查看status"
             git status
             echo '2'
-            git push -u master1 master
+            git push 
             echo '3'
             df -h
             exit 0
