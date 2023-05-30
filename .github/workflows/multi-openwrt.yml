@@ -19,6 +19,12 @@ env:
   # 编译插件版   
   PLUGINver: tru
   Release: true
+  # 上传 私钥公钥 SSH_KEY SSH_PUB  
+  SSH_KEY: ${{ secrets. SSH_KEY }}
+  SSH_PUB: ${{ secrets.SSH_PUB }}
+  EMAIL_GITHUB: ${{ secrets.EMAIL_GITHUB }}
+  NAME_GITHUB: ${{ secrets.NAME_GITHUB }}
+  PUSH: true
   
   
 on:
@@ -99,6 +105,34 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@main
+        
+      - name: PUSH
+        if: env.PUSH == 'true'  && !failure() && !cancelled()
+        env:
+          SOURCE_REPO: 'https://github.com/levenwindy/test1'
+          DESTINATION_REPO: 'git@github.com:levenwindy/test1.git'
+        run: |
+            if [ ! -f ~/.ssh ];then 
+              mkdir -p ~/.ssh  && echo '创建 .ssh 文件夹 成功 '
+            fi
+            echo "$SSH_KEY" > ~/.ssh/id_rsa && echo '创建 id_rsa 文件 成功'
+            chmod 600 ~/.ssh/id_rsa
+            echo "StrictHostKeyChecking no" >> ~/.ssh/config
+            git clone  "$SOURCE_REPO" && cd `basename "$SOURCE_REPO"` || ls -al
+            touch $NAME.txt
+            git config --global user.email $EMAIL_GITHUB && echo 'git 邮箱设置成功 '
+            git config --global user.name  $NAME_GITHUB  && echo 'git 密码设置成功 '
+            git add .
+            git commit -m "add 360.txt" && echo '提交信息成功 '
+            echo '1'
+            git remote add origin_master $DESTINATION_REPO
+            echo "查看远程仓库"
+            git remote -v
+            echo '2'
+            git push -u origin_master master
+            echo '3'
+            df -h
+            exit 0
 
       - name: Generate Variables
         id: env
