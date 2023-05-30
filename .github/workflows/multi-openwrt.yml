@@ -105,9 +105,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@main
-        
+      
       - name: PUSH
-        if: env.PUSH == 'true'  && !failure() && !cancelled()
         env:
           SOURCE_REPO: 'https://github.com/levenwindy/test1'
           DESTINATION_REPO: 'git@github.com:levenwindy/test1.git'
@@ -119,22 +118,24 @@ jobs:
             chmod 600 ~/.ssh/id_rsa
             echo "StrictHostKeyChecking no" >> ~/.ssh/config
             git clone  "$SOURCE_REPO" && cd `basename "$SOURCE_REPO"` || ls -al
-            touch $NAME.txt
+            touch 360.txt
             git config --global user.email $EMAIL_GITHUB && echo 'git 邮箱设置成功 '
             git config --global user.name  $NAME_GITHUB  && echo 'git 密码设置成功 '
+            #  git init
             git add .
             git commit -m "add 360.txt" && echo '提交信息成功 '
             echo '1'
-            # git remote add master1 $DESTINATION_REPO
+            # git branch -M master
+            # 已经存在无法添加
+            git remote add origin_master $DESTINATION_REPO
+             # 查看远程仓库
             echo "查看远程仓库"
             git remote -v
-            echo "查看status"
-            git status
             echo '2'
-            git push 
+            # 查看本地文件
+            ls -al
+            git push -u origin_master master
             echo '3'
-            df -h
-            exit 0
 
       - name: Generate Variables
         id: env
