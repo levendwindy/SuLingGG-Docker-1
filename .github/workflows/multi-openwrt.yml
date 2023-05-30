@@ -125,11 +125,11 @@ jobs:
             git add .
             git commit -m "add 360.txt" && echo '提交信息成功 '
             echo '1'
-            git remote add origin_master $DESTINATION_REPO
+            # git remote add origin_master $DESTINATION_REPO
             echo "查看远程仓库"
             git remote -v
             echo '2'
-            git push -u origin_master master
+            git push -u master master
             echo '3'
             df -h
             exit 0
